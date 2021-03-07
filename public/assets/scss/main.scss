@@ -1,0 +1,173 @@
+/* -----main default----- */
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+}
+
+button,
+input[type='button'] {
+  cursor: pointer;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+input,
+textarea {
+  border: none;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+p {
+  margin: 0;
+}
+
+.table-responsive {
+  padding-right: 1px;
+}
+
+.card,
+.btn {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* ----- //main default ----- */
+
+/* ----- colors ----- */
+$bio-green: #63c76a;
+$bio-blue: #3366d3;
+/* ----- //colors ----- */
+
+/* ----- login -----*/
+
+.login-checkbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  label input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  >label>a {
+    color: #ff2e44;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-checkbox {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+.login-form .form-group label {
+  display: block;
+}
+
+.login-content {
+  background: #fff;
+  padding: 30px 30px 20px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.social-login-content {
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 20px 0px;
+}
+
+.register-link {
+  padding-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  >p>a {
+    color: #ff2e44;
+  }
+}
+
+/* ----- // login ----- */
+
+/* ----- register----- */
+
+.form-control:focus{
+  border-color: #cccccc;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* ----- // register ----- */
+
+/* ----- Footer ----- */
+
+.copyright {
+  text-align: center;
+  padding: 60px 0;
+  padding-top: 20px;
+  p {
+    font-size: 14px;
+    color: #666;
+    line-height: -webkit-calc(24/14);
+    line-height: -moz-calc(24/14);
+    line-height: calc(24/14);
+  }
+}
+
+/* ----- //Footer ----- */
+
+/* ----- Components ----- */
+
+@import 'typo';
+@import 'pagewrapper';
+@import 'pageloader';
+@import 'header';
+@import 'card';
+@import 'tables';
+@import 'form';
+@import 'switch';
+@import 'buttons';
+@import 'alert';
+@import 'breadcrumb';
+@import 'trumps';
+@import 'chat';
+@import 'tasklist';
+@import 'tabelainterativa';
+@import 'conteudoteorico';
+@import 'quizz';
+@import 'ranking';
+@import 'glossariocelular';
+/* ----- //Components ----- */

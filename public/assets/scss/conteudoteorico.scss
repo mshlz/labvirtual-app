@@ -1,0 +1,42 @@
+  
+  /* Estilos Conteúdos Teóricos */
+  
+  .text-green {
+    color: rgb(89, 193, 37);
+  }
+  
+  .img-desc {
+    font-size: 13px;
+    font-style: italic;
+  }
+  
+  .accordion {
+    button {
+      color: #63c76ae1;
+      &:hover {
+        color: #36a03de1;
+      }
+    }
+    img {
+      max-height: 400px;
+    }
+    hr {
+      margin: 30px 0px;
+    }
+    b {
+      color: #0b4f10e1;
+      font-weight: 550;
+    }
+    .card-body.only-subs {
+      padding: 0px;
+      margin: 0px;
+      .card-header h2 {
+        padding-left: 20px;
+      }
+    }
+    .card{
+      margin-bottom:0px !important;
+    }
+  }
+  
+  /* //Estilos Conteúdos Teóricos */

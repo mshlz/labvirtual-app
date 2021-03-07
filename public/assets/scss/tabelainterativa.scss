@@ -1,0 +1,100 @@
+
+  /* Estilos tabela interativa */
+  
+  .badge-lg {
+    padding: 10px 15px;
+  }
+  
+  #objectsRecipe {
+    display: flex;
+    flex-wrap: wrap;
+    .object {
+      margin: 5px 10px 4px 4px;
+    }
+    img {
+      margin-top: 10px;
+      max-height: 100px;
+      max-width: 200px;
+      float: left;
+      display: block;
+    }
+  }
+  
+  .tabela-interativa td, th {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .tabela-interativa td img {
+    max-height: 100px;
+    max-width: 200px;
+  }
+  
+  .badge-green {
+    background: #63c76ae1;
+    color: white;
+    &:hover {
+      background: #59bd60;
+    }
+    &:active {
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.252);
+    }
+  }
+  
+  #objectsRecipe img:active {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.252);
+  }
+  
+  .tabela-interativa td {
+    height: 120px;
+  }
+  
+  div.placeholder {
+    background-color: rgba(99, 199, 106, 0.35);
+    box-shadow: 0 0 4px 0 rgba(99, 199, 106, 0.35), inset 0 0 1px 0 rgba(99, 199, 106, 0.75);
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    margin: 5px 10px 4px 4px;
+  }
+  
+  img.placeholder, #objectsRecipe img.placeholder {
+    margin: 5px 10px 4px 4px;
+    opacity: .45;
+  }
+  
+  .placeholder::before {
+    content: '.';
+    color: rgba(255, 255, 255, 0);
+  }
+  
+  /* Blocos de Texto */
+  
+  div.object {
+    display: inline-flex;
+    line-height: 1.25em;
+    max-width: 180px;
+    height: 44px;
+    align-items: center;
+    white-space: normal;
+    vertical-align: top;
+  }
+  
+  .tabela-interativa {
+    table-layout: fixed;
+    th {
+      width: 25%;
+      &:nth-of-type(3) {
+        width: 120px;
+      }
+    }
+  }
+  
+  /* // Tabela Interativa */
+  

@@ -1,0 +1,371 @@
+
+  .au-message p {
+    color: #808080;
+  }
+  
+  .au-message-list {
+    height: 424px;
+    position: relative;
+    overflow-y: auto;
+  }
+  
+  .au-message__noti {
+    padding: 25px 15px;
+    padding-left: 40px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #f2f2f2;
+    p {
+      font-size: 14px;
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .au-message__item {
+    border-bottom: 1px solid #f2f2f2;
+    cursor: pointer;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    &:hover {
+      background: #f7f7f7;
+    }
+  }
+  
+  .au-message__item-inner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 19px 40px;
+    padding-right: 50px;
+    padding-bottom: 25px;
+  }
+  
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .au-message__item-inner {
+      padding: 15px;
+      padding-right: 10px;
+      padding-bottom: 15px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .au-message__item-inner {
+      padding: 15px;
+      padding-right: 10px;
+      padding-bottom: 15px;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -moz-box-orient: vertical;
+      -moz-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: start;
+      -webkit-align-items: flex-start;
+      -moz-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+    }
+  }
+  
+  .au-message__item-time {
+    margin-top: 26px;
+    span {
+      font-size: 14px;
+      color: #808080;
+    }
+  }
+  
+  .au-message__item-text .text {
+    margin-left: 60px;
+    padding: 7px 0;
+    padding-left: 23px;
+    .name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 2px;
+    }
+    p {
+      color: #808080;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .au-message__item-text .text {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  
+  .avatar-wrap {
+    position: relative;
+    float: left;
+  }
+  
+  @media (max-width: 767px) {
+    .avatar-wrap {
+      float: none;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .online .avatar::after {
+    background: #63c76a;
+  }
+  
+  .avatar {
+    height: 60px;
+    width: 60px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    overflow: hidden;
+    &::after {
+      content: '';
+      display: block;
+      height: 15px;
+      width: 15px;
+      background: #ccc;
+      border: 2px solid #fff;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      border-radius: 100%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+  
+  .avatar--small {
+    height: 50px;
+    width: 50px;
+  }
+  
+  .avatar--tiny {
+    height: 32px;
+    width: 32px;
+    &::after {
+      display: none;
+    }
+  }
+  
+  .au-message__item.unread {
+    .au-message__item-inner {
+      border-left: 3px solid #999;
+    }
+    .au-message__item-text .text {
+      .name, p {
+        color: #333;
+      }
+    }
+  }
+  
+  .au-chat--border {
+    .au-chat__title, .au-chat__content {
+      border-left: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+    }
+    .au-chat-textfield {
+      border: 1px solid #e5e5e5;
+      border-top: none;
+    }
+  }
+  
+  .au-chat__title {
+    border-bottom: 1px solid #f2f2f2;
+  }
+  
+  .au-chat-info {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 12px 40px;
+    .avatar-wrap {
+      float: none;
+      display: inline-block;
+      margin-bottom: 0;
+    }
+    .nick {
+      margin-left: 15px;
+      a {
+        font-weight: 600;
+        font-size: 16px;
+        color: #333;
+        &:hover {
+          color: #666;
+        }
+      }
+    }
+  }
+  
+  .au-chat__content {
+    height: 400px;
+    overflow: auto;
+    padding: 30px 40px;
+    padding-bottom: 0;
+    position: relative;
+  }
+  
+  .au-chat__content2 {
+    .recei-mess {
+      max-width: 240px;
+      -webkit-border-top-left-radius: 3px;
+      -moz-border-radius-topleft: 3px;
+      border-top-left-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      border-bottom-left-radius: 3px;
+      -webkit-border-top-right-radius: 15px;
+      -moz-border-radius-topright: 15px;
+      border-top-right-radius: 15px;
+      -webkit-border-bottom-right-radius: 15px;
+      -moz-border-radius-bottomright: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    .send-mess {
+      max-width: 240px;
+      -webkit-border-top-right-radius: 3px;
+      -moz-border-radius-topright: 3px;
+      border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      border-bottom-right-radius: 3px;
+      -webkit-border-top-left-radius: 15px;
+      -moz-border-radius-topleft: 15px;
+      border-top-left-radius: 15px;
+      -webkit-border-bottom-left-radius: 15px;
+      -moz-border-radius-bottomleft: 15px;
+      border-bottom-left-radius: 15px;
+    }
+  }
+  
+  .mess-time {
+    font-size: 14px;
+    color: #999;
+  }
+  
+  .recei-mess-wrap {
+    text-align: center;
+  }
+  
+  .recei-mess {
+    background: #f2f2f2;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding: 12px 25px;
+    max-width: 390px;
+    margin-bottom: 2px;
+    text-align: left;
+  }
+  
+  .recei-mess__inner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 6px;
+    .avatar--tiny {
+      -webkit-align-self: flex-end;
+      -ms-flex-item-align: end;
+      align-self: flex-end;
+      justify-self: flex-start;
+      margin-right: 10px;
+    }
+  }
+  
+  .recei-mess-list {
+    width: -webkit-calc(100% - 42px);
+    width: -moz-calc(100% - 42px);
+    width: calc(100% - 42px);
+    .recei-mess:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .send-mess-wrap {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .send-mess__inner {
+    margin-top: 6px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -moz-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  
+  .send-mess {
+    background: #4272d7;
+    color: #fff;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding: 12px 25px;
+    max-width: 390px;
+    margin-bottom: 2px;
+    text-align: left;
+  }
+  
+  .au-chat-textfield {
+    padding: 40px;
+    padding-top: 32px;
+    padding-bottom: 50px;
+  }
+  
+  .au-inbox-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 200%;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    &.show-chat-box {
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
+  }
+  
+  .au-message, .au-chat {
+    width: 50%;
+  }
+  

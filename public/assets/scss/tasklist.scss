@@ -1,0 +1,101 @@
+
+  .au-task {
+    color: #808080;
+  }
+  
+  .au-task--border {
+    .au-task__title, .au-task-list {
+      border-left: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+    }
+    .au-task__footer {
+      border: 1px solid #e5e5e5;
+      border-top: none;
+    }
+  }
+  
+  .au-task__title {
+    padding: 27px 15px;
+    padding-left: 40px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #f2f2f2;
+    font-size: 14px;
+  }
+  
+  .au-task-list {
+    height: 424px;
+    position: relative;
+    overflow-y: auto;
+  }
+  
+  .au-task__item {
+    border-bottom: 1px solid #f2f2f2;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    &:hover {
+      background: #f7f7f7;
+    }
+  }
+  
+  .au-task__item-inner {
+    padding: 26px 15px;
+    padding-left: 40px;
+    .task {
+      font-size: 16px;
+      margin-bottom: 6px;
+      a {
+        font-size: 16px;
+        color: #808080;
+        font-weight: 400;
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+    .time {
+      font-size: 14px;
+      color: #555;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+  
+  .au-task__item--danger .au-task__item-inner {
+    border-left: 3px solid #fa4251;
+  }
+  
+  .au-task__item--warning .au-task__item-inner {
+    border-left: 3px solid #ffa037;
+  }
+  
+  .au-task__item--primary .au-task__item-inner {
+    border-left: 3px solid #4272d7;
+  }
+  
+  .au-task__item--success .au-task__item-inner {
+    border-left: 3px solid #00ad5f;
+  }
+  
+  .au-task__footer, .au-message__footer {
+    text-align: center;
+    padding-top: 35px;
+    padding-bottom: 45px;
+  }
+  
+  .task-progress {
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    padding: 40px;
+    padding-top: 42px;
+    padding-right: 55px;
+    padding-bottom: 74px;
+    margin-bottom: 40px;
+    .title-3 {
+      margin-bottom: 32px;
+    }
+    .au-progress {
+      padding: 11px 0;
+    }
+  }

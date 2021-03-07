@@ -1,0 +1,132 @@
+/* ----- Page Wrapper----- */
+  
+  /*Override Grid Bootstrap*/
+  
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1320px;
+    }
+  }
+  
+  /*Page Objects*/
+  
+  .page-wrapper {
+    overflow: hidden;
+  }
+  
+  .page-container {
+    background: #e5e5e5;
+    padding-left: 300px;
+  }
+  
+  @media (max-width: 991px) {
+    .page-container {
+      position: relative;
+      top: 88px;
+      padding-left: 0;
+    }
+  }
+  
+  .page-container2 {
+    background: #f2f2f2;
+    padding-left: 300px;
+  }
+  
+  @media (max-width: 991px) {
+    .page-container2 {
+      position: relative;
+      padding-left: 0;
+    }
+  }
+  
+  .page-container3 {
+    background: #f7f7f7;
+  }
+  
+  .main-content {
+    padding-top: 105px;
+    min-height: 100vh;
+  }
+  
+  @media (max-width: 991px) {
+    .main-content {
+      padding-top: 27px;
+    }
+  }
+  
+  .page-content--bgf7 {
+    background: #f7f7f7;
+  }
+  
+  .page-content--bge5 {
+    background: #e5e5e5;
+    min-height: 100vh;
+  }
+  
+  .register-wrap {
+    max-width: 800px;
+    padding-top: 8vh;
+    margin: 0 auto;
+  }
+  
+  .login-wrap {
+    max-width: 540px;
+    padding-top: 8vh;
+    margin: 0 auto;
+  }
+  
+  .login-logo {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  @media only screen and (max-width: 780px) {
+    .login-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      button {
+        margin: 20px;
+      }
+    }
+  }
+  
+    /* ----- Section----- */
+  
+    section {
+      position: relative;
+    }
+    
+    .section__content {
+      position: relative;
+      margin: 0 auto;
+      z-index: 1;
+      left: 0px;
+      -moz-transition: all 0.4s ease;
+      -webkit-transition: all 0.4s ease;
+      -o-transition: all 0.4s ease;
+      transition: all 0.4s ease;
+      &.sideHided {
+        left: -300px;
+        width: 100vw;
+      }
+    }
+    
+    .section__content--w1830 {
+      max-width: 1830px;
+    }
+    
+    .section__content--p30 {
+      padding: 0 30px;
+    }
+    
+    @media (max-width: 991px) {
+      .section__content--p30 {
+        padding: 0;
+      }
+    }
+    
+    .section__content--p35 {
+      padding: 0 35px;
+    }
+    

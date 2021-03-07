@@ -1,0 +1,209 @@
+  /* ----- Typography ----- */
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.625;
+    color: #666;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #333333;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    font-size: 36px;
+  }
+  
+  h2 {
+    font-size: 30px;
+  }
+  
+  h3 {
+    font-size: 24px;
+  }
+  
+  h4 {
+    font-size: 18px;
+  }
+  
+  h5 {
+    font-size: 15px;
+  }
+  
+  h6 {
+    font-size: 13px;
+  }
+  
+  blockquote {
+    margin: 0;
+  }
+  
+  strong {
+    font-weight: 700;
+  }
+
+  /* ----- Title ----- */
+  
+  .title--sbold {
+    font-weight: 600;
+  }
+  
+  .font-size-13 {
+    font-size: 13px;
+  }
+  
+  .title-1 {
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 30px;
+  }
+  
+  .title-2 {
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1;
+  }
+  
+  .title-3 {
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 24px;
+    color: #333;
+    i {
+      margin-right: 13px;
+      vertical-align: baseline;
+    }
+  }
+  
+  .title-4 {
+    font-weight: 500;
+    font-size: 30px;
+    color: #393939;
+  }
+  
+  .title-5 {
+    text-transform: capitalize;
+    font-size: 22px;
+    font-weight: 500;
+    color: #393939;
+  }
+  
+  .title-6 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .heading-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+  }
+  
+  /* ----- Links ----- */
+  
+  a {
+    display: inline-block;
+    &:hover, &:focus, &:active {
+      text-decoration: none;
+      outline: none;
+    }
+    &:hover {
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  
+  
+  .title-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 767px) {
+    .title-wrap {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -moz-box-orient: vertical;
+      -moz-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      .button {
+        -webkit-box-ordinal-group: 2;
+        -webkit-order: 1;
+        -moz-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+        order: 1;
+      }
+      h2 {
+        -webkit-box-ordinal-group: 3;
+        -webkit-order: 2;
+        -moz-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+        order: 2;
+      }
+    }
+  }
+  
+  /* fa */
+  .fontawesome-list-wrap {
+    background: #fff;
+    border: 1px solid #C9CDD7;
+    padding: 20px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+  }
+  
+  .fontawesome-list__title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #C9CDD7;
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
+  
+  .fa-hover a {
+    color: #666;
+    font-size: 15px;
+    i {
+      margin-right: 10px;
+    }
+    &:hover {
+      color: #333;
+    }
+  }
+  
+  .main-content--pb30 {
+    padding-bottom: 30px;
+  }
+  

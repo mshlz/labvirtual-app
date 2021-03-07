@@ -1,0 +1,112 @@
+/* Glossario Celular */
+
+//maps
+$organelasAnimal:(P1: (width: 221px,
+height: 248px,
+left: 28%,
+top: 28%,
+),
+
+P2:(width: 93px,
+height: 124px,
+left: 80%,
+top: 40%,
+),
+
+P3:(width: 116px,
+height: 114px,
+left: 15%,
+top: 15%,
+),
+
+P4:(width: 70.96px,
+height: 86.05px,
+left: 5%,
+top: 50%,
+),
+
+P5:(width: 147.1px,
+height: 75.05px,
+left: 30%,
+top: 80%,
+),
+
+P6:(width: 63.96px,
+height: 64.03px,
+left: 70%,
+top: 70%,
+),
+
+P8:(width: 191px,
+height: 103px,
+left: 50%,
+top: 10%,
+));
+
+
+.glossarioCelular {
+  .organela {
+    cursor: pointer;
+    transition: 0.8s all;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &.celulaAnimal .organela {
+
+    @each $organela,
+    $props in $organelasAnimal {
+      &.#{$organela} {
+        width: map-get($props, width);
+        height: map-get($props, height);
+        background-image: url("../images/glossario-celulaanimal/#{$organela}.png");
+        background-size: cover;
+      }
+    }
+  }
+
+  &.glossarioCelular-desktop {
+    padding: 10px 0px 10px 10px;
+
+    .celula-bg {
+      background-color: rgb(255, 235, 197);
+      border-radius: 50%;
+      border: 5px solid rgb(119, 65, 3);
+      position: relative;
+      min-height: 570px;
+    }
+
+    &.celulaAnimal .organela {
+      position: absolute;
+
+      @each $organela,
+      $props in $organelasAnimal {
+        &.#{$organela} {
+          left: map-get($props, left);
+          top: map-get($props, top);
+        }
+      }
+
+    }
+  }
+
+  &.glossarioCelular-mobile {
+    .celula-bg {
+      padding: 30px;
+      background-color: rgb(255, 235, 197);
+      border-radius: 20%;
+      border: 5px solid rgb(119, 65, 3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .organela+.organela {
+      margin: 20px 0px 0px 0px;
+    }
+  }
+}
+
+
+/* //Glossario Celular */
