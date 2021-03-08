@@ -1,4 +1,9 @@
+import { AppLeftNavigation } from "../layouts/AppLeftNavigation"
 
-export default function Index() {
-    return <h1>Hello World</h1>
+const Index = () => {
+    return <AppLeftNavigation>
+        <h1>Hello</h1>
+    </AppLeftNavigation>
 }
+
+export default Index
