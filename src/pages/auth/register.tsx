@@ -1,6 +1,8 @@
 import { Form } from "@unform/web"
 import Link from "next/link"
+import Router from "next/router"
 import { useRef, useState } from "react"
+import { toast } from "react-toastify"
 import * as Yup from 'yup'
 import { Button } from "../../components/UI/Button"
 import { Input } from "../../components/UI/Input"
@@ -9,6 +11,9 @@ import { AuthService } from "../../services/AuthService"
 
 const RegisterPage = (props) => {
   const formRef = useRef(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
   const [isTeacher, setIsTeacher] = useState(false)
 
   const handleSubmit = async (data) => {
@@ -25,7 +30,20 @@ const RegisterPage = (props) => {
 
     data.type = isTeacher ? 'teacher' : 'student'
 
-    console.log(await AuthService.register(data))
+    try {
+      setIsLoading(true)
+      await AuthService.register(data)
+      toast('Registro efetuado com sucesso!', { type: 'success' })
+      setTimeout(() => {
+        Router.push('/auth')
+      }, 1000)
+    }
+    catch (err) {
+      setIsLoading(false)
+      let error = err.response.data
+      // if (error.status == 422) return formRef.current.setErrors(error.data) // TODO validation array from server
+      return setError(error.message)
+    }
   }
 
   return (<div className="page-wrapper ">
@@ -55,6 +73,9 @@ const RegisterPage = (props) => {
             <div className="login-form">
               <div id="form">
                 <Form ref={formRef} onSubmit={handleSubmit}>
+                  {error && <div className="alert alert-danger mt-2" role="alert">
+                    {error}
+                  </div>}
                   <div className="row">
                     <div className="col-md-6">
                       <Input name="name" label="Nome" placeholder="Nome completo" />
@@ -70,7 +91,10 @@ const RegisterPage = (props) => {
                       <Input name="password_verify" label="Confirme sua senha" placeholder="Confirme sua senha" type="password" />
                     </div>
                   </div>
-                  <Button color="success" block>Registrar</Button>
+                  <Button color="success" block disabled={isLoading}>
+                    {isLoading && <i className="fa fa-spinner fa-spin mr-1"></i>}
+                    Registrar
+                  </Button>
                   {/* <button className="au-btn--block au-btn--green m-b-20" type="submit">Registrar</button> */}
                   {/* <div className="social-login-content">
                     <div className="social-button">
