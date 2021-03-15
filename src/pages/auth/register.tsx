@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { Button } from "../../components/UI/Button"
 import { Input } from "../../components/UI/Input"
 import { ValidateForm } from "../../plugins/validation/FormValidator"
+import { AuthService } from "../../services/AuthService"
 
 const RegisterPage = (props) => {
   const formRef = useRef(null)
@@ -24,7 +25,7 @@ const RegisterPage = (props) => {
 
     data.type = isTeacher ? 'teacher' : 'student'
 
-    console.log('valid')
+    console.log(await AuthService.register(data))
   }
 
   return (<div className="page-wrapper ">

@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+export { Yup }
 import { ObjectShape } from 'yup/lib/object'
 
 export const ValidateForm = async (schema: ObjectShape, data: any, formRef: any): Promise<boolean> => {

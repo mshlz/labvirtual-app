@@ -1,13 +1,18 @@
+import Link from "next/link"
+import { useEffect } from "react"
+
 const Sidebar = (props) => {
   return (<>
     {/* <!-- HEADER MOBILE--> */}
-    < header className="header-mobile d-block d-lg-none" >
+    <header className="header-mobile d-block d-lg-none">
       <div className="header-mobile__bar">
         <div className="container-fluid">
           <div className="header-mobile-inner">
-            <a className="logo" href="home.html">
-              <img src="/assets/images/logo.png" className="mobile-logo" />
-            </a>
+            <Link href="/">
+              <a className="logo">
+                <img src="/assets/images/logo.png" className="mobile-logo" />
+              </a>
+            </Link>
             <button className="hamburger hamburger--slider" type="button">
               <span className="hamburger-box">
                 <span className="hamburger-inner"></span>
@@ -20,10 +25,9 @@ const Sidebar = (props) => {
         <div className="container-fluid">
           <ul className="navbar-mobile__list list-unstyled">
             <li>
-              <a href="home.html">
-                <i className="fas fa-tachometer-alt"></i>Início</a>
+              <Link href="/"><a><i className="fas fa-tachometer-alt"></i>Início</a></Link>
             </li>
-            <li>
+            {/* <li>
               <a href="jogos.html">
                 <i className="fas fa-gamepad"></i>Jogos</a>
             </li>
@@ -43,9 +47,9 @@ const Sidebar = (props) => {
             <li>
               <a href="forum.html">
                 <i className="fa fa-comment"></i>Fórum</a>
-            </li>
+            </li> */}
 
-            <li className="has-sub">
+            {/* <li className="has-sub">
               <a className="js-arrow" href="#">
                 <i className="fas fa-plus"></i>Extras</a>
               <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
@@ -57,7 +61,7 @@ const Sidebar = (props) => {
 
                 </li>
               </ul>
-            </li>
+            </li> */}
 
 
             <li className="has-sub">
@@ -82,7 +86,7 @@ const Sidebar = (props) => {
                 <i className="fas fa-cog"></i>Gerenciamento</a>
               <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
                 <li className="">
-                  <a href="controle-turmas.html">Controle de Turmas</a>
+                  <Link href="/manager/classes">Controle de Turmas</Link>
                 </li>
                 <li>
                   <a href="controle-alunos.html">Controle de Alunos</a>
@@ -100,18 +104,19 @@ const Sidebar = (props) => {
     {/* <!-- MENU SIDEBAR--> */}
     <aside className="menu-sidebar d-none d-lg-block">
       <div className="logo">
-        <a href="#">
-          <img src="/assets/images/logo.png" />
-        </a>
+        <Link href="/">
+          <a><img src="/assets/images/logo.png" /></a>
+        </Link>
       </div>
       <div className="menu-sidebar__content js-scrollbar1">
         <nav className="navbar-sidebar">
           <ul className="list-unstyled navbar__list">
             <li className="active">
-              <a href="#">
-                <i className="fas fa-tachometer-alt"></i>Início</a>
+              <Link href="/">
+                <a><i className="fas fa-home"></i>Início</a>
+              </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="jogos.html">
                 <i className="fas fa-gamepad"></i>Jogos</a>
             </li>
@@ -147,20 +152,20 @@ const Sidebar = (props) => {
 
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             <li className="has-sub">
               <a className="js-arrow" href="#">
                 <i className="fas fa-cog"></i>Configurações</a>
               <ul className="list-unstyled navbar__sub-list js-sub-list">
                 <li className="">
-                  <a href="minhaconta.html">Minha Conta</a>
+                  <Link href="/profile">Minha Conta</Link>
                 </li>
                 <li>
-                  <a href="alterardados.html">Alterar Dados</a>
+                  <a href="#">Alterar Dados</a>
                 </li>
                 <li>
-                  <a href="suporte.html">Suporte</a>
+                  <a href="#">Suporte</a>
                 </li>
 
               </ul>
@@ -171,7 +176,7 @@ const Sidebar = (props) => {
                 <i className="fas fa-cog"></i>Gerenciamento</a>
               <ul className="list-unstyled navbar__sub-list js-sub-list">
                 <li className="">
-                  <a href="controle-turmas.html">Controle de Turmas</a>
+                  <Link href="/manager/classes">Controle de Turmas</Link>
                 </li>
                 <li>
                   <a href="controle-alunos.html">Controle de Alunos</a>

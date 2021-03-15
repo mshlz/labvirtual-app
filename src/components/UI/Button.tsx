@@ -15,6 +15,7 @@ interface ButtonProps {
 
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
+    const { ...rest } = props
     const cssClasses = ['btn']
     if (props.block) cssClasses.push('btn-block')
     if (props.color) props.outline ? cssClasses.push(`btn-outline-${props.color}`) : cssClasses.push(`btn-${props.color}`)
@@ -27,6 +28,7 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
             style={{
                 textTransform: props.uppercase ? 'uppercase' : 'none'
             }}
+            {...rest}
         >
             {props.children}
         </button>

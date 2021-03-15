@@ -1,7 +1,7 @@
 const NotificationBox = (props) => {
   return <>
     <div className="noti-wrap">
-      <div className="noti__item js-item-menu">
+      <div className={`noti__item js-item-menu `}>
         <i className="zmdi zmdi-notifications"></i>
         <span className="quantity">3</span>
 
