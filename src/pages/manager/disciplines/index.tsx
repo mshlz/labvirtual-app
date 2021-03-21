@@ -31,7 +31,11 @@ const DisciplineListPage = () => {
                     </div>
                 </div>
                 <div className="table-responsive table-responsive-data2">
-                    <table className="table table-data2">
+                    {(!disciplines || disciplines.length == 0) && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <i className="fa fa-exclamation-triangle fa-2x mb-2"></i><span>Sem dados!</span>
+                    </div>}
+
+                    {disciplines.length > 0 && <table className="table table-data2">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -65,7 +69,7 @@ const DisciplineListPage = () => {
                                 </tr>
                             )}
                         </tbody>
-                    </table>
+                    </table>}
                 </div>
                 <div className="row">
                     <div className="col-md-12">
