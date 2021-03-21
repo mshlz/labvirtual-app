@@ -9,6 +9,7 @@ interface ButtonProps {
     uppercase?: boolean
     size?: typeof sizes[number]
     block?: boolean
+    isLoading?: boolean
     cssClasses?: string | string[]
     [key: string]: any
 }
@@ -28,8 +29,10 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
             style={{
                 textTransform: props.uppercase ? 'uppercase' : 'none'
             }}
+            disabled={props.isLoading}
             {...rest}
         >
+            {props.isLoading && <i className="fa fa-spinner fa-spin mr-1"></i>}
             {props.children}
         </button>
     )

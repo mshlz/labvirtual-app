@@ -19,6 +19,10 @@ export abstract class LocalStorage {
         localStorage.removeItem(key)
     }
 
+    public static removeAll(keys: string[]): void {
+        keys.forEach(key => localStorage.removeItem(key))
+    }
+
     public static wipe() {
         localStorage.clear()
     }
