@@ -21,6 +21,7 @@ const Input = (props: InputProps) => {
                 return ref.current.value
             },
             setValue: (ref, value) => {
+                if (value === undefined) value = ''
                 ref.current.value = value
             },
             clearValue: ref => {

@@ -6,23 +6,24 @@ import { Button } from "../../../components/UI/Button"
 import { Input } from "../../../components/UI/Input"
 import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
 import { ValidateForm, Yup } from "../../../plugins/validation/FormValidator"
-import { DisciplineService } from "../../../services/DisciplineService"
+import { InstitutionService } from "../../../services/InstitutionService"
 
-const CreateDisciplinePage = () => {
+const CreateInstitutionPage = () => {
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (data) => {
         const isValid = await ValidateForm({
-            name: Yup.string().required().min(3)
+            name: Yup.string().required().min(3),
+            acronym: Yup.string().required().min(3)
         }, data, formRef)
 
         if (isValid) {
             try {
                 setIsLoading(true)
-                await DisciplineService.create(data)
+                await InstitutionService.create(data)
                 setIsLoading(false)
-                toast("Disciplina criada com sucesso!", { type: 'success' })
+                toast("Instituição criada com sucesso!", { type: 'success' })
             } catch (error) {
                 setIsLoading(false)
                 alert(error.response.data.message)
@@ -35,9 +36,9 @@ const CreateDisciplinePage = () => {
             <div className="col-md-12">
                 <div className="title-wrap">
                     <h2 className="title-5 text-center">
-                        <i className="fa fa-plus mr-2"></i> Nova disciplina
+                        <i className="fa fa-plus mr-2"></i> Nova instituição
                     </h2>
-                    <Link href="/manager/disciplines">
+                    <Link href="/manager/institutions">
                         <Button color="light"><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
                     </Link>
                 </div>
@@ -55,7 +56,10 @@ const CreateDisciplinePage = () => {
                                         <hr />
                                     </div>
                                     <div className="col-md-12">
-                                        <Input label="Nome da disciplina:" name="name" />
+                                        <Input label="Nome da instituição:" name="name" />
+                                    </div>
+                                    <div className="col-md-12">
+                                        <Input label="Sigla:" name="acronym" />
                                     </div>
 
                                     <div className="col-md-12">
@@ -73,4 +77,4 @@ const CreateDisciplinePage = () => {
     </AppLeftNavigation >
 }
 
-export default CreateDisciplinePage
+export default CreateInstitutionPage

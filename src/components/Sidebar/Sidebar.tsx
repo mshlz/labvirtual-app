@@ -176,6 +176,9 @@ const Sidebar = (props) => {
                 <i className="fas fa-cog"></i>Gerenciamento</a>
               <ul className="list-unstyled navbar__sub-list js-sub-list">
                 <li>
+                  <Link href="/manager/institutions">Controle de Instituições</Link>
+                </li>
+                <li>
                   <Link href="/manager/disciplines">Controle de Disciplinas</Link>
                 </li>
                 <li className="">

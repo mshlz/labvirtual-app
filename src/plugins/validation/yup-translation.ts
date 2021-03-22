@@ -16,6 +16,7 @@ const translation = {
         trim: 'este campo não deve conter espaços no início ou no fim.',
         lowercase: 'este campo deve estar em maiúsculo',
         uppercase: 'este campo deve estar em minúsculo',
+        uuid: 'este campo deve ser um UUID válido'
     },
     number: {
         min: 'este campo deve ser no mínimo ${min}',
