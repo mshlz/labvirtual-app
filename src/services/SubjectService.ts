@@ -16,6 +16,10 @@ class SubjectService {
     static async update(id: string, data) {
         return (await Axios.post(`/subjects/${id}`, data)).data.data
     }
+
+    static async getAllFromDiscipline(discipline_id: string) {
+        return (await Axios.post(`/subjects/get/discipline`, { discipline: discipline_id })).data.data
+    }
 }
 
 export { SubjectService }

@@ -6,10 +6,12 @@ import ReactSelect, {
 import { useField } from '@unform/core';
 
 interface Props extends SelectProps<OptionTypeBase> {
-    name: string;
+    name: string
+    label?: string
+    clear?: () => void
 }
 
-export default function Select({ name, label, ...rest }: Props) {
+export default function Select({ name, label, clear, options, ...rest }: Props) {
     const selectRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
 
@@ -17,6 +19,7 @@ export default function Select({ name, label, ...rest }: Props) {
         registerField({
             name: fieldName,
             ref: selectRef.current,
+            path: 'state.value' as any,
             getValue: (ref: any) => {
                 if (rest.isMulti) {
                     if (!ref.state.value) {
@@ -28,9 +31,11 @@ export default function Select({ name, label, ...rest }: Props) {
                     return '';
                 }
                 return ref.state.value.value;
-            },
+            }
         });
     }, [fieldName, registerField, rest.isMulti]);
+
+    useEffect(() => { selectRef?.current?.select?.clearValue() }, [clear])
 
     const customStyles = {
         control: provided => ({ ...provided, borderRadius: '2px', boxShadow: 'none', borderColor: '#ced4da' })
@@ -41,10 +46,11 @@ export default function Select({ name, label, ...rest }: Props) {
             <div className="form-group">
                 {label && <label htmlFor="">{label}</label>}
                 <ReactSelect
-                    defaultValue={defaultValue}
+                    defaultValue={defaultValue && options.find(option => option.value === defaultValue)}
                     ref={selectRef}
                     classNamePrefix="react-select"
                     styles={customStyles}
+                    options={options}
                     {...rest}
                 />
                 {error && <span style={{ fontFamily: 'sans-serif', fontSize: '.9rem', color: '#dc3545' }}>{error}</span>}

@@ -16,6 +16,7 @@
     "react-dom": "17.0.1",
     "react-select": "^4.3.0",
     "react-toastify": "^7.0.3",
+    "suneditor-react": "^2.16.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {
