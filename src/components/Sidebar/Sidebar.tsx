@@ -181,12 +181,15 @@ const Sidebar = (props) => {
                 <li>
                   <Link href="/manager/disciplines">Controle de Disciplinas</Link>
                 </li>
+                <li>
+                  <Link href="/manager/subjects">Controle de Assuntos</Link>
+                </li>
                 <li className="">
                   <Link href="/manager/classes">Controle de Turmas</Link>
                 </li>
-                <li>
+                {/* <li>
                   <a href="controle-alunos.html">Controle de Alunos</a>
-                </li>
+                </li> */}
 
               </ul>
             </li>
