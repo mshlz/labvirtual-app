@@ -16,6 +16,10 @@ class DisciplineService {
     static async update(id: string, data) {
         return (await Axios.post(`/disciplines/${id}`, data)).data.data
     }
+
+    static async delete(id: string) {
+        return (await Axios.delete(`/disciplines/${id}`)).data.data
+    }
 }
 
 export { DisciplineService }

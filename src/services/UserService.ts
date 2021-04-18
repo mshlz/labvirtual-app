@@ -8,6 +8,10 @@ class UserService {
     static async updateProfile(data) {
         return (await Axios.post('/users/update', data)).data.data
     }
+
+    static async delete(id: string) {
+        return (await Axios.delete(`/users/${id}`)).data.data
+    }
 }
 
 export { UserService }

@@ -17,6 +17,10 @@ class LessonService {
         return (await Axios.post(`/lessons/${id}`, data)).data.data
     }
 
+    static async delete(id: string) {
+        return (await Axios.delete(`/lessons/${id}`)).data.data
+    }
+
     static async getAllFromDiscipline(discipline_id: string) {
         return (await Axios.post(`/lessons/get/discipline`, { discipline: discipline_id })).data.data
     }

@@ -16,6 +16,10 @@ class InstitutionService {
     static async update(id: string, data) {
         return (await Axios.post(`/institutions/${id}`, data)).data.data
     }
+
+    static async delete(id: string) {
+        return (await Axios.delete(`/institutions/${id}`)).data.data
+    }
 }
 
 export { InstitutionService }
