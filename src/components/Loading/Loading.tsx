@@ -1,11 +1,11 @@
-const LoadingComponent = () => {
+const LoadingComponent = ({ fullHeight = false, fullWidth = false }) => {
     return <>
         <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
-            width: '100vw',
+            height: fullHeight && '100vh',
+            width: fullWidth && '100vw',
             position: 'relative',
             flexDirection: 'column'
         }}>

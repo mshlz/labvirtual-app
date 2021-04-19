@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { LoadingComponent } from "../../components/Loading/Loading"
 import { Button } from "../../components/UI/Button"
 import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
 import { UserService } from "../../services/UserService"
@@ -277,7 +278,7 @@ const ProfilePage = () => {
                         </table>
                     </div>
                 </div>
-            </div></> : <div></div>}
+            </div></> : <LoadingComponent />}
     </AppLeftNavigation>
 }
 

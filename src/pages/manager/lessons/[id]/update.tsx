@@ -12,7 +12,7 @@ import { LessonService } from "../../../../services/LessonService"
 
 
 const UpdateLessonPage = () => {
-    const [resource, setResource] = useState({})
+    const [resource, setResource] = useState(null)
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -26,14 +26,19 @@ const UpdateLessonPage = () => {
         const id = router.query.id as string
         if (!id) return
         const resource = await LessonService.get(id)
-        setResource(resource)
+        setTimeout(() => {
+            setResource(resource)
+            if (!resource || !resource.id) {
+                toast('Conteúdo não encontrado!', { type: 'error' })
+                return setTimeout(() => router.push('/manager/lessons'), 4000)
+            }
 
-        if (!resource || !resource.id) {
-            toast('Conteúdo não encontrado!', { type: 'error' })
-            return setTimeout(() => router.push('/manager/lessons'), 4000)
-        }
+            formRef.current.setData(resource)
 
-        formRef.current.setData(resource)
+        }, 1000000)
+
+
+
     }
 
     const handleSubmit = async (data) => {
