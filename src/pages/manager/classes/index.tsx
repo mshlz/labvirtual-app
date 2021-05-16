@@ -49,7 +49,7 @@ const ClassListPage = () => {
                             </thead>
                             <tbody>
                                 {classes.map(e =>
-                                    <tr className="tr-shadow">
+                                    <tr key={e.id} className="tr-shadow">
                                         <td>{e.id?.slice(-5)}</td>
                                         <td>{e.name}</td>
                                         <td>{e.discipline?.name}</td>
