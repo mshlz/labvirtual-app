@@ -14,8 +14,8 @@ import { SubjectService } from "../../../services/SubjectService"
 const CreateLessonPage = () => {
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [disciplines, setDisciplines] = useState([])
-    const [subjects, setSubjects] = useState([])
+    const [disciplines, setDisciplines] = useState(null)
+    const [subjects, setSubjects] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
@@ -85,26 +85,26 @@ const CreateLessonPage = () => {
                                         <Input label="Título do conteúdo:" name="name" />
                                     </div>
                                     <div className="col-md-12">
-                                        <Select
+                                        {disciplines && <Select
                                             label="Disciplina:"
                                             name="discipline"
                                             onChange={e => loadSubjects(e?.value)}
                                             options={disciplines.map(e => ({ label: e.name, value: e.id }))}
-                                        />
+                                        />}
                                     </div>
                                     <div className="col-md-12">
-                                        <Select
+                                        {subjects && <Select
                                             label="Assunto:"
                                             name="subject"
                                             clear={triggerClearSelect}
                                             options={subjects?.map(e => ({ label: e.name, value: e.id }))}
-                                        />
+                                        />}
                                     </div>
 
                                     <div className="col-md-12">
                                         <Button color="success" block isLoading={isLoading}>
                                             Salvar
-                                            </Button>
+                                        </Button>
                                     </div>
                                 </Form>
                             </div>

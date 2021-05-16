@@ -19,7 +19,7 @@ const UpdateClassPage = () => {
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
-    const [disciplines, setDisciplines] = useState([])
+    const [disciplines, setDisciplines] = useState(null)
 
     useEffect(() => {
         loadResource()
@@ -94,7 +94,7 @@ const UpdateClassPage = () => {
                                             <Input label="Nome da turma:" name="name" />
                                         </div>
                                         <div className="col-md-12">
-                                            <Select label="Disciplina:" name="discipline" options={disciplines.map(e => ({ label: e.name, value: e.id }))} />
+                                            {disciplines && <Select label="Disciplina:" name="discipline" options={disciplines.map(e => ({ label: e.name, value: e.id }))} />}
                                         </div>
 
                                         <div className="col-md-12">

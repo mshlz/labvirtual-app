@@ -13,7 +13,7 @@ import { DisciplineService } from "../../../services/DisciplineService"
 const CreateClassPage = () => {
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [disciplines, setDisciplines] = useState([])
+    const [disciplines, setDisciplines] = useState(null)
 
     useEffect(() => {
         loadDisciplines()
@@ -71,7 +71,7 @@ const CreateClassPage = () => {
                                         <Input label="Nome da turma:" name="name" />
                                     </div>
                                     <div className="col-md-12">
-                                        <Select label="Disciplina:" name="discipline" options={disciplines.map(e => ({ label: e.name, value: e.id }))} />
+                                        {disciplines && <Select label="Disciplina:" name="discipline" options={disciplines.map(e => ({ label: e.name, value: e.id }))} />}
                                     </div>
 
                                     <div className="col-md-12">
