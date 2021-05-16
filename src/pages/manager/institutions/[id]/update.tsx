@@ -3,19 +3,15 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
+import { LoadingWrapper } from "../../../../components/Loading/Loading"
 import { Button } from "../../../../components/UI/Button"
 import { Input } from "../../../../components/UI/Input"
 import { AppLeftNavigation } from "../../../../layouts/AppLeftNavigation"
 import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
 import { InstitutionService } from "../../../../services/InstitutionService"
 
-interface Institution {
-    id: string
-    name: string
-}
-
 const UpdateInstitutionPage = () => {
-    const [institution, setInstitution] = useState({} as Institution)
+    const [institution, setInstitution] = useState(null)
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -58,7 +54,7 @@ const UpdateInstitutionPage = () => {
     }
 
     return <AppLeftNavigation>
-        {institution ? <>
+        <LoadingWrapper isLoading={!institution}>
             <div className="row m-b-20">
                 <div className="col-md-12">
                     <div className="title-wrap">
@@ -100,7 +96,8 @@ const UpdateInstitutionPage = () => {
                         </div>
                     </div>
                 </div>
-            </div> </> : <></>}
+            </div>
+        </LoadingWrapper>
     </AppLeftNavigation >
 }
 

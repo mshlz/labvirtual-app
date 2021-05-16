@@ -13,7 +13,7 @@ interface Props extends SelectProps<OptionTypeBase> {
 
 export default function Select({ name, label, clear, options, ...rest }: Props) {
     const selectRef = useRef(null);
-    const { fieldName, defaultValue, registerField, error } = useField(name);
+    const { fieldName, registerField, error } = useField(name);
 
     useEffect(() => {
         registerField({
@@ -31,6 +31,10 @@ export default function Select({ name, label, clear, options, ...rest }: Props) 
                     return '';
                 }
                 return ref.state.value.value;
+            },
+            setValue: (ref, value) => {
+                if (value === undefined) value = ''
+                selectRef.current.select.setValue(options.find(option => option.value == value))
             }
         });
     }, [fieldName, registerField, rest.isMulti]);
@@ -46,7 +50,6 @@ export default function Select({ name, label, clear, options, ...rest }: Props) 
             <div className="form-group">
                 {label && <label htmlFor="">{label}</label>}
                 <ReactSelect
-                    defaultValue={defaultValue && options.find(option => option.value === defaultValue)}
                     ref={selectRef}
                     classNamePrefix="react-select"
                     styles={customStyles}

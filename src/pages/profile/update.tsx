@@ -3,19 +3,15 @@ import { Form } from "@unform/web"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
+import { LoadingWrapper } from "../../components/Loading/Loading"
 import { Button } from "../../components/UI/Button"
 import { Input } from "../../components/UI/Input"
 import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
 import { ValidateForm, Yup } from "../../plugins/validation/FormValidator"
 import { UserService } from "../../services/UserService"
 
-interface UserProfile {
-    name: string
-    email: string
-}
-
 const UpdateProfilePage = () => {
-    const [user, setUser] = useState({} as UserProfile)
+    const [user, setUser] = useState(null)
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -49,7 +45,7 @@ const UpdateProfilePage = () => {
     }
 
     return <AppLeftNavigation>
-        {user ? <>
+        <LoadingWrapper isLoading={!user}>
             <div className="row m-b-20">
                 <div className="col-md-12">
                     <div className="title-wrap">
@@ -138,7 +134,8 @@ const UpdateProfilePage = () => {
                         </div>
                     </div>
                 </div>
-            </div> </> : <></>}
+            </div>
+        </LoadingWrapper>
     </AppLeftNavigation >
 }
 

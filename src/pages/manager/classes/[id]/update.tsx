@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
+import { LoadingWrapper } from "../../../../components/Loading/Loading"
 import { Button } from "../../../../components/UI/Button"
 import { Input } from "../../../../components/UI/Input"
 import Select from "../../../../components/UI/Select"
@@ -13,7 +14,7 @@ import { DisciplineService } from "../../../../services/DisciplineService"
 
 
 const UpdateClassPage = () => {
-    const [classe, setClass] = useState({})
+    const [classe, setClass] = useState(null)
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -65,7 +66,7 @@ const UpdateClassPage = () => {
     }
 
     return <AppLeftNavigation>
-        {classe ? <>
+        <LoadingWrapper isLoading={!classe}>
             <div className="row m-b-20">
                 <div className="col-md-12">
                     <div className="title-wrap">
@@ -107,7 +108,8 @@ const UpdateClassPage = () => {
                         </div>
                     </div>
                 </div>
-            </div> </> : <></>}
+            </div>
+        </LoadingWrapper>
     </AppLeftNavigation >
 }
 

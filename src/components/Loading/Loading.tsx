@@ -20,4 +20,13 @@ const LoadingComponent = ({ fullHeight = false, fullWidth = false }) => {
     </>
 }
 
-export { LoadingComponent }
+const LoadingWrapper = ({ children, isLoading }) => {
+    return  <>
+    { isLoading && <LoadingComponent /> }
+    <div className={isLoading && 'd-none'}>
+        {children}
+    </div>
+    </>
+}
+
+export { LoadingComponent, LoadingWrapper }
