@@ -3,13 +3,22 @@ import { useField } from '@unform/core';
 
 import SunEditor from 'suneditor-react'
 import 'suneditor/dist/css/suneditor.min.css'
+import SetOptions from 'suneditor-react/types/SetOptions';
 
 interface Props {
     name: string
     label?: string
+    buttons?: SetOptions['buttonList']
 }
 
-export default function RichTextEditor({ name, label, ...rest }: Props) {
+const defaultButtons = [
+    ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+    ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+    ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+]
+
+export default function RichTextEditor({ name, label, buttons = defaultButtons , ...rest }: Props) {
     const editorRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
 
@@ -37,12 +46,7 @@ export default function RichTextEditor({ name, label, ...rest }: Props) {
                     name={name}
                     defaultValue={defaultValue}
                     setOptions={{
-                        buttonList: [
-                            ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
-                            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-                            ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
-                        ]
+                        buttonList: buttons
                     }}
                     {...rest}
                 />

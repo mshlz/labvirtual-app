@@ -10,7 +10,8 @@ class LabAppDocument extends Document {
                     <link href="/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all" />
                     <link href="/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all" />
 
-                    <link href="/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all" />
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+                    {/* <link href="/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all" /> */}
 
                     <link href="/vendor/animsition/animsition.min.css" rel="stylesheet" media="all" />
                     {/* <link href="/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all" /> */}

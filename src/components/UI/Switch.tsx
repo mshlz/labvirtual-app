@@ -1,16 +1,17 @@
 import { useField } from '@unform/core'
 import React, { PropsWithChildren, useEffect, useRef } from 'react'
 
-interface CheckboxProps {
+interface SwitchProps {
     name: string
     label: string
     [key: string]: string
 }
 
-const Checkbox = (props: PropsWithChildren<CheckboxProps>) => {
+const Switch = (props: PropsWithChildren<SwitchProps>) => {
     const { name, label, children, ...rest } = props
     const inputRef = useRef()
     const { fieldName, defaultValue, registerField } = useField(name)
+    const uid = Math.trunc(Math.random() * 100000).toString(36)  + Math.trunc(Math.random() * 100000).toString(36)
 
     useEffect(() => {
         registerField({
@@ -30,18 +31,18 @@ const Checkbox = (props: PropsWithChildren<CheckboxProps>) => {
 
     return (
         <>
-            <label>
+            <div className="custom-control custom-switch">
                 <input
-                    name={name}
                     ref={inputRef}
                     type="checkbox"
+                    className="custom-control-input"
+                    id={`switch-${uid}`}
                     {...rest}
                 />
-                {label}
-                {children}
-            </label>
+                {label && <label className="custom-control-label" htmlFor={`switch-${uid}`}>{label}</label>}
+            </div>
         </>
     )
 }
 
-export { Checkbox }
+export { Switch }

@@ -188,6 +188,9 @@ const Sidebar = (props) => {
                   <Link href="/manager/lessons">Controle de Conteúdo Teórico</Link>
                 </li>
                 <li className="">
+                  <Link href="/manager/quiz">Controle de Questionários</Link>
+                </li>
+                <li className="">
                   <Link href="/manager/classes">Controle de Turmas</Link>
                 </li>
                 {/* <li>
