@@ -1,9 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { useField } from "@unform/core";
 
-const Radio = ({ name, options }) => {
+interface RadioOptionItem {
+  label: string
+  value: any
+}
+
+interface RadioProps {
+  name: string
+  options: RadioOptionItem[]
+  onValueChange?: (value: string) => void
+}
+
+const Radio = ({ name, options, onValueChange }: RadioProps) => {
   const inputRefs = useRef([]);
-  const { fieldName, registerField, defaultValue } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -28,8 +39,8 @@ const Radio = ({ name, options }) => {
   return (
     <div>
       {options.map((option, index) => (
-        <div className="form-check">
-          <label key={option.value} className="form-check-label">
+        <div key={option.value} className="form-check">
+          <label className="form-check-label">
             <input
               ref={elRef => (inputRefs.current[index] = elRef)}
               className="form-check-input"
@@ -37,11 +48,13 @@ const Radio = ({ name, options }) => {
               name={fieldName}
               value={option.value}
               defaultChecked={defaultValue === option.value}
+              onChange={e => onValueChange(option.value)}
             />
             {option.label}
           </label>
         </div>
       ))}
+      {error && <span style={{ fontFamily: 'sans-serif', fontSize: '.9rem', color: '#dc3545' }}>{error}</span>}
     </div>
   );
 }
