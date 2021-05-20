@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Router from 'next/router'
+import { toast } from 'react-toastify'
 import { BASE_URL } from '../../config/env'
 import { LocalStorage } from '../../utils/LocalStorage'
 
@@ -17,6 +18,9 @@ Axios.interceptors.response.use(res => res, error => {
     if (error.response.status == 401 && error.response.data.message.includes('token')) {
         LocalStorage.removeAll(['app-token', 'app-user'])
         Router.push('/auth')
+    }
+    if (error.response.data.message.includes('permission')) {
+        toast("Erro: Você não tem permissão para acessar esse recurso", {type: 'error'});
     }
     return Promise.reject(error)
 })
