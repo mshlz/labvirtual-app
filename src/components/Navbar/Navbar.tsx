@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-import { useScript } from "../../utils/useScript"
 import { AccountBox } from "./components/AccountBox"
 import { NotificationBox } from "./components/NotificationBox"
 import { SearchBox } from "./components/SearchBox"
@@ -15,7 +13,7 @@ const Navbar = (props) => {
             <SearchBox />
 
             <div className="header-button">
-              <NotificationBox />
+              {/* <NotificationBox /> */}
               <AccountBox />
             </div>
 

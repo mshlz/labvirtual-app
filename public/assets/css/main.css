@@ -9475,3 +9475,9 @@ ul.responses li.incorrect p span {
 
 /* //Glossario Celular */
 /* ----- //Components ----- */
+
+
+/* SUN EDITOR OVERRIDE */
+.sun-editor .se-dialog .se-dialog-inner .se-dialog-content {
+  margin-top: 6rem!important;
+}

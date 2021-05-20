@@ -114,6 +114,8 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </div>
+            <hr />
+            <h1 className="text-muted mb-3">Não implementado ainda</h1>
             <div className="row">
                 <div className="col-md-3">
                     <div className="card">
