@@ -50,7 +50,7 @@ export default function RichTextEditor({ name, label, buttons = defaultButtons, 
                     defaultValue={defaultValue}
                     setOptions={{
                         buttonList: buttons,
-                        imageUploadUrl: `${BASE_URL}/upload`,
+                        imageUploadUrl: `${BASE_URL}upload`,
                         imageUploadHeader: {
                             Authorization: LocalStorage.get("app-token")
                         },

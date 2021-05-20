@@ -9481,3 +9481,9 @@ ul.responses li.incorrect p span {
 .sun-editor .se-dialog .se-dialog-inner .se-dialog-content {
   margin-top: 6rem!important;
 }
+
+@media (min-width: 992px) {
+  .sun-editor .se-toolbar.se-toolbar-sticky {
+    top: 77px!important;
+  }
+}
