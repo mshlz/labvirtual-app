@@ -1,14 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
 import { useField } from '@unform/core';
-
-import SunEditor from 'suneditor-react'
-import 'suneditor/dist/css/suneditor.min.css'
+import React, { useEffect, useRef } from 'react';
+import SunEditor from 'suneditor-react';
 import SetOptions from 'suneditor-react/types/SetOptions';
+import 'suneditor/dist/css/suneditor.min.css';
+import { BASE_URL } from '../../config/env';
+import { LocalStorage } from '../../utils/LocalStorage';
+
 
 interface Props {
     name: string
     label?: string
-    buttons?: SetOptions['buttonList']
+    buttons?: SetOptions['buttonList'],
+    onSave?: (contents: string) => void
 }
 
 const defaultButtons = [
@@ -18,7 +21,7 @@ const defaultButtons = [
     ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
 ]
 
-export default function RichTextEditor({ name, label, buttons = defaultButtons , ...rest }: Props) {
+export default function RichTextEditor({ name, label, buttons = defaultButtons, onSave, ...rest }: Props) {
     const editorRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
 
@@ -46,7 +49,12 @@ export default function RichTextEditor({ name, label, buttons = defaultButtons ,
                     name={name}
                     defaultValue={defaultValue}
                     setOptions={{
-                        buttonList: buttons
+                        buttonList: buttons,
+                        imageUploadUrl: `${BASE_URL}/upload`,
+                        imageUploadHeader: {
+                            Authorization: LocalStorage.get("app-token")
+                        },
+                        callBackSave: onSave
                     }}
                     {...rest}
                 />

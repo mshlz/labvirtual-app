@@ -69,6 +69,7 @@ const UpdateLessonPage = () => {
                         <h2 className="title-5 text-center">
                             <i className="fa fa-edit mr-2"></i> Editar conteúdo
                     </h2>
+                        <Button color="light" onClick={() => window.open(router.route.replace('[id]/update', `${router.query.id}/preview`), '_blank')}>Visualizar ↗</Button>
                         <Button color="light" onClick={() => router.back()}><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
 
                     </div>
@@ -89,7 +90,7 @@ const UpdateLessonPage = () => {
                                             <Input label="Título do conteúdo:" name="name" />
                                         </div>
                                         <div className="col-md-12">
-                                            <RichTextEditor name="content" label="Conteúdo:" />
+                                            <RichTextEditor name="content" label="Conteúdo:" onSave={() => formRef.current.submitForm()} />
                                         </div>
 
                                         <div className="col-md-12">

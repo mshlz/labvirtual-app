@@ -12,7 +12,7 @@ const QuizListPage = () => {
     }, [])
 
     const loadQuizzes = async () => {
-        const _quizzes = await QuizService.list()
+        const _quizzes = []// await QuizService.list()
         setQuizzes(_quizzes)
     }
 

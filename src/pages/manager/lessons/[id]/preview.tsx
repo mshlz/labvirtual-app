@@ -42,7 +42,7 @@ const PreviewLessonPage = () => {
                             {/* <i className="fa fa-edit mr-2"></i> Editar conteúdo */}
                             <span className="badge badge-light mr-2"><small>PRÉVIA</small></span>{resource.name ?? 'Sem título'}
                         </h2>
-                        <Button color="light" onClick={() => router.back()}><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
+                        <Button color="light" onClick={() => window.close()}><i className="fa fa-times mr-2"></i>Fechar</Button>
 
                     </div>
                 </div>
@@ -67,7 +67,7 @@ const PreviewLessonPage = () => {
             </div>
 
             {/* Informações Adicionais */}
-            <div className="row">
+            <div className="row d-none">
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
