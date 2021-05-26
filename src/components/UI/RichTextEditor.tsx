@@ -4,8 +4,8 @@ import SunEditor from 'suneditor-react';
 import SetOptions from 'suneditor-react/types/SetOptions';
 import 'suneditor/dist/css/suneditor.min.css';
 import { BASE_URL } from '../../config/env';
+import { GlossaryEntryPlugin } from '../../plugins/suneditor/glossary-dialog';
 import { LocalStorage } from '../../utils/LocalStorage';
-
 
 interface Props {
     name: string
@@ -18,7 +18,7 @@ const defaultButtons = [
     ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
     ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-    ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+    ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'glossaryEntry']
 ]
 
 export default function RichTextEditor({ name, label, buttons = defaultButtons, onSave, ...rest }: Props) {
@@ -54,7 +54,8 @@ export default function RichTextEditor({ name, label, buttons = defaultButtons, 
                         imageUploadHeader: {
                             Authorization: LocalStorage.get("app-token")
                         },
-                        callBackSave: onSave
+                        callBackSave: onSave,
+                        customPlugins: [GlossaryEntryPlugin]                 
                     }}
                     {...rest}
                 />
