@@ -189,6 +189,9 @@ const Sidebar = (props) => {
                 </li>                
                 <li className="">
                   <Link href="/manager/glossary">Controle de Glossário</Link>
+                </li>                
+                <li className="">
+                  <Link href="/manager/questions">Controle de Questões</Link>
                 </li>
                 <li className="">
                   <Link href="/manager/quiz">Controle de Questionários</Link>

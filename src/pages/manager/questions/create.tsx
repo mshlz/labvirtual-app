@@ -39,11 +39,11 @@ const CreateQuizPage = () => {
         console.log("DATA", data)
         const isValid = await ValidateForm({
             name: Yup.string().required().min(3),
-            type: Yup.mixed().required(),
-            discipline: Yup.string().required().uuid('este campo necessita ser preenchido'),
-            subject: Yup.string().required().uuid('este campo necessita ser preenchido'),
+            type: Yup.string().trim().oneOf(['dissertative', 'single-choice', 'multiple-choice']),
+            // discipline: Yup.string().required().uuid('este campo necessita ser preenchido'),
+            // subject: Yup.string().required().uuid('este campo necessita ser preenchido'),
         }, data, formRef)
-        return
+        // return
         if (isValid) {
             try {
                 setIsLoading(true)

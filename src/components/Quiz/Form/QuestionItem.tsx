@@ -1,25 +1,32 @@
 import { Scope } from '@unform/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../../UI/Button'
 import { Input } from '../../UI/Input'
 import { Radio } from '../../UI/Radio'
 import RichTextEditor from '../../UI/RichTextEditor'
 import { Switch } from '../../UI/Switch'
 
-export const QuestionItem = () => {
+export const QuestionItem = ({ alternatives, reload, edit = false }: { [k: string]: any }) => {
     const [type, setType] = useState(null)
-    const [alternatives, setAlternatives] = useState([] as Array<any>)
+    const [m_alternatives, setAlternatives] = useState([])
+
+    if (edit) {
+        useEffect(() => {
+            setAlternatives(alternatives || [])
+            if (typeof reload == 'function') setTimeout(() => reload(), 100)
+        }, [alternatives])
+    }
 
     const addAlternative = (event) => {
         event.preventDefault()
 
-        setAlternatives([...alternatives, { id: Date.now() }])
+        setAlternatives([...m_alternatives, { id: Date.now() }])
     }
 
     const removeAlternative = (index) => {
-        console.log(alternatives, index)
-        setAlternatives(alternatives.filter((e, i) => e.id != index))
-        console.log(alternatives)
+        console.log(m_alternatives, index)
+        setAlternatives(m_alternatives.filter((e, i) => e.id != index))
+        console.log(m_alternatives)
     }
 
     return <>
@@ -53,9 +60,9 @@ export const QuestionItem = () => {
                 <h4 className="mb-2">Alternativas</h4>
 
                 <ul className="list-group">
-                    {alternatives.length === 0 && <div className="alert alert-sm alert-secondary text-center"><i className="fa fa-info-circle mr-2"></i>Não há alternativas ainda</div>}
+                    {m_alternatives.length === 0 && <div className="alert alert-sm alert-secondary text-center"><i className="fa fa-info-circle mr-2"></i>Não há alternativas ainda</div>}
 
-                    {alternatives.map((alternative, idx) => (
+                    {m_alternatives?.map((alternative, idx) => (
                         <Scope path={`alternatives[${idx}]`}>
                             <li key={alternative.id} className="list-group-item shadow-sm">
                                 <div className="d-flex justify-content-between align-items-center mb-2">
@@ -67,11 +74,14 @@ export const QuestionItem = () => {
                                     <Button onClick={() => removeAlternative(alternative.id)} color="danger" outline size="sm" type="button" title="Remover alternativa"><i className="fa fa-times"></i></Button>
                                 </div>
 
-                                <RichTextEditor name="text" buttons={[
-                                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                                    ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align'],
-                                    ['link', 'image', 'showBlocks', 'codeView']
-                                ]} />
+                                <RichTextEditor
+                                    name="text"
+                                    buttons={[
+                                        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                                        ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align'],
+                                        ['link', 'image', 'showBlocks', 'codeView']
+                                    ]}
+                                />
                             </li>
                         </Scope>
                     ))}
