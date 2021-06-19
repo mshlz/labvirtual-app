@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect } from "react"
+import { Routes } from "./Routes"
 
 const Sidebar = (props) => {
   return (<>
@@ -24,77 +24,27 @@ const Sidebar = (props) => {
       <nav className="navbar-mobile">
         <div className="container-fluid">
           <ul className="navbar-mobile__list list-unstyled">
-            <li>
-              <Link href="/"><a><i className="fas fa-tachometer-alt"></i>Início</a></Link>
-            </li>
-            {/* <li>
-              <a href="jogos.html">
-                <i className="fas fa-gamepad"></i>Jogos</a>
-            </li>
-            <li>
-              <a href="questionarios.html">
-                <i className="fas fa-tasks"></i>Questionários</a>
-            </li>
-
-            <li>
-              <a href="conteudo-teorico.html">
-                <i className="fas fa-align-justify"></i>Conteúdo Teórico</a>
-            </li>
-            <li>
-              <a href="aulas-praticas.html">
-                <i className="fas fa-vials"></i>Aulas Práticas</a>
-            </li>
-            <li>
-              <a href="forum.html">
-                <i className="fa fa-comment"></i>Fórum</a>
-            </li> */}
-
-            {/* <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-plus"></i>Extras</a>
-              <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
-                <li className="">
-                  <a href="portifolio.html">Portfólio</a>
+          {Routes.map((e,i) => {
+              if (e.children) {
+                return <li key={'sbm-i-' + i} className="has-sub">
+                  <a className="js-arrow" href="#">
+                    <i className="fas fa-cog"></i>{e.title}</a>
+                  <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
+                    {e.children.map((child, j) => {
+                      return <li key={'sb-i-' + i + '-j-' + j} className="">
+                        <Link href={`${e.base || ''}${child.path}`}>{child.title}</Link>
+                      </li>
+                    })}
+                  </ul>
                 </li>
-                <li>
-                  <a href="trofeus.html">Troféus</a>
-
+              } else {
+                return <li key={'sbm-i-' + i} className={false ? "active" : ""}>
+                  <Link href={e.path}>
+                    <a><i className={e.icon}></i>{e.title}</a>
+                  </Link>
                 </li>
-              </ul>
-            </li> */}
-
-
-            <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-cog"></i>Configurações</a>
-              <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
-                <li className="">
-                  <a href="minhaconta.html">Minha Conta</a>
-                </li>
-                <li>
-                  <a href="alterardados.html">Alterar Dados</a>
-                </li>
-                <li>
-                  <a href="suporte.html">Suporte</a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-cog"></i>Gerenciamento</a>
-              <ul className="navbar-mobile-sub__list list-unstyled js-sub-list">
-                <li className="">
-                  <Link href="/manager/classes">Controle de Turmas</Link>
-                </li>
-                <li>
-                  <a href="controle-alunos.html">Controle de Alunos</a>
-                </li>
-
-              </ul>
-            </li>
-
+              }
+            })}
           </ul>
         </div>
       </nav>
@@ -111,101 +61,27 @@ const Sidebar = (props) => {
       <div className="menu-sidebar__content js-scrollbar1">
         <nav className="navbar-sidebar">
           <ul className="list-unstyled navbar__list">
-            <li className="active">
-              <Link href="/">
-                <a><i className="fas fa-home"></i>Início</a>
-              </Link>
-            </li>
-            {/* <li>
-              <a href="jogos.html">
-                <i className="fas fa-gamepad"></i>Jogos</a>
-            </li>
-            <li>
-              <a href="questionarios.html">
-                <i className="fas fa-tasks"></i>Questionários</a>
-            </li>
-
-            <li>
-              <a href="conteudo-teorico.html">
-                <i className="fas fa-align-justify"></i>Conteúdo Teórico</a>
-            </li>
-            <li>
-              <a href="aulas-praticas.html">
-                <i className="fas fa-vials"></i>Aulas Práticas</a>
-            </li>
-
-            <li>
-              <a href="forum.html">
-                <i className="fas fa-comment"></i>Fórum</a>
-
-            </li>
-
-            <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-plus"></i>Extras</a>
-              <ul className="list-unstyled navbar__sub-list js-sub-list">
-                <li className="">
-                  <a href="portifolio.html">Portfólio</a>
+            {Routes.map((e,i) => {
+              if (e.children) {
+                return <li key={'sb-i-' + i} className="has-sub">
+                  <a className="js-arrow" href="#">
+                    <i className="fas fa-cog"></i>{e.title}</a>
+                  <ul className="list-unstyled navbar__sub-list js-sub-list">
+                    {e.children.map((child, j) => {
+                      return <li key={'sb-i-' + i + '-j-' + j} className="">
+                        <Link href={`${e.base || ''}${child.path}`}>{child.title}</Link>
+                      </li>
+                    })}
+                  </ul>
                 </li>
-                <li>
-                  <a href="trofeus.html">Troféus</a>
-
+              } else {
+                return <li key={'sb-i-' + i} className={false ? "active" : ""}>
+                  <Link href={e.path}>
+                    <a><i className={e.icon}></i>{e.title}</a>
+                  </Link>
                 </li>
-              </ul>
-            </li> */}
-
-            <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-cog"></i>Configurações</a>
-              <ul className="list-unstyled navbar__sub-list js-sub-list">
-                <li className="">
-                  <Link href="/profile">Minha Conta</Link>
-                </li>
-                <li>
-                  <a href="#">Alterar Dados</a>
-                </li>
-                <li>
-                  <a href="#">Suporte</a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li className="has-sub">
-              <a className="js-arrow" href="#">
-                <i className="fas fa-cog"></i>Gerenciamento</a>
-              <ul className="list-unstyled navbar__sub-list js-sub-list">
-                <li>
-                  <Link href="/manager/institutions">Controle de Instituições</Link>
-                </li>
-                <li>
-                  <Link href="/manager/disciplines">Controle de Disciplinas</Link>
-                </li>
-                <li>
-                  <Link href="/manager/subjects">Controle de Assuntos</Link>
-                </li>
-                <li className="">
-                  <Link href="/manager/lessons">Controle de Conteúdo Teórico</Link>
-                </li>                
-                <li className="">
-                  <Link href="/manager/glossary">Controle de Glossário</Link>
-                </li>                
-                <li className="">
-                  <Link href="/manager/questions">Controle de Questões</Link>
-                </li>
-                <li className="">
-                  <Link href="/manager/quiz">Controle de Questionários</Link>
-                </li>
-                <li className="">
-                  <Link href="/manager/classes">Controle de Turmas</Link>
-                </li>
-                {/* <li>
-                  <a href="controle-alunos.html">Controle de Alunos</a>
-                </li> */}
-
-              </ul>
-            </li>
-
+              }
+            })}
           </ul>
         </nav>
       </div>
