@@ -4,12 +4,15 @@ import React, { useEffect, useRef } from 'react'
 interface InputProps {
     name: string
     label?: string
+    size?: 'sm' | 'lg'
     autocomplete?: boolean
+    inline?: boolean
+    cssClasses?: string
     [key: string]: any
 }
 
 const Input = (props: InputProps) => {
-    const { name, label, autocomplete, ...rest } = props
+    const { name, label, autocomplete, inline, size, cssClasses, ...rest } = props
     const inputRef = useRef()
     const { fieldName, defaultValue, registerField, error, clearError } = useField(name)
 
@@ -32,7 +35,7 @@ const Input = (props: InputProps) => {
 
     return (
         <>
-            <div className="form-group">
+            <div className={"form-group ".concat(inline ? 'mb-0' : '')}>
                 {label && <label htmlFor={name}>{label}</label>}
                 <input
                     id={name}
@@ -40,7 +43,7 @@ const Input = (props: InputProps) => {
                     ref={inputRef}
                     // type="email"
                     // placeholder="Email"
-                    className={"form-control" + (error ? ' is-invalid' : '')}
+                    className={`form-control ${error ? 'is-invalid' : ''} ${size ? 'form-control-' + size : ''} ${cssClasses}`}
                     onChange={clearError}
                     autoComplete={autocomplete ? 'on' : 'off'}
                     {...rest}
