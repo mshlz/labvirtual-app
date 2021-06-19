@@ -19,7 +19,7 @@ const AppLeftNavigation = ({ children }) => {
         {/* <!-- MAIN CONTENT--> */}
         <div className="main-content">
           <div className="section__content section__content--p30">
-            <div className="container-fluid">
+            <div className="container-fluid p-b-10">
 
               {children}
 

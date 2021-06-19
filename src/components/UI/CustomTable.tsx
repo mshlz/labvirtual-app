@@ -29,13 +29,13 @@ type CustomTableProps = PropsWithChildren<{
         title?: string
         action: () => void
     }
+    isLoading?: boolean
     actions?: (row) => ReactNode
     onSearch?: (query: string) => Promise<Entry[]>
     onPageChange?: (newPage: number) => void
 }>
 
-export const CustomTable = ({ title, columns, data, meta, createButton, actions, onSearch, onPageChange }: CustomTableProps) => {
-    const [mock, setMock] = useState([])
+export const CustomTable = ({ title, columns, data, meta, createButton, isLoading, actions, onSearch, onPageChange }: CustomTableProps) => {
 
     const [pages, setPages] = useState([])
     const [hasPrevious, setHasPrevious] = useState(true)
@@ -127,7 +127,7 @@ export const CustomTable = ({ title, columns, data, meta, createButton, actions,
                 </div>
             </div>
 
-            <div className="table-responsive" style={{ minHeight: '300px' }}>
+            <div className="table-responsive" style={{ minHeight: '300px', position: 'relative' }}>
                 <table className="table table-data2">
                     <thead className="border-bottom" style={{ backgroundColor: '#eee' }}>
                         <tr>
@@ -180,6 +180,24 @@ export const CustomTable = ({ title, columns, data, meta, createButton, actions,
                 {!data || !data.length &&
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '25px' }}>
                         <i className="fa fa-exclamation-triangle fa-2x mb-2"></i><span>Sem dados!</span>
+                    </div>
+                }
+                {isLoading &&
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        paddingTop: '25px',
+                        position: 'absolute',
+                        top: '0',
+                        left: '0',
+                        bottom: '0',
+                        right: '0',
+                        userSelect: 'none',
+                        backgroundColor: '#00000096',
+                        color: '#BEBEBE'
+                    }}>
+                        <i className="fa fa-refresh fa-2x fa-spin mb-2"></i><span>Carregando</span>
                     </div>
                 }
             </div>
