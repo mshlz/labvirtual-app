@@ -13,6 +13,10 @@ class GlossaryService {
         return (await Axios.get(`/glossary`, { params: { page } })).data
     }
 
+    static async simpleSearch(params: { query?: string, page?: number, limit?: number }) {
+        return (await Axios.get(`/glossary/search`, { params })).data.data
+    }
+
     static async update(id: string, data) {
         return (await Axios.post(`/glossary/${id}`, data)).data.data
     }
