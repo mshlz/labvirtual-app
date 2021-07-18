@@ -1,85 +1,58 @@
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import router from "next/router"
+import React, { useEffect, useState } from "react"
 import { LoadingComponent } from "../../../components/Loading/Loading"
+import { CustomTable } from "../../../components/UI/CustomTable"
 import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
 import { ClassService } from "../../../services/ClassService"
 
 const ClassListPage = () => {
-    const [classes, setClasses] = useState(null)
+    const [data, setData] = useState(null)
+    const [isLoading, setLoading] = useState(false)
+    const [page, setPage] = useState(1)
+    const [total_count, setTotal] = useState(0)
 
     useEffect(() => {
-        loadClasses()
-    }, [])
+        setLoading(true)
+        loadResources()
+        console.log('changed ', page)
+    }, [page])
 
-    const loadClasses = async () => {
-        const classes = await ClassService.list()
-        setClasses(classes)
+    const loadResources = async () => {
+        const result = await ClassService.list(page)
+        setData(result.data)
+        setTotal(result.meta.total)
+        setLoading(false)
     }
 
     return <AppLeftNavigation>
-        {classes ? <>
-            <div className="row">
-                <div className="col-md-12">
-                    {/* <!-- DATA TABLE --> */}
-
-                    <div className="table-data__tool">
-                        <div className="table-data__tool-left">
-                            <h3 className="title-5 m-b-35" style={{ textTransform: 'inherit' }}>Turmas</h3>
-                        </div>
-                        <div className="table-data__tool-right">
-                            <Link href="/manager/classes/create"><button className="au-btn au-btn-icon au-btn--green au-btn--small">
-                                Nova Turma</button></Link>
-
-                        </div>
-                    </div>
-                    <div className="table-responsive table-responsive-data2">
-                        {(!classes || classes.length == 0) && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <i className="fa fa-exclamation-triangle fa-2x mb-2"></i><span>Sem dados!</span>
-                        </div>}
-
-                        {classes.length > 0 && <table className="table table-data2">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nome</th>
-                                    <th>Disciplina</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {classes.map(e =>
-                                    <tr key={e.id} className="tr-shadow">
-                                        <td>{e.id?.slice(-5)}</td>
-                                        <td>{e.name}</td>
-                                        <td>{e.discipline?.name}</td>
-                                        <td>
-                                            <span className="badge badge-success">ATIVO</span>
-                                        </td>
-                                        <td>
-                                            <div className="table-data-feature">
-                                                <Link href={`/manager/classes/${e.id}/update`}>
-                                                    <button className="item" data-toggle="tooltip" data-placement="top" title="Detalhes">
-                                                        <i className="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                </Link>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>}
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="copyright">
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {data ? <>
+            <CustomTable
+                title="Turmas"
+                createButton={{ action: () => router.push("/manager/classes/create") }}
+                columns={[
+                    { key: 'id', label: 'ID' },
+                    { key: 'name', label: 'Nome' },
+                    { key: 'discipline.name', label: 'Disciplina' },
+                ]}
+                meta={{
+                    page: page,
+                    per_page: 10,
+                    total_count: total_count
+                }}
+                onPageChange={setPage}
+                data={data}
+                isLoading={isLoading}
+                actions={row =>
+                    <>
+                        <Link href={`/manager/classes/${row.id}/update`}>
+                            <button className="item" data-toggle="tooltip" data-placement="top" title="Editar">
+                                <i className="zmdi zmdi-edit"></i>
+                            </button>
+                        </Link>
+                    </>
+                }
+            />
         </> : <LoadingComponent />}
     </AppLeftNavigation>
 }

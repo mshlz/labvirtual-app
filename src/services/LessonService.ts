@@ -10,7 +10,7 @@ class LessonService {
     }
 
     static async list(page?: number) {
-        return (await Axios.get(`/lessons`)).data.data
+        return (await Axios.get(`/lessons`, { params: { page } })).data
     }
 
     static async update(id: string, data) {

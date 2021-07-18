@@ -1,10 +1,12 @@
 import { Form } from "@unform/web"
 import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
+import { AsyncSelect } from "../../../components/UI/AsyncSelect"
 import { Button } from "../../../components/UI/Button"
 import { Input } from "../../../components/UI/Input"
 import Select from "../../../components/UI/Select"
+// import AsyncSelect from "../../../components/UI/Select"
 import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
 import { ValidateForm, Yup } from "../../../plugins/validation/FormValidator"
 import { DisciplineService } from "../../../services/DisciplineService"
@@ -20,9 +22,10 @@ const CreateSubjectPage = () => {
         loadDisciplines()
     }, [])
 
-    const loadDisciplines = async () => {
+    const loadDisciplines = async (query?: string) => {
+        console.log(query)
         const disciplines = await DisciplineService.list()
-        setDisciplines(disciplines)
+        setDisciplines(disciplines.data)
     }
 
     const handleSubmit = async (data) => {
@@ -72,6 +75,7 @@ const CreateSubjectPage = () => {
                                     </div>
                                     <div className="col-md-12">
                                         <Select label="Disciplina:" name="discipline" options={disciplines.map(e => ({ label: e.name, value: e.id }))} />
+                                        {/* <AsyncSelect label="Disciplina:" name="discipline" executeSearch={searchDiscipline}/> */}
                                     </div>
 
                                     <div className="col-md-12">

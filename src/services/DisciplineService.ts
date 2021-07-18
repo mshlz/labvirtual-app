@@ -10,7 +10,7 @@ class DisciplineService {
     }
 
     static async list(page?: number) {
-        return (await Axios.get(`/disciplines`)).data.data
+        return (await Axios.get(`/disciplines`, { params: { page } })).data
     }
 
     static async update(id: string, data) {

@@ -24,7 +24,7 @@ const CreateLessonPage = () => {
 
     const loadDependencies = async () => {
         const disciplines = await DisciplineService.list()
-        setDisciplines(disciplines)
+        setDisciplines(disciplines.data)
     }
 
     const loadSubjects = async (discipline_id: string) => {

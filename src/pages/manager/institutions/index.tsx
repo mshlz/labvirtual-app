@@ -7,7 +7,6 @@ import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
 import { InstitutionService } from "../../../services/InstitutionService"
 
 const InstitutionListPage = () => {
-    const [institutions, setInstitutions] = useState(null)
     const [data, setData] = useState(null)
     const [isLoading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
@@ -15,15 +14,11 @@ const InstitutionListPage = () => {
 
     useEffect(() => {
         setLoading(true)
-        loadInstitutions()
+        loadResources()
         console.log('changed ', page)
     }, [page])
 
-    const loadInstitutions = async () => {
-        const institutions = await InstitutionService.list()
-        setInstitutions(institutions)
-        console.log('loading ', page)
-
+    const loadResources = async () => {
         const result = await InstitutionService.list(page)
         setData(result.data)
         setTotal(result.meta.total)
@@ -31,7 +26,7 @@ const InstitutionListPage = () => {
     }
 
     return <AppLeftNavigation>
-        {institutions ? <>
+        {data ? <>
             <CustomTable
                 title="Instituições"
                 createButton={{ action: () => router.push("/manager/institutions/create") }}

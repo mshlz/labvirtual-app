@@ -103,7 +103,7 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
     const getValue = (data, key) => {
         const path = key.split('.')
         let _data = Object.assign({}, data)
-        path.forEach(k => _data = _data[k])
+        path.forEach(k => _data = _data && _data[k])
         return _data || ''
     }
 
@@ -169,7 +169,7 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
                         {data?.map((e, idx) => (<>
                             <tr key={`row-${idx}`} className="tr-shadow border-bottom">
                                 {columns.map((column, i) => {
-                                    return <td key={`${column.key}-${idx}-${i}`}>{getValue(e, column.key) || 'anything'}</td>
+                                    return <td key={`${column.key}-${idx}-${i}`}>{getValue(e, column.key) || ''}</td>
                                 })}
                                 {typeof actions == 'function'
                                     ? <td>

@@ -2,14 +2,14 @@ import { Form } from "@unform/web"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
-import { QuizCreateEditForm } from "../../../components/Quiz/FormCreateEdit"
+import { SearchQuestionBox } from "../../../components/Quiz/SearchQuestion"
 import { Button } from "../../../components/UI/Button"
 import { Input } from "../../../components/UI/Input"
 import Select from "../../../components/UI/Select"
 import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
 import { ValidateForm, Yup } from "../../../plugins/validation/FormValidator"
 import { DisciplineService } from "../../../services/DisciplineService"
-import { LessonService } from "../../../services/LessonService"
+import { QuizService } from "../../../services/QuizService"
 import { SubjectService } from "../../../services/SubjectService"
 
 const CreateQuizPage = () => {
@@ -25,7 +25,7 @@ const CreateQuizPage = () => {
 
     const loadDependencies = async () => {
         const disciplines = await DisciplineService.list()
-        setDisciplines(disciplines)
+        setDisciplines(disciplines.data)
     }
 
     const loadSubjects = async (discipline_id: string) => {
@@ -43,11 +43,11 @@ const CreateQuizPage = () => {
             discipline: Yup.string().required().uuid('este campo necessita ser preenchido'),
             subject: Yup.string().required().uuid('este campo necessita ser preenchido'),
         }, data, formRef)
-return
+        // return
         if (isValid) {
             try {
                 setIsLoading(true)
-                await LessonService.create(data)
+                await QuizService.create(data)
                 setIsLoading(false)
                 toast("Questionário criado com sucesso!", { type: 'success' })
                 setTimeout(() => {
@@ -103,11 +103,13 @@ return
                                         />}
                                     </div>
 
+
                                     <div className="col-12 mt-2">
                                         <h4>Questões</h4>
                                         <hr />
                                     </div>
-                                    <QuizCreateEditForm />                                    
+                                    <SearchQuestionBox />
+                                    {/* <QuizCreateEditForm /> */}
 
                                     <div className="col-md-12 mt-3">
                                         <Button color="success" block isLoading={isLoading}>

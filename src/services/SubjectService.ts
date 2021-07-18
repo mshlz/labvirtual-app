@@ -10,7 +10,7 @@ class SubjectService {
     }
 
     static async list(page?: number) {
-        return (await Axios.get(`/subjects`)).data.data
+        return (await Axios.get(`/subjects`, { params: { page } })).data
     }
 
     static async update(id: string, data) {

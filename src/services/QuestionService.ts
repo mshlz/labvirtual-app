@@ -10,7 +10,7 @@ class QuestionService {
     }
 
     static async list(page?: number) {
-        return (await Axios.get(`/questions`)).data.data
+        return (await Axios.get(`/questions`, { params: { page } })).data
     }
 
     static async update(id: string, data) {

@@ -27,7 +27,7 @@ const UpdateSubjectPage = () => {
 
     const loadDisciplines = async () => {
         const disciplines = await DisciplineService.list()
-        setDisciplines(disciplines)
+        setDisciplines(disciplines.data)
     }
 
     const loadResource = async () => {
