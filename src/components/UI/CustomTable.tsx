@@ -100,6 +100,13 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
         typeof onSearch == 'function' && onSearch(data.search)
     }
 
+    const getValue = (data, key) => {
+        const path = key.split('.')
+        let _data = Object.assign({}, data)
+        path.forEach(k => _data = _data[k])
+        return _data || ''
+    }
+
     return <>
         <div className="card border-0 shadow m-b-10">
             <div className="card-header p-4 align-items-center">
@@ -162,7 +169,7 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
                         {data?.map((e, idx) => (<>
                             <tr key={`row-${idx}`} className="tr-shadow border-bottom">
                                 {columns.map((column, i) => {
-                                    return <td key={`${column.key}-${idx}-${i}`}>{e[column.key] || 'anything'}</td>
+                                    return <td key={`${column.key}-${idx}-${i}`}>{getValue(e, column.key) || 'anything'}</td>
                                 })}
                                 {typeof actions == 'function'
                                     ? <td>
