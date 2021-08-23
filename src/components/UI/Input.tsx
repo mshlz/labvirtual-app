@@ -6,7 +6,7 @@ interface InputProps {
     label?: string
     size?: 'sm' | 'lg'
     autocomplete?: boolean
-    inline?: boolean
+    inline?: string | boolean
     cssClasses?: string
     [key: string]: any
 }
@@ -35,7 +35,7 @@ const Input = (props: InputProps) => {
 
     return (
         <>
-            <div className={"form-group ".concat(inline ? 'mb-0' : '')}>
+            <div className={"form-group ".concat(inline ? typeof inline == 'string' ? 'mb-0 ' + inline : 'mb-0'  : '')}>
                 {label && <label htmlFor={name}>{label}</label>}
                 <input
                     id={name}

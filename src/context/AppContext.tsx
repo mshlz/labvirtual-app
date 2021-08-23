@@ -5,7 +5,7 @@ import { LocalStorage } from "../utils/LocalStorage";
 
 interface AppContextData {
     signed: boolean
-    user: { name, type, email }
+    user: { name, type, email, avatar_url }
     login: (a?: any) => any
     logout: () => void
     isLoading: boolean

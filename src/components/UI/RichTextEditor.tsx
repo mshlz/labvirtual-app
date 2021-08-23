@@ -23,7 +23,7 @@ const defaultButtons = [
 
 export default function RichTextEditor({ name, label, buttons = defaultButtons, onSave, ...rest }: Props) {
     const editorRef = useRef(null);
-    const { fieldName, defaultValue, registerField, error } = useField(name);
+    const { fieldName, defaultValue, registerField, error, clearError } = useField(name);
 
     useEffect(() => {
         registerField({
@@ -34,6 +34,10 @@ export default function RichTextEditor({ name, label, buttons = defaultButtons, 
             },
             setValue: (ref, value) => {
                 ref.editor.setContents(value)
+            },
+            clearValue: (ref, newValue) =>{
+                clearError()
+                ref.editor.setContents('')
             }
         });
     }, [fieldName, registerField]);

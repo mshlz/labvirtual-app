@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react"
 
-const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'] as const
+const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'link'] as const
 const sizes = ['sm', 'lg'] as const
 
 interface ButtonProps {
