@@ -8,4 +8,16 @@ module.exports = {
             },
         ]
     },
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: '/h',
+    //             destination: '/home/classes'
+    //         },
+    //         {
+    //             source: '/c/:id',
+    //             destination: '/classes/:id'
+    //         },
+    //     ]
+    // }
 }
