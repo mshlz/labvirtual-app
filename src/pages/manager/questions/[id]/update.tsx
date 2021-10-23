@@ -1,23 +1,22 @@
-import { Form } from "@unform/web"
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { Button, Card, Empty, Form, Input, PageHeader, Radio, Select, Space, Switch, Tooltip, Typography } from "antd"
+import { useForm } from "antd/lib/form/Form"
 import { useRouter } from "next/router"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { LoadingWrapper } from "../../../../components/Loading/Loading"
-import { QuestionItem } from "../../../../components/Quiz/Form/QuestionItem"
-import { Button } from "../../../../components/UI/Button"
-import Select from "../../../../components/UI/Select"
-import { AppLeftNavigation } from "../../../../layouts/AppLeftNavigation"
-import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
+import { RichTextSunEditor } from "../../../../components/UI/RichTextSunEditor"
+import { AdminLayout } from "../../../../layouts/AdminLayout"
 import { DisciplineService } from "../../../../services/DisciplineService"
 import { QuestionService } from "../../../../services/QuestionService"
 import { SubjectService } from "../../../../services/SubjectService"
 
 const UpdateQuestionPage = () => {
-    const [resource, setResource] = useState(null)
-    const formRef = useRef(null)
+    const [form] = useForm()
     const [isLoading, setIsLoading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [disciplines, setDisciplines] = useState(null)
     const [subjects, setSubjects] = useState(null)
+    const [type, setType] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
@@ -29,23 +28,21 @@ const UpdateQuestionPage = () => {
     }, [])
 
     const loadResource = async () => {
+        setIsLoading(true)
         const id = router.query.id as string
         if (!id) return
         const resource = await QuestionService.get(id)
-        // setTimeout(() => {
-        setResource(resource)
-        if (!resource || !resource.id) {
+
+        if (!resource || !resource._id) {
             toast('Questão não encontrado!', { type: 'error' })
             return setTimeout(() => router.push('/manager/questions'), 4000)
         }
+        
+        await loadSubjects(resource.disciplines)
+        setType(resource.type)
+        form.setFieldsValue(resource)
 
-        setupForm()
-        // }, 1000)
-    }
-
-    const setupForm = () => {
-        if (resource)
-            formRef.current.setData(resource)
+        setIsLoading(false)
     }
 
     const loadDependencies = async () => {
@@ -55,95 +52,159 @@ const UpdateQuestionPage = () => {
 
     const loadSubjects = async (discipline_id: string) => {
         if (!discipline_id) return
-        triggerClearSelect()
-        const subjects = await SubjectService.getAllFromDiscipline(discipline_id)
+        const subjects = await SubjectService.getFromDisciplines(discipline_id)
         setSubjects(subjects)
     }
-    const triggerClearSelect = () => null
 
-    const handleSubmit = async (data) => {
-        console.log("DATA", data)
-        const isValid = await ValidateForm({
-            name: Yup.string().required().min(3),
-            type: Yup.string().trim().oneOf(['dissertative', 'single-choice', 'multiple-choice']),
-            // discipline: Yup.string().required().uuid('este campo necessita ser preenchido'),
-            // subject: Yup.string().required().uuid('este campo necessita ser preenchido'),
-        }, data, formRef)
-        // return
-        if (isValid) {
-            try {
-                setIsLoading(true)
-                await QuestionService.update(router.query.id as string, data)
-                setIsLoading(false)
-                toast("Questão atualizada com sucesso!", { type: 'success' })
-                setTimeout(() => {
-                    router.push('/manager/questions')
-                }, 2000);
-            } catch (error) {
-                setIsLoading(false)
-                alert(error.response.data.message)
-            }
+    const handleValuesChange = (changes) => {
+        if (changes.disciplines) {
+            loadSubjects(changes.disciplines)
+        }
+        else if (changes.type) {
+            setType(changes.type)
         }
     }
 
-    return <AppLeftNavigation>
-        <LoadingWrapper isLoading={!resource}>
-            <div className="row m-b-20">
-                <div className="col-md-12">
-                    <div className="title-wrap">
-                        <h2 className="title-5 text-center">
-                            <i className="fa fa-plus mr-2"></i> Nova Questão
-                    </h2>
-                        <Button color="light" onClick={() => router.back()}><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
+    const handleSubmit = async (data) => {
+        try {
+            setIsSubmitting(true)
+            await QuestionService.update(router.query.id as string, data)
+            toast("Questão atualizada com sucesso!", { type: 'success' })
+            setTimeout(() => {
+                router.push('/manager/questions')
+            }, 2000);
+        } catch (error) {
+            alert(error.response.data.message)
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
 
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12">
-                    <div className="card m-b-70">
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <Form ref={formRef} onSubmit={handleSubmit} className="row">
-                                        <div className="col-12">
-                                            <h4>Informações básicas</h4>
-                                            <hr />
-                                        </div>
-                                        <div className="col-md-12">
-                                            {disciplines && <Select
-                                                label="Disciplina:"
-                                                name="discipline"
-                                                onChange={e => loadSubjects(e?.value)}
-                                                options={disciplines.map(e => ({ label: e.name, value: e.id }))}
-                                            />}
-                                        </div>
-                                        <div className="col-md-12">
-                                            {subjects && <Select
-                                                label="Assunto:"
-                                                name="subject"
-                                                clear={triggerClearSelect}
-                                                options={subjects?.map(e => ({ label: e.name, value: e.id }))}
-                                            />}
-                                        </div>
-                                        <div className="col-md-12">
-                                            <QuestionItem alternatives={resource?.alternatives} questionType={resource?.type} reload={setupForm} edit={true}/>
-                                        </div>
+    return <AdminLayout>
+        <PageHeader
+            title="Editar questão"
+            onBack={() => router.push('/manager/questions')}
+        // breadcrumb={{ routes }}
+        // subTitle="This is a subtitle"
+        />
+        <Card title="Informações básicas" loading={isLoading}>
+            <Form name="basic" form={form} layout="vertical" onValuesChange={handleValuesChange} onFinish={handleSubmit} onFinishFailed={null}>
+                <Form.Item label="Disciplina" name="disciplines" rules={[{ required: true }]}>
+                    <Select
+                        mode="tags"
+                        showSearch
+                        placeholder="Selecione uma disciplina"
+                        optionFilterProp="children"
+                    >
+                        {disciplines?.map(v => <Select.Option value={v._id}>{v.name}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item label="Assunto" name="subjects" rules={[{ required: true }]}>
+                    <Select
+                        mode="tags"
+                        allowClear
+                        showSearch
+                        placeholder="Selecione um assunto"
+                        optionFilterProp="children"
+                    >
+                        {subjects?.map(v => <Select.Option value={v._id}>{v.name} <Typography.Text type='secondary'>- {disciplines?.find(d => d._id === v.discipline)?.name || ''}</Typography.Text></Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item name="question">
+                    {(...args) => console.log(args)}
+                    <Form.Item label="Título da questão" name="name" rules={[{ required: true }]}>
+                        <Input />
+                    </Form.Item>
 
-                                        <div className="col-md-12 mt-3">
-                                            <Button color="success" block isLoading={isLoading}>
-                                                Salvar
-                                        </Button>
-                                        </div>
-                                    </Form>
-                                </div>
-                            </div>
+                    <Form.Item label="Texto da questão (opcional)" name="text">
+                        <RichTextSunEditor buttons={[
+                            ['font', 'fontSize', 'formatBlock'],
+                            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                            ['link', 'image', 'video', 'showBlocks', 'codeView']
+                        ]} />
+                    </Form.Item>
+
+                    <Form.Item label="Tipo de alternativa" name="type" rules={[{ required: true }]}>
+                        <Radio.Group options={[
+                            { label: 'Dissertativa', value: 'DISSERTATIVE' },
+                            { label: 'Múltipla escolha', value: 'SINGLE_CHOICE' },
+                            { label: 'Múltipla escolha (multi resposta)', value: 'MULTIPLE_CHOICE' }
+                        ]} />
+                    </Form.Item>
+
+                    {type === 'dissertative'
+                        ? <h5>Questão dissertativa</h5>
+                        : <div className="form-group">
+                            <h4 className="mb-2">Alternativas</h4>
+
+                            <Form.List
+                                name="alternatives"
+                                rules={[
+                                    {
+                                        validator: async (_, alternatives) => {
+                                            if (!alternatives || alternatives.length < 2) {
+                                                return Promise.reject(new Error('Você precisa adicionar ao menos 2 alternativas'));
+                                            }
+                                        },
+                                    },
+                                ]}
+                            >
+                                {(fields, { add, remove }, { errors }) => (
+                                    <>
+                                        {fields.length === 0 && <Empty description="Não há alternativas" />}
+                                        {fields.map((field, index) => (
+                                            <Form.Item key={field.key}>
+                                                <Card
+                                                    title={`Alternativa #${index + 1}`}
+                                                    extra={
+                                                        <Space>
+                                                            <Tooltip title="Esta alternativa é correta?">
+                                                                <Form.Item name={[field.name, "correct"]} valuePropName="checked" noStyle>
+                                                                    <Switch checkedChildren="Correta" unCheckedChildren="Incorreta" />
+                                                                </Form.Item>
+                                                            </Tooltip>
+
+                                                            <Tooltip title="Remover alternativa">
+                                                                <Button type="text" shape="circle" icon={<MinusCircleOutlined />} onClick={() => remove(field.name)} />
+                                                            </Tooltip>
+                                                        </Space>
+                                                    }
+                                                    style={{ boxShadow: "rgb(229 229 229 / 60%) 5px 8px 24px 5px" }}
+                                                >
+                                                    <Form.Item name={[field.name, "text"]}>
+                                                        <RichTextSunEditor buttons={[
+                                                            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                                                            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align'],
+                                                            ['link', 'image', 'showBlocks', 'codeView']
+                                                        ]} />
+                                                        {/* <QuillEditor /> */}
+                                                    </Form.Item>
+
+                                                </Card>
+                                            </Form.Item>
+                                        ))}
+                                        <Form.Item>
+                                            <Button
+                                                type="dashed"
+                                                onClick={() => add()}
+                                                icon={<PlusOutlined />}
+                                            >
+                                                Adicionar outra alternativa
+                                            </Button>
+                                            <Form.ErrorList errors={errors} />
+                                        </Form.Item>
+                                    </>
+                                )}
+                            </Form.List>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </LoadingWrapper>
-    </AppLeftNavigation >
+                    }
+
+                </Form.Item>
+                <Button type="primary" htmlType="submit" loading={isSubmitting}>Salvar</Button>
+            </Form>
+        </Card>
+    </AdminLayout >
 }
 
 export default UpdateQuestionPage
