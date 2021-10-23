@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { ClassCard } from "../../components/Student/home/ClassCard"
-import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../layouts/AdminLayout"
 import { UserService } from "../../services/UserService"
 
 const MyClasses = () => {
@@ -12,7 +12,7 @@ const MyClasses = () => {
         })()
     }, [])
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         <div className="row">
             <ClassCard
                 id="uuid"
@@ -20,7 +20,7 @@ const MyClasses = () => {
                 teacher="Professor"
             />
         </div>
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default MyClasses

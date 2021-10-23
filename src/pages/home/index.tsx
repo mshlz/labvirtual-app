@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../layouts/AdminLayout"
 import { UserService } from "../../services/UserService"
 
 const HomePage = () => {
@@ -11,7 +11,7 @@ const HomePage = () => {
         })()
     }, [])
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         <div className="row">
             <div className="col-md-12">
                 {/* <!-- DATA TABLE --> */}
@@ -119,7 +119,7 @@ const HomePage = () => {
                 </div>
             </div>
         </div>
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default HomePage
