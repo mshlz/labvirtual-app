@@ -1,9 +1,12 @@
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button } from "antd"
 import Link from "next/link"
 import router from "next/router"
 import React, { useEffect, useState } from "react"
 import { LoadingComponent } from "../../../components/Loading/Loading"
 import { CustomTable } from "../../../components/UI/CustomTable"
-import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../../layouts/AdminLayout"
 import { ClassService } from "../../../services/ClassService"
 
 const ClassListPage = () => {
@@ -15,7 +18,6 @@ const ClassListPage = () => {
     useEffect(() => {
         setLoading(true)
         loadResources()
-        console.log('changed ', page)
     }, [page])
 
     const loadResources = async () => {
@@ -25,13 +27,13 @@ const ClassListPage = () => {
         setLoading(false)
     }
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         {data ? <>
             <CustomTable
                 title="Turmas"
                 createButton={{ action: () => router.push("/manager/classes/create") }}
                 columns={[
-                    { key: 'id', label: 'ID' },
+                    { key: '_id', label: 'ID' },
                     { key: 'name', label: 'Nome' },
                     { key: 'discipline.name', label: 'Disciplina' },
                 ]}
@@ -45,16 +47,14 @@ const ClassListPage = () => {
                 isLoading={isLoading}
                 actions={row =>
                     <>
-                        <Link href={`/manager/classes/${row.id}/update`}>
-                            <button className="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                <i className="zmdi zmdi-edit"></i>
-                            </button>
+                        <Link href={`/manager/classes/${row._id}/update`}>
+                            <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
                         </Link>
                     </>
                 }
             />
         </> : <LoadingComponent />}
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default ClassListPage
