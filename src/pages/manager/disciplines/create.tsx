@@ -1,76 +1,43 @@
-import { Form } from "@unform/web"
-import Link from "next/link"
-import { useRef, useState } from "react"
+import { Button, Card, Form, Input, PageHeader } from "antd"
+import { useForm } from "antd/lib/form/Form"
+import router from "next/router"
+import { useState } from "react"
 import { toast } from "react-toastify"
-import { Button } from "../../../components/UI/Button"
-import { Input } from "../../../components/UI/Input"
-import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
-import { ValidateForm, Yup } from "../../../plugins/validation/FormValidator"
+import { AdminLayout } from "../../../layouts/AdminLayout"
 import { DisciplineService } from "../../../services/DisciplineService"
 
 const CreateDisciplinePage = () => {
-    const formRef = useRef(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const [form] = useForm()
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const handleSubmit = async (data) => {
-        const isValid = await ValidateForm({
-            name: Yup.string().required().min(3)
-        }, data, formRef)
-
-        if (isValid) {
-            try {
-                setIsLoading(true)
-                await DisciplineService.create(data)
-                setIsLoading(false)
-                toast("Disciplina criada com sucesso!", { type: 'success' })
-            } catch (error) {
-                setIsLoading(false)
-                alert(error.response.data.message)
-            }
+        try {
+            setIsSubmitting(true)
+            await DisciplineService.create(data)
+            toast("Disciplina criada com sucesso!", { type: 'success' })
+        } catch (error) {
+            alert(error.response.data.message)
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
-    return <AppLeftNavigation>
-        <div className="row m-b-20">
-            <div className="col-md-12">
-                <div className="title-wrap">
-                    <h2 className="title-5 text-center">
-                        <i className="fa fa-plus mr-2"></i> Nova disciplina
-                    </h2>
-                    <Link href="/manager/disciplines">
-                        <Button color="light"><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
-                    </Link>
-                </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-12">
-                <div className="card m-b-70">
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <Form ref={formRef} onSubmit={handleSubmit} className="row">
-                                    <div className="col-12">
-                                        <h4>Informações básicas</h4>
-                                        <hr />
-                                    </div>
-                                    <div className="col-md-12">
-                                        <Input label="Nome da disciplina:" name="name" />
-                                    </div>
-
-                                    <div className="col-md-12">
-                                        <Button color="success" block isLoading={isLoading}>
-                                            Salvar
-                                            </Button>
-                                    </div>
-                                </Form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </AppLeftNavigation >
+    return <AdminLayout>
+        <PageHeader
+            title="Criar nova disciplina"
+            onBack={() => router.push('/manager/disciplines')}
+        // breadcrumb={{ routes }}
+        // subTitle="This is a subtitle"
+        />
+        <Card title="Informações básicas">
+            <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit} onFinishFailed={null}>
+                <Form.Item label="Nome da disciplina" name="name" rules={[{ required: true, min: 3 }]}>
+                    <Input />
+                </Form.Item>
+                <Button type="primary" htmlType="submit" loading={isSubmitting}>Salvar</Button>
+            </Form>
+        </Card>
+    </AdminLayout>
 }
 
 export default CreateDisciplinePage

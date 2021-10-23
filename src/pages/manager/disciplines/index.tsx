@@ -1,9 +1,12 @@
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button } from "antd"
 import Link from "next/link"
 import router from "next/router"
 import React, { useEffect, useState } from "react"
 import { LoadingComponent } from "../../../components/Loading/Loading"
 import { CustomTable } from "../../../components/UI/CustomTable"
-import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../../layouts/AdminLayout"
 import { DisciplineService } from "../../../services/DisciplineService"
 
 const DisciplineListPage = () => {
@@ -25,13 +28,13 @@ const DisciplineListPage = () => {
         setLoading(false)
     }
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         {data ? <>
             <CustomTable
                 title="Disciplinas"
                 createButton={{ action: () => router.push("/manager/disciplines/create") }}
                 columns={[
-                    { key: 'id', label: 'ID' },
+                    { key: '_id', label: 'ID' },
                     { key: 'name', label: 'Nome' }
                 ]}
                 meta={{
@@ -44,16 +47,15 @@ const DisciplineListPage = () => {
                 isLoading={isLoading}
                 actions={row =>
                     <>
-                        <Link href={`/manager/disciplines/${row.id}/update`}>
-                            <button className="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                <i className="zmdi zmdi-edit"></i>
-                            </button>
+                        <Link href={`/manager/disciplines/${row._id}/update`}>
+                            <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
+
                         </Link>
                     </>
                 }
             />
         </> : <LoadingComponent />}
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default DisciplineListPage
