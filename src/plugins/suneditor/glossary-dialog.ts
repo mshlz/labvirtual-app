@@ -203,8 +203,8 @@ export const GlossaryEntryPlugin: Plugin = {
         return noResult
     },
 
-    insertEntry: function (core, entry: { id: string, name: string }) {
-        core.functions.insertHTML(`<span title="glossário" data-origin="glossary-entry-word" id="${entry.id}">${entry.name}</span>`, true);
+    insertEntry: function (core, entry: { _id: string, name: string }) {
+        core.functions.insertHTML(`<span title="glossário" data-origin="glossary-entry-word" id="${entry._id}">${entry.name}</span>`, true);
         core.plugins.dialog.close.call(core);
         core.focus()
     }
