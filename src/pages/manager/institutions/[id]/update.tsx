@@ -1,19 +1,15 @@
-import { Form } from "@unform/web"
-import Link from "next/link"
+import { Button, Card, Form, Input, PageHeader } from "antd"
+import { useForm } from "antd/lib/form/Form"
 import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { LoadingWrapper } from "../../../../components/Loading/Loading"
-import { Button } from "../../../../components/UI/Button"
-import { Input } from "../../../../components/UI/Input"
-import { AppLeftNavigation } from "../../../../layouts/AppLeftNavigation"
-import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
+import { AdminLayout } from "../../../../layouts/AdminLayout"
 import { InstitutionService } from "../../../../services/InstitutionService"
 
 const UpdateInstitutionPage = () => {
-    const [institution, setInstitution] = useState(null)
-    const formRef = useRef(null)
+    const [form] = useForm()
     const [isLoading, setIsLoading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -21,84 +17,55 @@ const UpdateInstitutionPage = () => {
     }, [router])
 
     const loadResource = async () => {
+        setIsLoading(true)
+
         const id = router.query.id as string
         if (!id) return
-        const institution = await InstitutionService.get(id)
-        setInstitution(institution)
 
-        if (!institution || !institution.id) {
+        const institution = await InstitutionService.get(id)
+
+        if (!institution || !institution._id) {
             toast('Instituição não encontrada!', { type: 'error' })
             return setTimeout(() => router.push('/manager/institutions'), 4000)
         }
 
-        formRef.current.setData(institution)
+        form.setFieldsValue(institution)
+        setIsLoading(false)
     }
 
     const handleSubmit = async (data) => {
-        const isValid = await ValidateForm({
-            name: Yup.string().required().min(3)
-        }, data, formRef)
 
-        if (isValid) {
-            try {
-                setIsLoading(true)
-                const id = router.query.id as string
-                await InstitutionService.update(id, data)
-                setIsLoading(false)
-                toast("Instituição atualizada com sucesso!", { type: 'success' })
-            } catch (error) {
-                setIsLoading(false)
-                toast(error.response.data.message, { type: 'error' })
-            }
+        try {
+            setIsSubmitting(true)
+            const id = router.query.id as string
+            await InstitutionService.update(id, data)
+            toast("Instituição atualizada com sucesso!", { type: 'success' })
+        } catch (error) {
+            toast(error.response.data.message, { type: 'error' })
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
-    return <AppLeftNavigation>
-        <LoadingWrapper isLoading={!institution}>
-            <div className="row m-b-20">
-                <div className="col-md-12">
-                    <div className="title-wrap">
-                        <h2 className="title-5 text-center">
-                            <i className="fa fa-edit mr-2"></i> Editar instituição
-                    </h2>
-                        <Link href="/manager/institutions">
-                            <Button color="light"><i className="fa fa-arrow-left mr-2"></i>Voltar</Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12">
-                    <div className="card m-b-70">
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <Form ref={formRef} onSubmit={handleSubmit} className="row">
-                                        <div className="col-12">
-                                            <h4>Informações básicas</h4>
-                                            <hr />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <Input label="Nome da instituição:" name="name" />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <Input label="Sigla:" name="acronym" />
-                                        </div>
-
-                                        <div className="col-md-12">
-                                            <Button color="success" block isLoading={isLoading}>
-                                                Salvar
-                                            </Button>
-                                        </div>
-                                    </Form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </LoadingWrapper>
-    </AppLeftNavigation >
+    return <AdminLayout>
+        <PageHeader
+            title="Editar instituição"
+            onBack={() => router.push('/manager/institutions')}
+        // breadcrumb={{ routes }}
+        // subTitle="This is a subtitle"
+        />
+        <Card title="Informações básicas" loading={isLoading}>
+            <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit} onFinishFailed={null}>
+                <Form.Item label="Nome da instituição" name="name" rules={[{ required: true, min: 3 }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item label="Sigla" name="acronym" rules={[{ required: true, min: 3 }]}>
+                    <Input />
+                </Form.Item>
+                <Button type="primary" htmlType="submit" loading={isSubmitting}>Salvar</Button>
+            </Form>
+        </Card>
+    </AdminLayout >
 }
 
 export default UpdateInstitutionPage
