@@ -1,6 +1,6 @@
 import Axios from "../plugins/http/axios.instance"
 
-class GlossaryService {
+export class GlossaryService {
     static async create(data) {
         return (await Axios.post(`/glossary`, data)).data.data
     }
@@ -25,9 +25,7 @@ class GlossaryService {
         return (await Axios.delete(`/glossary/${id}`)).data.data
     }
 
-    static async getAllFromDiscipline(discipline_id: string) {
-        return (await Axios.post(`/glossary/get/discipline`, { discipline: discipline_id })).data.data
+    static async getFromDiscipline(disciplines: string | string[]) {
+        return (await Axios.post(`/glossary/from/disciplines`, { discipline: Array.isArray(disciplines) ? disciplines : [disciplines] })).data.data
     }
 }
-
-export { GlossaryService }
