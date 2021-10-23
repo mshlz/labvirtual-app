@@ -1,7 +1,11 @@
 import Axios from "../plugins/http/axios.instance"
 
-class PostService {
-    static async create(data) {
+interface ICreateReq {
+    text: string
+    classId: string
+}
+export class PostService {
+    static async create(data: ICreateReq) {
         return (await Axios.post(`/posts`, data)).data.data
     }
 
@@ -13,8 +17,8 @@ class PostService {
         return (await Axios.get(`/posts`, { params: { page } })).data
     }
 
-    static async listFromClassId(classId: string) {
-        return (await Axios.get(`/posts/class/${classId}`, { params: { } })).data
+    static async getFromClass(classId: string) {
+        return (await Axios.post(`/posts/from/class`, { classId })).data
     }
 
     static async update(id: string, data) {
@@ -25,5 +29,3 @@ class PostService {
         return (await Axios.delete(`/posts/${id}`)).data.data
     }
 }
-
-export { PostService }
