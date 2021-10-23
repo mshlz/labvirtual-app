@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { LoadingComponent } from "../../../../components/Loading/Loading"
 import { Button } from "../../../../components/UI/Button"
-import { AppLeftNavigation } from "../../../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../../../layouts/AdminLayout"
 import { LessonService } from "../../../../services/LessonService"
 interface ILesson {
     name?: string
@@ -26,14 +26,14 @@ const PreviewLessonPage = () => {
         const resource = await LessonService.get(id)
         setResource(resource)
 
-        if (!resource || !resource.id) {
+        if (!resource || !resource._id) {
             toast('Conteúdo não encontrado!', { type: 'error' })
             return setTimeout(() => router.push('/manager/lessons'), 4000)
         }
 
     }
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         {resource ? <>
             <div className="row m-b-20">
                 <div className="col-md-12">
@@ -111,7 +111,7 @@ const PreviewLessonPage = () => {
 
         </> : <LoadingComponent />
         }
-    </AppLeftNavigation >
+    </AdminLayout >
 }
 
 export default PreviewLessonPage
