@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { FormCreateNewPost } from "../../../components/Student/classes/post/FormCreateNewPost"
 import { PostCard } from "../../../components/Student/classes/post/PostCard"
 import { Button } from "../../../components/UI/Button"
-import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../../layouts/AdminLayout"
 import { ClassService } from "../../../services/ClassService"
 import { PostService } from "../../../services/PostService"
 import { hashToColor } from "../../../utils/hashToColor"
@@ -30,7 +30,7 @@ export default () => {
         setPosts(r.data)
     }
 
-    return resource && <AppLeftNavigation>
+    return resource && <AdminLayout>
         {/* banner */}
         <div className="row">
             <div className="col-12">
@@ -57,8 +57,8 @@ export default () => {
 
                 {posts?.map(post =>
                     <PostCard
-                        key={post._id || post.id}
-                        id={post._id || post.id}
+                        key={post._id}
+                        _id={post._id}
                         author={post.author.name}
                         avatar_url={post.author.avatar_url}
                         created_at={post.createdAt}
@@ -91,5 +91,5 @@ export default () => {
         </div>
 
 
-    </AppLeftNavigation>
+    </AdminLayout>
 }

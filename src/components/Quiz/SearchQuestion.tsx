@@ -10,21 +10,21 @@ export const SearchQuestionBox = () => {
 
     const executeSearch = async (input) => {
         const result = await QuestionService.list() as any
-        return result?.data.map(e => ({ label: `${e.name}`, value: e.id })) //
+        return result?.data.map(e => ({ label: `${e.name}`, value: e._id })) //
     }
 
     const handleOnChange = (value: { label: string, value: string }, action: ActionMeta<object>) => {
         // console.log("Changed ==> ", value, action, selectRef)
 
         if (action.action === 'select-option') {
-            if (!selectedQuestions.some(e => e.id == value.value)) {
+            if (!selectedQuestions.some(e => e._id == value.value)) {
                 setSelectedQuestions([...selectedQuestions, { id: value.value, name: value.label }])
             }
         }
     }
 
     const removeQuestion = (id) => {
-        setSelectedQuestions(selectedQuestions.filter(e => e.id != id))
+        setSelectedQuestions(selectedQuestions.filter(e => e._id != id))
     }
 
     const customStyles = { control: provided => ({ ...provided, borderRadius: '2px', boxShadow: 'none', borderColor: '#ced4da' }) }
@@ -48,9 +48,9 @@ export const SearchQuestionBox = () => {
                 { selectedQuestions.length > 0 ? selectedQuestions.length > 1 ? `${selectedQuestions.length} questões` : '1 questão' : 'Nenhuma questão adicionada'}
                     {selectedQuestions.map((question, idx) =>
                         <UQuestionItem
-                            key={question.id}
+                            key={question._id}
                             idx={idx}
-                            id={question.id}
+                            id={question._id}
                             name={question.name}
                             removeQuestion={removeQuestion}
                         />

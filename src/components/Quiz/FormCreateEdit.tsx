@@ -4,7 +4,7 @@ import { Button } from '../UI/Button'
 import { QuestionItem } from './Form/QuestionItem'
 
 export const QuizCreateEditForm = () => {
-    const [questions, setQuestions] = useState([{ id: "teste" }] as Array<any>)
+    const [questions, setQuestions] = useState([{ _id: "teste" }] as Array<any>)
 
     const addQuestion = (event) => {
         event.preventDefault()
@@ -13,7 +13,7 @@ export const QuizCreateEditForm = () => {
     }
 
     const removeQuestion = (index) => {
-        setQuestions(questions.filter((e, i) => e.id != index))
+        setQuestions(questions.filter((e, i) => e._id != index))
     }
 
     return <>
@@ -22,7 +22,7 @@ export const QuizCreateEditForm = () => {
             {questions.map((question, idx) => (
                 <Scope path={`questions[${idx}]`}>
                     <div key={question.id} className="col-md-12 mb-3 pt-3 pb-3 border-bottom shadow">
-                        <h3 className="d-flex justify-content-between mb-1"><strong>Questão # {idx + 1}</strong> <Button type="button" size="sm" outline color="danger" onClick={() => removeQuestion(question.id)} title="Remover questão">Remover</Button></h3>
+                        <h3 className="d-flex justify-content-between mb-1"><strong>Questão # {idx + 1}</strong> <Button type="button" size="sm" outline color="danger" onClick={() => removeQuestion(question._id)} title="Remover questão">Remover</Button></h3>
                         <QuestionItem />
                     </div>
                 </Scope>

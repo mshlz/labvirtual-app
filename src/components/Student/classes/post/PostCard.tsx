@@ -13,7 +13,7 @@ import { toast } from "react-toastify"
 
 
 export interface IPostItem {
-    id: string
+    _id: string
     author: string
     avatar_url?: string
     created_at: string
@@ -30,7 +30,7 @@ export const PostCard = (props: IPostItem) => {
     const handleSubmitComment = async (formData) => {
         const data = {
             ...formData,
-            post_uuid: props.id
+            post_uuid: props._id
         }
         console.log(data)
 
@@ -90,7 +90,7 @@ export const PostCard = (props: IPostItem) => {
             /> */}
             {comments?.map(comment =>
                 <CommentItem
-                    id={comment.id}
+                    id={comment._id}
                     author={comment.author.name}
                     created_at={comment.createdAt}
                     text={comment.text}
