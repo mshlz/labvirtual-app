@@ -26,7 +26,7 @@ export default () => {
     }
 
     const loadPosts = async (id) => {
-        const r = await PostService.listFromClassId(id)
+        const r = await PostService.getFromClass(id)
         setPosts(r.data)
     }
 
