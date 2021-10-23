@@ -1,23 +1,36 @@
-interface RouteItem {
+import { ExperimentOutlined, HomeOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons';
+import { ReactNode } from 'react';
+
+export interface RouteItem {
     path: string
     title: string
-    icon?: string
+    icon?: ReactNode
     scope?: 'student' | 'teacher' | 'admin'
     permission?: string
     base?: string
     children?: RouteItem[]
 }
 
-const Routes: RouteItem[] = [
+export const Routes: RouteItem[] = [
     {
         path: '/home',
         title: 'Início',
-        icon: 'fas fa-tachometer-alt',
+        icon: <HomeOutlined />,
+    },
+    {
+        path: '/v2/my-classes',
+        title: 'Minhas turmas',
+        icon: <HomeOutlined />,
+    },
+    {
+        path: '/v2/class/123',
+        title: 'Turma teste',
+        icon: <ExperimentOutlined />,
     },
     {
         path: '#',
         title: 'Configurações',
-        icon: 'fas fa-cog',
+        icon: <SettingOutlined />,
         children: [
             {
                 path: '/profile',
@@ -29,7 +42,7 @@ const Routes: RouteItem[] = [
     {
         path: '#',
         title: 'Gerenciamento',
-        icon: 'fas fa-cog',
+        icon: <ProfileOutlined />,
         base: '/manager',
         children: [
             {
@@ -65,5 +78,3 @@ const Routes: RouteItem[] = [
         ]
     },
 ]
-
-export { Routes }
