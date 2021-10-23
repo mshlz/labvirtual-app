@@ -1,6 +1,6 @@
 import Axios from "../plugins/http/axios.instance"
 
-class SubjectService {
+export class SubjectService {
     static async create(data) {
         return (await Axios.post(`/subjects`, data)).data.data
     }
@@ -21,9 +21,7 @@ class SubjectService {
         return (await Axios.delete(`/subjects/${id}`)).data.data
     }
 
-    static async getAllFromDiscipline(discipline_id: string) {
-        return (await Axios.post(`/subjects/get/discipline`, { discipline: discipline_id })).data.data
+    static async getFromDisciplines(discipline_ids: string | string[]) {
+        return (await Axios.post(`/subjects/from/disciplines`, { disciplines: Array.isArray(discipline_ids) ? discipline_ids : [discipline_ids] })).data.data
     }
 }
-
-export { SubjectService }
