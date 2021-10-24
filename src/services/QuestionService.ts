@@ -13,8 +13,8 @@ export class QuestionService {
         return (await Axios.get(`/questions`, { params: { page } })).data
     }
 
-    static async simpleSearch(query: string) {
-        return (await Axios.post(`/questions/simple-search`, { query })).data
+    static async simpleSearch(query: string, skipIds?: string[]) {
+        return (await Axios.post(`/questions/simple-search`, { query, skipIds })).data
     }
 
     static async update(id: string, data) {
