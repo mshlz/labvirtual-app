@@ -66,6 +66,9 @@ const UpdateSubjectPage = () => {
                 <Form.Item label="Nome do assunto" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
                 </Form.Item>
+                <Form.Item label="Icone do assunto" name="icon">
+                    <Input />
+                </Form.Item>
                 <Form.Item label="Disciplina" name="discipline" rules={[{ required: true }]}>
                     <Select
                         showSearch
