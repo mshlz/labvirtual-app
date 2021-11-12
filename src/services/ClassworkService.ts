@@ -21,4 +21,8 @@ export class ClassworkService {
         return (await Axios.delete(`/classworks/${id}`)).data.data
     }
 
+    static async getFromClass(classId: string) {
+        return (await Axios.post(`/classworks/from/class`, { classId })).data.data
+    }
+
 }

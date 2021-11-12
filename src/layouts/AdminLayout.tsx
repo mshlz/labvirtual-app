@@ -15,7 +15,7 @@ export const AdminLayout = ({ children }) => {
     <Layout style={{ minHeight: '100vh' }}>
       <BackTop />
       <Navbar handleSidebar={() => onCollapse(!collapsed)} />
-      <Layout className="site-layout-background">
+      <Layout>
         <Sidebar collapsed={collapsed} onCollapse={onCollapse} />
         {/* <Header /> */}
         <Content>
