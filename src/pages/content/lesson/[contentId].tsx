@@ -34,9 +34,21 @@ const LessonPage = () => {
                     <Typography.Text>
                         {parseHtml(lesson.content, {
                             replace: node => {
-                                console.log('el', node)
-                                if (node.type == 'tag' && node['name'] == 'img') {
-                                    node['attribs']['style'] += "max-width:100%;"
+                                if (node.type == 'tag') {
+                                    let current: any = node
+                                    switch (node['name']) {
+                                        case 'img':
+                                            current = <Image src={node['attribs']['src']} />
+                                            break;
+                                        case 'span':
+                                            if (node['attribs'] && node['attribs']['data-origin'] == 'glossary-entry-word') {
+                                                const text = (node['children']||[]).filter(v => typeof v.data == 'string').reduce((v, c) => v+=c.data, '')
+                                                const uuid = node['attribs']['id']
+                                                current = <Typography.Text style={{borderBottom: 'dashed 1px #333'}}>{text}</Typography.Text>
+                                            }
+                                            break;
+                                    }
+                                    return current
                                 }
                                 return node
                             }
