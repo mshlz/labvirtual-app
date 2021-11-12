@@ -35,6 +35,7 @@ const UpdateLessonPage = () => {
             return setTimeout(() => router.push('/manager/lessons'), 4000)
         }
 
+        resource.discipline = resource.discipline._id
         await loadSubjects(resource.discipline)
 
         form.setFieldsValue(resource)

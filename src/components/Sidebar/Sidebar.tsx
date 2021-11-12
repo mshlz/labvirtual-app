@@ -16,11 +16,9 @@ export const Sidebar = (props) => {
       path: '#',
       title: v.name,
       icon: <FontAwesomeIcon icon={faStar} />,
-      children: v.subjects?.map(s => ({ path: '#' + s._id, title: s.name }))
+      children: (v.subjects||[]).map(s => ({ path: '/content/subject/' + s._id, title: s.name }))
     }
   })
-
-  const a = <Avatar />
 
   const handleSidebarClick = (data) => {
     console.log(data)
