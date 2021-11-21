@@ -4,13 +4,14 @@ import { Avatar, Card, Layout, Menu, Space, Typography } from "antd";
 import { useRouter } from "next/router";
 import React from "react";
 import { useApp } from "../../context/AppContext";
+import { getInitials } from "../../utils/getInitials";
 import { RouteItem, Routes } from "./Routes";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 export const Sidebar = (props) => {
   const router = useRouter()
-  const { disciplines } = useApp()
+  const { disciplines, user } = useApp()
   const disciplinesRoutes = (disciplines || []).map<RouteItem>(v => {
     return {
       path: '#',
@@ -38,8 +39,8 @@ export const Sidebar = (props) => {
   >
     <Card hoverable style={{ margin: '16px', backgroundColor: '#919eab1f' }} bodyStyle={{ padding: '16px', }}>
       <Space>
-        <Avatar icon={'MH'} />
-        <Typography.Text strong>Mateus Holzschuh</Typography.Text>
+        <Avatar icon={getInitials(user.name, true)} />
+        <Typography.Text strong>{user.name}</Typography.Text>
       </Space>
     </Card>
     <Menu theme="light" mode="inline" onClick={handleSidebarClick}>

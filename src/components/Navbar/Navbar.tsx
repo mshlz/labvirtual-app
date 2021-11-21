@@ -3,10 +3,11 @@ import { Button, Dropdown, Menu, Space, Typography } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import React from "react";
 import { useApp } from "../../context/AppContext";
+import { getInitials } from "../../utils/getInitials";
 import styles from "./Navbar.module.css";
 
 const Navbar = (props) => {
-  const { logout } = useApp()
+  const { logout, user } = useApp()
   return (
     <nav className={styles.navbar}>
       <div>
@@ -39,8 +40,8 @@ const Navbar = (props) => {
           trigger={['click']}
         >
           <Space style={{ cursor: 'pointer' }}>
-            <Avatar icon={'MH'} />
-            <Typography.Text>Mateus</Typography.Text>
+            <Avatar icon={getInitials(user.name, true)} />
+            <Typography.Text>{user.name}</Typography.Text>
           </Space>
         </Dropdown>
       </div>
