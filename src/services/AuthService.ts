@@ -17,9 +17,14 @@ interface IForgotPasswordReq {
     email: string
 }
 
+interface ICheckTokenReq {
+    tokenId: string
+    code: string
+}
+
 interface IResetPasswordReq {
-    token_id: string
-    token: string
+    tokenId: string
+    code: string
     password: string
     password_confirm: string
 }
@@ -37,6 +42,11 @@ export class AuthService {
     static async forgotPassword(data: IForgotPasswordReq) {
         const response = await Axios.post('/auth/forgot-password', data)
         return response.data
+    }
+
+    static async checkToken(data: ICheckTokenReq) {
+        const response = await Axios.post('/auth/check-token', data)
+        return response.data.data as boolean
     }
 
     static async resetPassword(data: IResetPasswordReq) {

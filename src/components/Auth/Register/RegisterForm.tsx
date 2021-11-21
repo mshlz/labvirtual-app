@@ -1,14 +1,14 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons"
 import { Button, Divider, Form, Input, Space } from "antd"
-import { useState, useEffect } from 'react'
 import { useForm } from "antd/lib/form/Form"
+import Link from "next/link"
+import router from "next/router"
+import { useEffect, useState } from 'react'
 import { useApp } from "../../../context/AppContext"
 import { AuthService } from "../../../services/AuthService"
-import router from "next/router"
-import Link from "next/link"
 import { transformResponseError } from "../../../utils/transformResponseError"
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
     const [form] = useForm(null)
     const [isLoading, setIsLoading] = useState(false)
     const { isLoggedIn, login } = useApp()
@@ -17,13 +17,21 @@ export const LoginForm = () => {
         if (isLoggedIn) {
             router.push('/')
         }
-    })
+    }, [])
 
     const handleSubmit = async (data) => {
         try {
             setIsLoading(true)
-            const response = await AuthService.login(data)
-            login(response.data)
+            await AuthService.register({
+                ...data,
+                type: 'student'
+            })
+
+            const loginResult = await AuthService.login({
+                email: data.email,
+                password: data.password
+            })
+            login(loginResult.data)
         }
         catch (err) {
             let error = err.response
@@ -43,31 +51,39 @@ export const LoginForm = () => {
         onFinish={handleSubmit}
     >
         <Form.Item
-            name="email"
-            rules={[{ required: true, message: 'Por favor, insira seu email!' }]}
+            name="name"
+            rules={[{ required: true, message: 'Este campo é obrigatório' }]}
         >
-            <Input prefix={<UserOutlined />} placeholder="Email" />
+            <Input prefix={<UserOutlined />} placeholder="Nome completo" />
+        </Form.Item>
+        <Form.Item
+            name="email"
+            rules={[{ required: true, message: 'Este campo é obrigatório' }]}
+        >
+            <Input prefix={<MailOutlined />} placeholder="Email" />
         </Form.Item>
         <Form.Item
             name="password"
-            rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
+            rules={[{ required: true, message: 'Este campo é obrigatório' }]}
         >
             <Input.Password
                 prefix={<LockOutlined />}
                 placeholder="Senha"
             />
         </Form.Item>
-        {/* <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-            
-        </Form.Item> */}
+        <Form.Item
+            name="password_confirm"
+            rules={[{ required: true, message: 'Este campo é obrigatório' }]}
+        >
+            <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Confirme a Senha"
+            />
+        </Form.Item>
 
         <Form.Item noStyle>
             <Button type="primary" htmlType="submit" block loading={isLoading}>
-                Entrar
+                Registrar
             </Button>
 
 
@@ -86,9 +102,9 @@ export const LoginForm = () => {
 
         <Divider />
 
-        <Space split={'•'} style={{ width: '100%', justifyContent: 'center' }}>
-            <Link href="/auth/reset-password"><a>Esqueceu sua senha?</a></Link>
-            <Link href="/auth/register"><a>Criar uma conta!</a></Link>
+        <Space style={{ width: '100%', justifyContent: 'center' }}>
+            <span>Já tem uma conta? </span>
+            <Link href="/auth/login"><a>Faça login aqui</a></Link>
         </Space>
 
     </Form>)

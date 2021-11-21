@@ -2,7 +2,6 @@ import { Card, Col, Row, Typography } from 'antd'
 import { LoginForm } from '../../components/Auth/Login/LoginForm'
 
 const LoginPage = () => {
-
     return <div>
         {/* <Row justify="center">
                 <Col>
@@ -23,8 +22,6 @@ const LoginPage = () => {
                 </Card>
             </Col>
         </Row>
-
-
     </div>
 }
 
