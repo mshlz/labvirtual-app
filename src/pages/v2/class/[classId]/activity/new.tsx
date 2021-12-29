@@ -5,7 +5,7 @@ import { ActivityEditForm } from "../../../../../components/pages/Class/Activiti
 import { AdminLayout } from "../../../../../layouts/AdminLayout"
 
 const NewActivity = () => {
-    const classId = router.query.id as string
+    const classId = router.query.classId as string
     useEffect(() => {
         message.info({icon: <Spin size="small" style={{marginRight: '8px'}}/>, content:"Salvando atividade..."})
     },[])

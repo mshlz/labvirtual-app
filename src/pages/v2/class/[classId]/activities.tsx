@@ -15,7 +15,7 @@ import { ClassworkService } from "../../../../services/ClassworkService";
 const ClassActivities = () => {
     const router = useRouter()
     const query = router.query
-    const id = query.id as string
+    const classId = query.classId as string
 
     const [topics, setTopics] = useState([])
     const [activities, setActivities] = useState([])
@@ -23,7 +23,7 @@ const ClassActivities = () => {
     const [newTopicModal, setModalOpen] = useState(false)
 
     useEffect(() => {
-        if (!id) return
+        if (!classId) return
 
             ; (async () => {
                 await loadActivities()
@@ -38,7 +38,7 @@ const ClassActivities = () => {
     }
 
     const loadActivities = async () => {
-        const result = await ClassworkService.getFromClass(id)
+        const result = await ClassworkService.getFromClass(classId)
         console.log('activities', result)
         setActivities(result)
     }
@@ -52,7 +52,7 @@ const ClassActivities = () => {
         return topicActivities.map(v =>
             <ActivityPanel
                 key={v._id}
-                classId={id}
+                classId={classId}
                 id={v._id}
                 title={v.name}
                 description={v.description}
@@ -67,12 +67,12 @@ const ClassActivities = () => {
             <Row gutter={[24, 24]} >
 
                 <Col span={24}>
-                    <NavigationMenu active="activities" classId={id} />
+                    <NavigationMenu active="activities" classId={classId} />
                 </Col>
 
                 <Col span={24}>
                     <NewTopicModal
-                        classId={id}
+                        classId={classId}
                         isOpen={newTopicModal}
                         handleSuccess={() => (setModalOpen(false), loadTopics())}
                         handleCancel={() => setModalOpen(false)}
@@ -82,7 +82,7 @@ const ClassActivities = () => {
                             type="primary"
                             shape="round"
                             icon={<FontAwesomeIcon icon={faPlus} style={{ marginRight: '8px' }} />}
-                            onClick={() => router.push({ pathname: 'activity/new', query: { id } })}
+                            onClick={() => router.push({ pathname: 'activity/new', query: { classId } })}
                         >
                             Adicionar atividade
                         </Button>

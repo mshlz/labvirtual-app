@@ -3,7 +3,7 @@ import { ActivityEditForm } from "../../../../../components/pages/Class/Activiti
 import { AdminLayout } from "../../../../../layouts/AdminLayout"
 
 const EditActivity = () => {
-    const classId = router.query.id as string
+    const classId = router.query.classId as string
     const activityId = router.query.activityId as string
 
     return <AdminLayout>

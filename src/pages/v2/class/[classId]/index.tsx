@@ -16,26 +16,26 @@ import { PostService } from "../../../../services/PostService";
 const ClassMural = () => {
     const router = useRouter()
     const query = router.query
-    const { id } = query as { id: string }
+    const { classId } = query as { classId: string }
 
     const [klass, setKlass] = useState(null)
     const [posts, setPosts] = useState(null)
 
     useEffect(() => {
-        if (!id) return
+        if (!classId) return
 
         loadResource()
         loadPosts()
     }, [query])
 
     const loadResource = async () => {
-        const result = await ClassService.get(id)
+        const result = await ClassService.get(classId)
         console.log(result)
         setKlass(result)
     }
 
     const loadPosts = async () => {
-        const result = await PostService.getFromClass(id)
+        const result = await PostService.getFromClass(classId)
         setPosts(result.data)
     }
 
@@ -46,18 +46,22 @@ const ClassMural = () => {
                     <Card
                         style={{
                             // backgroundColor: 'steelblue'
-                            height: 150
+                            // height: 150
                         }}
-                    >
-                        <Card.Meta
-                            title={<Typography.Title level={2} style={{ marginBottom: 0 }}>Turma {klass?.name}</Typography.Title>}
-                            description={klass?.section ? <Typography.Title level={4} type={'secondary'}>Seção {klass.section.name}</Typography.Title> : null}
-                        />
-                    </Card>
+                        title={
+                            <Typography.Title level={2} style={{ marginBottom: '48px' }}>Turma {klass?.name}</Typography.Title>
+                        }
+                        tabList={[
+                            { key: 'mural', tab: "Mural" },
+                            { key: 'activities', tab: "Atividades" },
+                            { key: 'grades', tab: "Notas" },
+                        ]}
+                        bodyStyle={{ padding: 0}}
+                    />
                 </Col>
 
                 <Col span={24}>
-                    <NavigationMenu active="mural" classId={id}/>
+                    <NavigationMenu active="mural" classId={classId} />
                 </Col>
 
 
@@ -65,7 +69,7 @@ const ClassMural = () => {
                     <Row gutter={[0, 16]}>
                         {/* MuralNewPostForm */}
                         <Col span={24}>
-                            <MuralNewPost classId={id} addNewPost={data => setPosts([data,...posts])} />
+                            <MuralNewPost classId={classId} addNewPost={data => setPosts([data, ...posts])} />
                         </Col>
 
                         {posts?.map(post =>
@@ -100,14 +104,14 @@ const ClassMural = () => {
 
 
                         {/* SimpleMuralPost */}
-                        <Col span={24}>
+                        {/* <Col span={24}>
                             <SimpleMuralPost
                                 title={'Mateus publicou uma nova tarefa'}
                                 // content={'Este é um texto de exemplo asdf'}
                                 // comments_count={1}
                                 date={new Date()}
                             />
-                        </Col>
+                        </Col> */}
 
                         {/* MuralPost */}
                         <Col span={24}>

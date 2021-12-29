@@ -76,7 +76,7 @@ const InviteModal = ({ isOpen, type, onCancel }) => {
 const ClassPeople = () => {
     const router = useRouter()
     const query = router.query
-    const id = query.id as string
+    const classId = query.classId as string
 
     const [teachers, setTeachers] = useState([])
     const [students, setStudents] = useState([])
@@ -85,13 +85,13 @@ const ClassPeople = () => {
     const [inviteStudentModal, setInviteStudent] = useState(false)
 
     useEffect(() => {
-        if (!id) return
+        if (!classId) return
 
         loadResource()
     }, [query])
 
     const loadResource = async () => {
-        const result = await ClassService.getPeople(id)
+        const result = await ClassService.getPeople(classId)
 
         setTeachers([result.teacher])
         setStudents(result.students)
@@ -102,7 +102,7 @@ const ClassPeople = () => {
             <Row gutter={[24, 24]} >
 
                 <Col span={24}>
-                    <NavigationMenu active="people" classId={id} />
+                    <NavigationMenu active="people" classId={classId} />
                 </Col>
 
                 <Col span={24}>
