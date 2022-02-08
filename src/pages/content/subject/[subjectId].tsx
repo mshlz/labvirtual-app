@@ -1,16 +1,13 @@
 import { Card, Col, Empty, Image, Row, Space, Typography } from "antd"
 import router from "next/router"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { LessonCard } from "../../../components/pages/Content/LessonCard"
-import { SubjectCard } from "../../../components/pages/Content/SubjectCard"
-import { useApp } from "../../../context/AppContext"
 import { AdminLayout } from "../../../layouts/AdminLayout"
 import { LessonService } from "../../../services/LessonService"
 import { SubjectService } from "../../../services/SubjectService"
 
 const SubjectLessonsPage = () => {
     const subjectId = router.query.subjectId as string
-    const { subjects } = useApp()
     const [subject, setSubject] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [lessons, setLessons] = useState([])
