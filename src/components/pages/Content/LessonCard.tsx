@@ -10,7 +10,7 @@ interface ILessonCardProps {
 }
 
 export const LessonCard = ({ name, id, content }: ILessonCardProps) => {
-    const renderContent = (content || '').slice(0, 400).concat(content.length > 400 ? '...' : '')
+    const renderContent = (content || '').slice(0, 400).concat(content?.length > 400 ? '...' : '')
     
     return <Card
         onClick={() => router.push(`/content/lesson/${id}`)}
