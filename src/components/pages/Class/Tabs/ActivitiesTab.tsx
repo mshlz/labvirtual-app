@@ -1,21 +1,23 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Col, Collapse, Divider, Empty, Result, Row, Space, Typography } from "antd";
+import { Button, Col, Collapse, Divider, Row, Space, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ActivityPanel } from "../../../../components/pages/Class/Activities/ActivityPanel";
-import { NewTopicModal } from "../../../../components/pages/Class/Activities/NewTopicModal";
-import { NavigationMenu } from "../../../../components/pages/Class/NavigationMenu";
-import { AdminLayout } from "../../../../layouts/AdminLayout";
 import { ClassTopicService } from "../../../../services/ClassTopicService";
 import { ClassworkService } from "../../../../services/ClassworkService";
+import { LoadingComponent, LoadingWrapper } from "../../../Loading/Loading";
+import { Loading } from "../../../Loading/Loading2";
+import { ActivityPanel } from "../Activities/ActivityPanel";
+import { NewTopicModal } from "../Activities/NewTopicModal";
 
 
+interface ActivitiesTabProps {
+    classId: string
+}
 
-const ClassActivities = () => {
+export const ActivitiesTab = (props: ActivitiesTabProps) => {
     const router = useRouter()
-    const query = router.query
-    const classId = query.classId as string
+    const [isLoading, setIsLoading] = useState(true)
 
     const [topics, setTopics] = useState([])
     const [activities, setActivities] = useState([])
@@ -23,13 +25,12 @@ const ClassActivities = () => {
     const [newTopicModal, setModalOpen] = useState(false)
 
     useEffect(() => {
-        if (!classId) return
-
-            ; (async () => {
-                await loadActivities()
-                await loadTopics()
-            })()
-    }, [query])
+        (async () => {
+            await loadActivities()
+            await loadTopics()
+            setIsLoading(false)
+        })()
+    }, [props.classId])
 
     const loadTopics = async () => {
         const result = await ClassTopicService.list()
@@ -38,7 +39,7 @@ const ClassActivities = () => {
     }
 
     const loadActivities = async () => {
-        const result = await ClassworkService.getFromClass(classId)
+        const result = await ClassworkService.getFromClass(props.classId)
         console.log('activities', result)
         setActivities(result)
     }
@@ -52,7 +53,7 @@ const ClassActivities = () => {
         return topicActivities.map(v =>
             <ActivityPanel
                 key={v._id}
-                classId={classId}
+                classId={props.classId}
                 id={v._id}
                 title={v.name}
                 description={v.description}
@@ -62,17 +63,13 @@ const ClassActivities = () => {
         )
     }
 
-    return <AdminLayout>
-        <Col lg={20} >
+    return <LoadingWrapper isLoading={isLoading} fullWidth={true}>
+        <Col span={24}>
             <Row gutter={[24, 24]} >
 
                 <Col span={24}>
-                    <NavigationMenu active="activities" classId={classId} />
-                </Col>
-
-                <Col span={24}>
                     <NewTopicModal
-                        classId={classId}
+                        classId={props.classId}
                         isOpen={newTopicModal}
                         handleSuccess={() => (setModalOpen(false), loadTopics())}
                         handleCancel={() => setModalOpen(false)}
@@ -82,7 +79,7 @@ const ClassActivities = () => {
                             type="primary"
                             shape="round"
                             icon={<FontAwesomeIcon icon={faPlus} style={{ marginRight: '8px' }} />}
-                            onClick={() => router.push({ pathname: 'activity/new', query: { classId } })}
+                            onClick={() => router.push({ pathname: '/v2/class/[classId]/activity/new', query: { classId: props.classId } })}
                         >
                             Adicionar atividade
                         </Button>
@@ -116,22 +113,7 @@ const ClassActivities = () => {
 
             </Row>
         </Col >
-    </AdminLayout >
+    </LoadingWrapper>
 }
 
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
-
-export default ClassActivities
+export default ActivitiesTab
