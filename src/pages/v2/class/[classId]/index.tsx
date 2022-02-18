@@ -53,7 +53,7 @@ const ClassMural = () => {
                         tabList={[
                             { key: 'mural', tab: "Mural" },
                             { key: 'activities', tab: "Atividades" },
-                            { key: 'people', tab: "People" },
+                            { key: 'people', tab: "Pessoas" },
                         ]}
                         onTabChange={(key: TabKeys) => setActiveTab(key)}
                         bodyStyle={{ padding: 0 }}
