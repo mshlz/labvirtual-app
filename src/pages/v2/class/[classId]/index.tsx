@@ -40,7 +40,7 @@ const ClassMural = () => {
     }
 
     return <AdminLayout>
-        <Col lg={20} >
+        <Col>
             <Row gutter={[24, 24]} >
                 <Col span={24}>
                     <Card
@@ -56,7 +56,7 @@ const ClassMural = () => {
                             { key: 'activities', tab: "Atividades" },
                             { key: 'grades', tab: "Notas" },
                         ]}
-                        bodyStyle={{ padding: 0}}
+                        bodyStyle={{ padding: 0 }}
                     />
                 </Col>
 
@@ -127,8 +127,9 @@ const ClassMural = () => {
                     </Row>
                 </Col>
 
-                <Col span={6}>
+                {/* <Col span={6}>
                     <Card
+                        hidden={true}
                         title="Atividades"
                         actions={[
                             <Button type="link">Ver atividades</Button>
@@ -136,7 +137,7 @@ const ClassMural = () => {
                     >
                         Nenhuma atividade
                     </Card>
-                </Col>
+                </Col> */}
 
 
 
