@@ -1,0 +1,9 @@
+@import "~antd/dist/antd.css";
+
+.meta-no-mb-title .ant-card-meta-title {
+    margin-bottom: 0px!important;
+}
+
+div.ant-typography .post-content p {
+    margin-bottom: .8em;
+}

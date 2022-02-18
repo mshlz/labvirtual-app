@@ -1,9 +1,12 @@
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button } from "antd"
 import Link from "next/link"
 import router from "next/router"
 import React, { useEffect, useState } from "react"
 import { LoadingComponent } from "../../../components/Loading/Loading"
 import { CustomTable } from "../../../components/UI/CustomTable"
-import { AppLeftNavigation } from "../../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../../layouts/AdminLayout"
 import { GlossaryService } from "../../../services/GlossaryService"
 
 const GlossaryListPage = () => {
@@ -25,13 +28,13 @@ const GlossaryListPage = () => {
         setLoading(false)
     }
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         {data ? <>
             <CustomTable
                 title="Glossário"
                 createButton={{ action: () => router.push("/manager/glossary/create") }}
                 columns={[
-                    { key: 'id', label: 'ID' },
+                    { key: '_id', label: 'ID' },
                     { key: 'name', label: 'Termo' },
                     { key: 'discipline.name', label: 'Disciplina' },
                     { key: 'subject.name', label: 'Assunto' },
@@ -46,16 +49,15 @@ const GlossaryListPage = () => {
                 isLoading={isLoading}
                 actions={row =>
                     <>
-                        <Link href={`/manager/glossary/${row.id}/update`}>
-                            <button className="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                <i className="zmdi zmdi-edit"></i>
-                            </button>
+                        <Link href={`/manager/glossary/${row._id}/update`}>
+                            <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
+
                         </Link>
                     </>
                 }
             />
         </> : <LoadingComponent />}
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default GlossaryListPage

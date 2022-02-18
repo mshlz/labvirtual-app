@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 import { LoadingWrapper } from "../../components/Loading/Loading"
 import { Button } from "../../components/UI/Button"
 import { Input } from "../../components/UI/Input"
-import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../layouts/AdminLayout"
 import { ValidateForm, Yup } from "../../plugins/validation/FormValidator"
 import { UserService } from "../../services/UserService"
 
@@ -44,7 +44,7 @@ const UpdateProfilePage = () => {
         }
     }
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         <LoadingWrapper isLoading={!user}>
             <div className="row m-b-20">
                 <div className="col-md-12">
@@ -136,7 +136,7 @@ const UpdateProfilePage = () => {
                 </div>
             </div>
         </LoadingWrapper>
-    </AppLeftNavigation >
+    </AdminLayout >
 }
 
 export default UpdateProfilePage

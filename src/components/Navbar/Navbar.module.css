@@ -1,0 +1,17 @@
+.navbar {
+  background-color: white;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 1rem 2rem;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+}
+@media (min-width: 992px) {
+  .menu {
+    display: none;
+  }
+}
+.logo {
+  height: 32px;
+  margin-left: 1rem;
+}

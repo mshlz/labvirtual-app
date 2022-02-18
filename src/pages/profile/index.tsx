@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { LoadingComponent } from "../../components/Loading/Loading"
 import { Button } from "../../components/UI/Button"
-import { AppLeftNavigation } from "../../layouts/AppLeftNavigation"
+import { AdminLayout } from "../../layouts/AdminLayout"
 import { UserService } from "../../services/UserService"
 
 interface UserProfile {
@@ -22,7 +22,7 @@ const ProfilePage = () => {
 
     const loadProfile = async () => setUser(await UserService.getProfile())
 
-    return <AppLeftNavigation>
+    return <AdminLayout>
         {user ? <>
             <div className="row m-b-20">
                 <div className="col-md-12">
@@ -281,7 +281,7 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </div></> : <LoadingComponent />}
-    </AppLeftNavigation>
+    </AdminLayout>
 }
 
 export default ProfilePage

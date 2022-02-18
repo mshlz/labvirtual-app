@@ -1,8 +1,8 @@
 import Axios from "../plugins/http/axios.instance"
 
-class UserService {
+export class UserService {
     static async getProfile() {
-        return (await Axios.get('/users/me')).data.data
+        return (await Axios.get('/users/profile')).data.data
     }
 
     static async updateProfile(data) {
@@ -13,5 +13,3 @@ class UserService {
         return (await Axios.delete(`/users/${id}`)).data.data
     }
 }
-
-export { UserService }

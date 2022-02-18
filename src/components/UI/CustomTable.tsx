@@ -1,8 +1,8 @@
-import { Form } from "@unform/web"
+import { FileAddOutlined } from "@ant-design/icons"
+import { Button, PageHeader, Space, Table } from "antd"
+import { ColumnsType } from "antd/lib/table"
 import React, { PropsWithChildren, ReactNode, useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { Button } from './Button'
-import { Input } from './Input'
 
 type Column = {
     key: string
@@ -22,7 +22,7 @@ type Metadata = {
 
 type CustomTableProps = PropsWithChildren<{
     title: string
-    columns: Column[]
+    columns: ColumnsType<any> | Column[]
     data: Entry[]
     meta: Metadata
     createButton?: {
@@ -35,14 +35,12 @@ type CustomTableProps = PropsWithChildren<{
     onPageChange?: (newPage: number) => void
 }>
 
-export const CustomTable = ({ title, columns, data, meta, createButton, isLoading, actions, onSearch, onPageChange }: CustomTableProps) => {
-
+export const CustomTable = ({ title, columns, data, meta, actions, createButton, isLoading, onSearch, onPageChange }: CustomTableProps) => {
     const [pages, setPages] = useState([])
     const [hasPrevious, setHasPrevious] = useState(true)
     const [hasNext, setHasNext] = useState(true)
 
-    const changePage = (event, newPage) => {
-        event.preventDefault()
+    const changePage = (newPage) => {
         typeof onPageChange == 'function' && onPageChange(newPage)
     }
 
@@ -92,13 +90,14 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
 
     useEffect(() => {
         console.log('updateData')
+
     }, [])
 
-    const handleSearch = (data) => {
-        toast("em breve", { type: 'dark' })
-        console.log(data)
-        typeof onSearch == 'function' && onSearch(data.search)
-    }
+    // const handleSearch = (data) => {
+    //     toast("em breve", { type: 'dark' })
+    //     console.log(data)
+    //     typeof onSearch == 'function' && onSearch(data.search)
+    // }
 
     const getValue = (data, key) => {
         const path = key.split('.')
@@ -107,130 +106,65 @@ export const CustomTable = ({ title, columns, data, meta, createButton, isLoadin
         return _data || ''
     }
 
-    return <>
-        <div className="card border-0 shadow m-b-10">
-            <div className="card-header p-4 align-items-center">
-                <div className="d-flex justify-content-between mb-3">
-                    <div>
-                        <h3>{title}</h3>
-                    </div>
-                    <div>
-                        {/* <Button color="light" size='sm' cssClasses="mr-2 border shadow-sm"><i className="fa fa-refresh"></i></Button> */}
-                        {createButton &&
-                            <Button color="success" size='sm' onClick={createButton.action}><i className="zmdi zmdi-plus"></i> {createButton.title || 'CRIAR NOVO'}</Button>
-                        }
-                    </div>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <div>
-                        <Form onSubmit={handleSearch}>
-                            <div className="d-flex align-items-center">
-                                <Input name="search" inline placeholder="Buscar" size='sm' style={{ width: '350px' }} />
-                                <Button color='light' size='sm' cssClasses="border shadow-sm"><i className="fa fa-search"></i> Buscar</Button>
-                            </div>
-                        </Form>
-                    </div>
-                    <div></div>
-                </div>
-            </div>
+    const getColumns = () => {
+        let finalColumns = []
+        columns.forEach(c => {
+            const columnEntry = {
+                key: c.key,
+                dataIndex: c.key,
+                title: c.label ? c.label : undefined,
+                render: undefined
+            }
 
-            <div className="table-responsive" style={{ minHeight: '300px', position: 'relative' }}>
-                <table className="table table-data2">
-                    <thead className="border-bottom" style={{ backgroundColor: '#eee' }}>
-                        <tr>
-                            {columns.map((column, idx) =>
-                                <th key={`${column.key}-${idx}`}>{column.label}</th>
-                            )}
-                            {typeof actions == 'function' ? <th></th> : ''}
-                        </tr>
-                    </thead>
-                    <tbody className="position-relative">
-                        {/* <div style={{
-                            transition: 'all .3 ease', 
-                            backgroundColor: '#999999FF',
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            color: '#FFFFFF',
-                            justifyContent: 'center',
-                            // paddingTop: '100px',
-                            alignItems: 'center',
-                            position: 'absolute',
-                            zIndex: 1000,
-                            userSelect: 'none',
-                            textShadow: '0 0 10px #000'
-                        }}
-                        >
-                            <i className="fa fa-refresh fa-spin fa-2x"></i>
-                            Carregando
-                        </div> */}
+            const parts = c.key.split('.')
+            if (parts.length > 1) {
+                columnEntry.dataIndex = parts.shift()
+                columnEntry.render = v => getValue(v, parts.join('.'))
+            }
 
-                        {data?.map((e, idx) => (<>
-                            <tr key={`row-${idx}`} className="tr-shadow border-bottom">
-                                {columns.map((column, i) => {
-                                    return <td key={`${column.key}-${idx}-${i}`}>{getValue(e, column.key) || ''}</td>
-                                })}
-                                {typeof actions == 'function'
-                                    ? <td>
-                                        <div className="table-data-feature">
-                                            {actions(e)}
-                                        </div>
-                                    </td>
-                                    : ''}
-                            </tr>
+            finalColumns.push(columnEntry)
+        })
 
-                            {/* <tr className="spacer"></tr> */}
-                        </>))}
-                    </tbody>
-                </table>
-                {!data || !data.length &&
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '25px' }}>
-                        <i className="fa fa-exclamation-triangle fa-2x mb-2"></i><span>Sem dados!</span>
-                    </div>
-                }
-                {isLoading &&
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        paddingTop: '25px',
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        bottom: '0',
-                        right: '0',
-                        userSelect: 'none',
-                        backgroundColor: '#00000096',
-                        color: '#BEBEBE'
-                    }}>
-                        <i className="fa fa-refresh fa-2x fa-spin mb-2"></i><span>Carregando</span>
-                    </div>
-                }
-            </div>
+        if (typeof actions === 'function') {
+            finalColumns.push({
+                title: 'Ações',
+                key: 'actions',
+                render: (text, record) => (
+                    <Space size="middle">
+                        {actions(record)}
+                    </Space>
+                ),
+            })
+        }
 
-            <div className="card-footer d-flex justify-content-between align-items-center">
-                <p className="font-size-13">Mostrando <strong>{(meta.total_count != 0 ? (meta.page - 1) * meta.per_page + 1 : 0) + ' - ' + ((meta.page - 1) * meta.per_page + data?.length) || 0}</strong> de <strong>{meta?.total_count}</strong> resultados.</p>
-                <div>
-                    <ul className="pagination pagination-sm">
-                        <li className={`page-item ${!hasPrevious ? 'disabled' : ''}`}>
-                            <a className="page-link" href="#" aria-label="Anterior" onClick={e => changePage(e, meta.page - 1)}>
-                                <span aria-hidden="true">&laquo;</span>
-                                <span className="sr-only">Anterior</span>
-                            </a>
-                        </li>
-                        {pages.map(e =>
-                            <li key={'pagination-page-' + e} className={`page-item ${e == meta.page ? 'active' : ''}`}><a className="page-link" href="#" onClick={ev => changePage(ev, e)}>{e}</a></li>
-                        )}
-                        <li className={`page-item ${!hasNext ? 'disabled' : ''}`}>
-                            <a className="page-link" href="#" aria-label="Próximo" onClick={e => changePage(e, meta.page + 1)}>
-                                <span aria-hidden="true">&raquo;</span>
-                                <span className="sr-only">Próximo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </>
+        return finalColumns as ColumnsType<any>
+    }
+
+    return <PageHeader
+        // className="site-page-header"
+        ghost={false}
+        onBack={() => window.history.back()}
+        title={title}
+        // subTitle="This is a subtitle"
+        extra={[
+            <Button key="1" type="primary" icon={<FileAddOutlined />} onClick={createButton.action}>
+                {createButton.title ?? 'Criar novo'}
+            </Button>
+        ]}
+
+    >
+
+        <Table
+            columns={getColumns()}
+
+            dataSource={data}
+            // loading={true}
+            pagination={{
+                current: meta.page,
+                pageSize: meta.per_page,
+                total: meta.total_count,
+                onChange: changePage
+            }}
+        />
+    </PageHeader>
 }
