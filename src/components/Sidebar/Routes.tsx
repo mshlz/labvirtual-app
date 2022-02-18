@@ -13,7 +13,7 @@ export interface RouteItem {
 
 export const Routes: RouteItem[] = [
     {
-        path: '/home',
+        path: '/',
         title: 'Início',
         icon: <HomeOutlined />,
     },
@@ -22,23 +22,18 @@ export const Routes: RouteItem[] = [
         title: 'Minhas turmas',
         icon: <HomeOutlined />,
     },
-    {
-        path: '/v2/class/123',
-        title: 'Turma teste',
-        icon: <ExperimentOutlined />,
-    },
-    {
-        path: '#',
-        title: 'Configurações',
-        icon: <SettingOutlined />,
-        children: [
-            {
-                path: '/profile',
-                title: 'Minha Conta',
-                icon: 'fas fa-tachometer-alt',
-            }
-        ]
-    },
+    // {
+    //     path: '#',
+    //     title: 'Configurações',
+    //     icon: <SettingOutlined />,
+    //     children: [
+    //         {
+    //             path: '/profile',
+    //             title: 'Minha Conta',
+    //             icon: 'fas fa-tachometer-alt',
+    //         }
+    //     ]
+    // },
     {
         path: '#',
         title: 'Gerenciamento',
