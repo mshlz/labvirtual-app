@@ -1,13 +1,11 @@
-import { Avatar, Button, Card, Col, Divider, Form, Input, List, Row, Space, Tabs, Tag, Typography } from "antd";
-import { MailOutlined } from '@ant-design/icons'
+import { MailOutlined } from '@ant-design/icons';
+import { Avatar, Button, Card, Col, Divider, Form, Input, List, Row, Space, Tag, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useEffect } from "react";
-import { NavigationMenu } from "../../../../components/pages/Class/NavigationMenu";
-import { AdminLayout } from "../../../../layouts/AdminLayout";
+import { useEffect, useState } from "react";
 import { ClassService } from "../../../../services/ClassService";
 import { getInitials } from "../../../../utils/getInitials";
+import { LoadingWrapper } from '../../../Loading/Loading';
 
 const InviteModal = ({ isOpen, type, onCancel }) => {
     const [form] = Form.useForm()
@@ -73,10 +71,13 @@ const InviteModal = ({ isOpen, type, onCancel }) => {
     </Modal>
 }
 
-const ClassPeople = () => {
+interface PeopleTabProps {
+    classId: string
+}
+
+export const PeopleTab = (props: PeopleTabProps) => {
     const router = useRouter()
-    const query = router.query
-    const classId = query.classId as string
+    const [isLoading, setIsLoading] = useState(true)
 
     const [teachers, setTeachers] = useState([])
     const [students, setStudents] = useState([])
@@ -85,25 +86,20 @@ const ClassPeople = () => {
     const [inviteStudentModal, setInviteStudent] = useState(false)
 
     useEffect(() => {
-        if (!classId) return
-
         loadResource()
-    }, [query])
+    }, [props.classId])
 
     const loadResource = async () => {
-        const result = await ClassService.getPeople(classId)
+        const result = await ClassService.getPeople(props.classId)
 
         setTeachers([result.teacher])
         setStudents(result.students)
+        setIsLoading(false)
     }
 
-    return <AdminLayout>
-        <Col lg={20} >
+    return <LoadingWrapper isLoading={isLoading} fullWidth={true}>
+        <Col span={24} >
             <Row gutter={[24, 24]} >
-
-                <Col span={24}>
-                    <NavigationMenu active="people" classId={classId} />
-                </Col>
 
                 <Col span={24}>
                     <Card
@@ -175,7 +171,5 @@ const ClassPeople = () => {
                 </Col>
             </Row>
         </Col >
-    </AdminLayout >
+    </LoadingWrapper>
 }
-
-export default ClassPeople

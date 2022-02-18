@@ -1,4 +1,11 @@
-const LoadingComponent = ({ fullHeight = false, fullWidth = false }) => {
+import { Spin } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
+
+interface LoadingComponentProps {
+    fullWidth?: boolean
+    fullHeight?: boolean
+}
+const LoadingComponent = ({ fullHeight = false, fullWidth = false }: LoadingComponentProps) => {
     return <>
         <div style={{
             display: 'flex',
@@ -9,24 +16,19 @@ const LoadingComponent = ({ fullHeight = false, fullWidth = false }) => {
             position: 'relative',
             flexDirection: 'column'
         }}>
-            <span style={{
-                fontSize: '1.8rem',
-                marginBottom: '.2rem'
-            }}>
-                <i className="fa fa-spinner fa-spin"></i>
-            </span>
-            <h1>Carregando</h1>
+            <Spin
+                indicator={<LoadingOutlined style={{ fontSize: '48px' }} />}
+                tip={"Carregando..."}
+            />
         </div>
     </>
 }
 
-const LoadingWrapper = ({ children, isLoading }) => {
-    return  <>
-    { isLoading && <LoadingComponent /> }
-    <div className={isLoading && 'd-none'}>
-        {children}
-    </div>
-    </>
+interface LoadingWrapperProps extends LoadingComponentProps {
+    isLoading: boolean
+}
+const LoadingWrapper = ({ children, isLoading, ...rest }: React.PropsWithChildren<LoadingWrapperProps>) => {
+    return isLoading ? <LoadingComponent {...rest} /> : <>{children}</>
 }
 
 export { LoadingComponent, LoadingWrapper }
