@@ -1,12 +1,13 @@
 import Router, { useRouter } from "next/router";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { LoadingComponent } from "../components/Loading/Loading";
+import { User } from "../models/User";
 import { DisciplineService } from "../services/DisciplineService";
 import { LocalStorage } from "../utils/LocalStorage";
 
 interface AppContextData {
     isLoggedIn: boolean
-    user: { name, type, email, avatar_url, _id }
+    user: User
     login: (a?: any) => any
     logout: () => void
     isLoading: boolean
@@ -39,7 +40,7 @@ export const AppProvider: React.FC = ({ children }) => {
     }
 
     const login = (data) => {
-        setUser(data.user)
+        setUser(User.create(data.user))
         setToken(data.token)
         LocalStorage.set('app-user', data.user)
         LocalStorage.set('app-token', data.token)

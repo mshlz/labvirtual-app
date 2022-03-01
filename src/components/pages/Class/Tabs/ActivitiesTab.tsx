@@ -20,7 +20,7 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
     const [isLoading, setIsLoading] = useState(true)
 
     const [topics, setTopics] = useState([])
-    const [activities, setActivities] = useState([])
+    const [activities, setActivities] = useState<any>([])
 
     const [newTopicModal, setModalOpen] = useState(false)
 
