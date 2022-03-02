@@ -1,8 +1,8 @@
 import { Button, Card, Col, Collapse, Row, Space, Typography } from "antd"
 import Avatar from "antd/lib/avatar/avatar"
 import { ReactNode } from "react"
-import parseHtml from 'html-react-parser'
 import router from "next/router"
+import { parseHtml } from "../../../../utils/parseHtml"
 
 interface IActivityPanel {
     classId: string

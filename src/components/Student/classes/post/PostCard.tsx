@@ -4,12 +4,12 @@ import { useApp } from "../../../../context/AppContext"
 import { Button } from "../../../UI/Button"
 import { Input } from "../../../UI/Input"
 import { CommentItem } from "./CommentItem"
-import parseHtml from 'html-react-parser'
 import { formatRelative, parseISO } from 'date-fns'
 import ptBR from "date-fns/locale/pt-BR/index.js"
 import { CommentService } from "../../../../services/CommentService"
 import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
 import { toast } from "react-toastify"
+import { parseHtml } from "../../../../utils/parseHtml"
 
 
 export interface IPostItem {

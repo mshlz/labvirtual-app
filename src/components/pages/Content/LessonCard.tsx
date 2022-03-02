@@ -1,6 +1,6 @@
 import { Card, Typography } from "antd"
-import parseHtml from 'html-react-parser'
 import router from "next/router"
+import { parseHtml } from "../../../utils/parseHtml"
 
 interface ILessonCardProps {
     id: string

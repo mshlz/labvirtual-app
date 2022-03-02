@@ -1,9 +1,9 @@
 import { Card, Col, Image, Row, Space, Typography } from "antd"
-import parseHtml from 'html-react-parser'
 import router from "next/router"
 import { useEffect, useState } from "react"
 import { AdminLayout } from "../../../layouts/AdminLayout"
 import { LessonService } from "../../../services/LessonService"
+import { parseHtml } from "../../../utils/parseHtml"
 
 const LessonPage = () => {
     const contentId = router.query.contentId as string
@@ -22,6 +22,8 @@ const LessonPage = () => {
         setLesson(result)
         setIsLoading(false)
     }
+
+    // TODO create helper to parse this html, it should support the glossary entries
 
     return !isLoading && <AdminLayout>
         <Space align="center" size={'middle'} style={{ marginBottom: '2rem' }}>

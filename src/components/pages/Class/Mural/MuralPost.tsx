@@ -5,11 +5,11 @@ import Avatar from "antd/lib/avatar/avatar"
 import TextArea from "antd/lib/input/TextArea"
 import { formatRelative, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import parseHtml from 'html-react-parser'
 import { ReactNode, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { useApp } from "../../../../context/AppContext"
 import { CommentService } from "../../../../services/CommentService"
+import { parseHtml } from "../../../../utils/parseHtml"
 
 
 const Editor = ({ onFinish, isSubmitting }) => {

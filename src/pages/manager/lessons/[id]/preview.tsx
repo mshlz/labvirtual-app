@@ -1,4 +1,3 @@
-import parseHtml from 'html-react-parser'
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
@@ -6,6 +5,7 @@ import { LoadingComponent } from "../../../../components/Loading/Loading"
 import { Button } from "../../../../components/UI/Button"
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 import { LessonService } from "../../../../services/LessonService"
+import { parseHtml } from "../../../../utils/parseHtml"
 interface ILesson {
     name?: string
     content?: string

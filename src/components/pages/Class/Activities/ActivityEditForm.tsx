@@ -1,4 +1,3 @@
-import parseHtml from 'html-react-parser'
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, DatePicker, Divider, Form, Input, InputNumber, List, message, Modal, Radio, Result, Row, Select, Space, Spin, Switch, Typography } from "antd"
 import { QuestionService } from "../../../../services/QuestionService"
@@ -8,6 +7,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ClassTopicService } from '../../../../services/ClassTopicService'
 import router from 'next/router'
 import { delay } from '../../../../utils/delay'
+import { parseHtml } from "../../../../utils/parseHtml"
 
 interface IActivityFormProps {
     classId: string
