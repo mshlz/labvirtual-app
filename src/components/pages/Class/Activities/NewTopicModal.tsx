@@ -21,7 +21,6 @@ export const NewTopicModal = (props: INewTopicModal) => {
             classId: props.classId
         })
         .then(r => {
-            console.log('[Topic Form] Sucess => ', r)
             form.resetFields()
             typeof props.handleSuccess == 'function' && props.handleSuccess()
         })

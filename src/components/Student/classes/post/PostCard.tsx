@@ -32,7 +32,6 @@ export const PostCard = (props: IPostItem) => {
             ...formData,
             post_uuid: props._id
         }
-        console.log(data)
 
         // validate
         const isValid = await ValidateForm(
@@ -102,7 +101,7 @@ export const PostCard = (props: IPostItem) => {
         {props.comments_enabled && user &&
             <div className="card-footer bg-white d-flex align-items-center p-3">
                 <div className="rounded-circle mr-3" style={{ width: '32px', height: '32px', overflow: 'hidden' }}>
-                    <img src={user.avatar_url || '/assets/images/blank-profile.png'} alt={user.name} />
+                    <img src={user['avatar_url'] || '/assets/images/blank-profile.png'} alt={user.name} />
                 </div>
                 <Form onSubmit={handleSubmitComment} ref={formRef} className="d-flex align-items-center" style={{ flex: 1 }}>
                     <Input name="text" inline="mb-0 w-100" cssClasses="rounded-pill d-inline" placeholder="Digite seu comentário..." />

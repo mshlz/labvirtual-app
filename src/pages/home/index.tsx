@@ -7,7 +7,6 @@ const HomePage = () => {
     useEffect(() => {
         (async () => {
             const u = await UserService.getProfile()
-            console.log('user', u)
         })()
     }, [])
 

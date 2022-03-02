@@ -22,7 +22,6 @@ export const Sidebar = (props) => {
   })
 
   const handleSidebarClick = (data) => {
-    console.log(data)
     router.push(data.key)
   }
 

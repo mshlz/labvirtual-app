@@ -45,7 +45,6 @@ const MuralNewPost = (props: IMuralNewPost) => {
     }
 
     const handleCancel = () => {
-        console.log('Clicked cancel button');
         setOpen(false);
     };
 

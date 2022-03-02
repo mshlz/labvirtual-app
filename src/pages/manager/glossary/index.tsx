@@ -18,7 +18,6 @@ const GlossaryListPage = () => {
     useEffect(() => {
         setLoading(true)
         loadResources()
-        console.log('changed ', page)
     }, [page])
 
     const loadResources = async () => {

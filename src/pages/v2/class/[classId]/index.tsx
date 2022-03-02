@@ -24,7 +24,6 @@ const ClassMural = () => {
 
     const loadResource = async () => {
         const result = await ClassService.get(classId)
-        console.log(result)
         setKlass(result)
     }
 

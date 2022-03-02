@@ -40,7 +40,6 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
 
     const loadActivities = async () => {
         const result = await ClassworkService.getFromClass(props.classId)
-        console.log('activities', result)
         setActivities(result)
     }
 
@@ -95,7 +94,7 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
                 </Col>
 
                 {topics.map(topic =>
-                    <Col span={24} style={{ marginBottom: '24px' }}>
+                    <Col key={topic._id} span={24} style={{ marginBottom: '24px' }}>
                         <Typography.Title level={2}>{topic.name}</Typography.Title>
                         <Divider style={{ margin: '12px 0' }} />
                         <Collapse
