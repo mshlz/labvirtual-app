@@ -1,10 +1,7 @@
-import { faTasks } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Card, Typography } from "antd"
 import Avatar from "antd/lib/avatar/avatar"
-import { formatRelative, parseISO } from "date-fns"
-import { ptBR } from "date-fns/locale"
 import { ReactNode } from "react"
+import { relativeDate } from "../../../../utils/date"
 
 interface ISimpleMuralPost {
     title: string
@@ -30,7 +27,7 @@ const SimpleMuralPost = (props: ISimpleMuralPost) => {
                 <Typography.Text>{props.title}</Typography.Text>
             }
             description={
-                props.date && formatRelative(typeof props.date === 'string' ? parseISO(props.date) : props.date, Date.now(), { locale: ptBR })
+                props.date && relativeDate(props.date)
             }
         />
 

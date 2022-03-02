@@ -3,12 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button, Card, Comment, Form, List, Popconfirm, Tooltip, Typography } from "antd"
 import Avatar from "antd/lib/avatar/avatar"
 import TextArea from "antd/lib/input/TextArea"
-import { formatRelative, parseISO } from "date-fns"
-import { ptBR } from "date-fns/locale"
 import { ReactNode, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { useApp } from "../../../../context/AppContext"
 import { CommentService } from "../../../../services/CommentService"
+import { relativeDate } from "../../../../utils/date"
 import { parseHtml } from "../../../../utils/parseHtml"
 
 
@@ -102,8 +101,8 @@ const MuralPost = (props: IMuralPost) => {
                         avatar: user.avatar_url || '/assets/images/blank-profile.png',
                     },
                     content: result.text,
-                    datetime: <Tooltip title={<p>{(new Date(result.createdAt)).toISOString()}</p>}>
-                        <span>{formatRelative(new Date(result.createdAt), new Date(), { locale: ptBR })}</span>
+                    datetime: <Tooltip title={<p>{result.createdAt}</p>}>
+                        <span>{relativeDate(result.createdAt)}</span>
                     </Tooltip>,
                     _id: result._id,
                 }])
@@ -151,7 +150,7 @@ const MuralPost = (props: IMuralPost) => {
                 <Typography.Text>{props.title}</Typography.Text>
             }
             description={
-                props.date && formatRelative(typeof props.date === 'string' ? parseISO(props.date) : props.date, Date.now(), { locale: ptBR })
+                props.date && relativeDate(props.date)
             }
         />
 

@@ -1,5 +1,4 @@
-import { formatRelative, parseISO } from "date-fns"
-import { ptBR } from "date-fns/locale"
+import { relativeDate } from "../../../../utils/date"
 
 export interface ICommentItem {
     id: string
@@ -15,7 +14,7 @@ export const CommentItem = (props: ICommentItem) => {
             <img src={props.avatar_url || "/assets/images/blank-profile.png"} alt={props.author} />
         </div>
         <div>
-            <h5 style={{ color: '#3c4043', fontWeight: 600 }}>{props.author}<span> &bull; </span><small>{formatRelative(parseISO(props.created_at), Date.now(), { locale: ptBR })}</small></h5>
+            <h5 style={{ color: '#3c4043', fontWeight: 600 }}>{props.author}<span> &bull; </span><small>{relativeDate(props.created_at)}</small></h5>
             <div className="mt-1" style={{ fontSize: '.9rem' }}>
                 {props.text}
             </div>

@@ -1,8 +1,7 @@
 import { Col, Row, Tooltip } from "antd"
-import { formatRelative } from "date-fns"
-import { ptBR } from "date-fns/locale"
 import { useEffect, useState } from "react"
 import { PostService } from "../../../../services/PostService"
+import { relativeDate } from "../../../../utils/date"
 import { LoadingWrapper } from "../../../Loading/Loading"
 import MuralNewPost from "../Mural/MuralNewPost"
 import MuralPost from "../Mural/MuralPost"
@@ -54,7 +53,7 @@ export const MuralTab = (props: MuralTabProps) => {
                                 ),
                                 datetime: (
                                     <Tooltip title={<p>{(new Date(comment.createdAt)).toISOString()}</p>}>
-                                        <span>{formatRelative(new Date(comment.createdAt), new Date(), { locale: ptBR })}</span>
+                                        <span>{relativeDate(comment.createdAt)}</span>
                                     </Tooltip>
                                 ),
                             }))}

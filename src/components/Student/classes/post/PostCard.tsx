@@ -1,15 +1,14 @@
 import { Form } from "@unform/web"
 import React, { useRef, useState } from "react"
+import { toast } from "react-toastify"
 import { useApp } from "../../../../context/AppContext"
+import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
+import { CommentService } from "../../../../services/CommentService"
+import { relativeDate } from "../../../../utils/date"
+import { parseHtml } from "../../../../utils/parseHtml"
 import { Button } from "../../../UI/Button"
 import { Input } from "../../../UI/Input"
 import { CommentItem } from "./CommentItem"
-import { formatRelative, parseISO } from 'date-fns'
-import ptBR from "date-fns/locale/pt-BR/index.js"
-import { CommentService } from "../../../../services/CommentService"
-import { ValidateForm, Yup } from "../../../../plugins/validation/FormValidator"
-import { toast } from "react-toastify"
-import { parseHtml } from "../../../../utils/parseHtml"
 
 
 export interface IPostItem {
@@ -67,7 +66,7 @@ export const PostCard = (props: IPostItem) => {
                 </div>
                 <div>
                     <h5 style={{ color: '#3c4043', fontWeight: 600 }}>{props.author}</h5>
-                    <small><time >{formatRelative(parseISO(props.created_at), Date.now(), { locale: ptBR })}</time></small>
+                    <small><time >{relativeDate(props.created_at)}</time></small>
                 </div>
             </div>
 
