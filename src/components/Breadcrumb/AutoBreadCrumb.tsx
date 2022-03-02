@@ -55,7 +55,7 @@ const translationMap: { [key: string]: (router: NextRouter) => IBreadcrumbItem }
     }),
     'activity': router => ({
         name: 'Atividades',
-        href: router.asPath.split('activity')[0] + 'activities'
+        href: router.asPath.split('activity')[0] + '#activities'
     }),
     '[activityId]': router => ({
         name: 'Atividade',
