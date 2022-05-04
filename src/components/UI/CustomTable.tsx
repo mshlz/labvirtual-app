@@ -99,10 +99,16 @@ export const CustomTable = ({ title, columns, data, meta, actions, createButton,
     //     typeof onSearch == 'function' && onSearch(data.search)
     // }
 
-    const getValue = (data, key) => {
-        const path = key.split('.')
-        let _data = Object.assign({}, data)
+    // 🚬 this should be refactored
+    const getValue = (data, key: string) => {
+        const [base, mapKey] = key.split('*.')
+        const path = !base ? [] : base.split('.')
+        let _data = Array.isArray(data) ? data : Object.assign({}, data)
         path.forEach(k => _data = _data && _data[k])
+        if (_data && mapKey && Array.isArray(_data)) {
+            _data = _data.map(v => getValue(v, mapKey)).join(', ')
+        }
+
         return _data || ''
     }
 
