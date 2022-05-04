@@ -51,13 +51,34 @@ export const Routes: RouteItem[] = [
                 // icon: 'fas fa-tachometer-alt',
             },
             {
+                path: '/page-sections',
+                title: 'Seções de Página',
+                // icon: 'fas fa-tachometer-alt',
+            },
+            {
+                path: '/pages',
+                title: 'Páginas',
+                // icon: 'fas fa-tachometer-alt',
+            },
+            {
                 path: '/subjects',
                 title: 'Assuntos',
                 // icon: 'fas fa-tachometer-alt',
             },
+            
             {
                 path: '/lessons',
                 title: 'Conteúdo Teórico',
+                // icon: 'fas fa-tachometer-alt',
+            },
+            {
+                path: '/simulators',
+                title: 'Simuladores',
+                // icon: 'fas fa-tachometer-alt',
+            },
+            {
+                path: '/games',
+                title: 'Jogos',
                 // icon: 'fas fa-tachometer-alt',
             },
             {
