@@ -98,7 +98,7 @@ const MuralPost = (props: IMuralPost) => {
                     author: {
                         _id: user._id,
                         name: user.name,
-                        avatar: user.avatar_url || '/assets/images/blank-profile.png',
+                        avatar: '/assets/images/blank-profile.png',
                     },
                     content: result.text,
                     datetime: <Tooltip title={<p>{result.createdAt}</p>}>
