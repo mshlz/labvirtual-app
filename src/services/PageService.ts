@@ -28,4 +28,8 @@ export class PageService {
     static async getFromSections(sections: string | string[]) {
         return (await Axios.post(`/pages/from/sections`, { sections: Array.isArray(sections) ? sections : [sections] })).data.data
     }
+
+    static async getRouterInfo(): Promise<{sections: any[], pages: any[]}> {
+        return (await Axios.get(`/pages/router-info`)).data.data
+    }
 }
