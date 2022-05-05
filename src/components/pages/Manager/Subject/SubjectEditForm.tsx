@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 import { DisciplineService } from "../../../../services/DisciplineService"
 import { SubjectService } from "../../../../services/SubjectService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
+import { ImagePicker } from "../../../UI/ImagePicker"
 
 interface ISubjectFormProps {
     subjectId?: string
@@ -77,8 +78,8 @@ export const SubjectEditForm = ({ subjectId }: ISubjectFormProps) => {
                 <Form.Item label="Nome do assunto" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item label="Icone do assunto" name="icon">
-                    <Input />
+                <Form.Item label="Icone" name="icon">
+                    <ImagePicker />
                 </Form.Item>
                 <Form.Item label="Disciplina" name="discipline" rules={[{ required: true }]}>
                     <Select

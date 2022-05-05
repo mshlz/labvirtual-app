@@ -7,6 +7,7 @@ import { DisciplineService } from "../../../../services/DisciplineService"
 import { SimulatorService } from "../../../../services/SimulatorService"
 import { SubjectService } from "../../../../services/SubjectService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
+import { ImagePicker } from "../../../UI/ImagePicker"
 import { RichTextSunEditor } from "../../../UI/RichTextSunEditor"
 
 interface ISimulatorFormProps {
@@ -100,6 +101,9 @@ export const SimulatorEditForm = ({ simulatorId: id }: ISimulatorFormProps) => {
         />
         <Card title="Informações básicas" loading={isLoading}>
             <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit} onValuesChange={handleValuesChange}>
+                <Form.Item label="Icone" name="icon">
+                    <ImagePicker />
+                </Form.Item>
                 <Form.Item label="Nome do conteúdo" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
                 </Form.Item>

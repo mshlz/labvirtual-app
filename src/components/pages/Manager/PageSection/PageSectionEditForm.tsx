@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { PageSectionService } from "../../../../services/PageSectionService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
+import { ImagePicker } from "../../../UI/ImagePicker"
 
 interface IPageSectionFormProps {
     pageSectionId?: string
@@ -72,6 +73,9 @@ export const PageSectionEditForm = ({ pageSectionId: id }: IPageSectionFormProps
         />
         <Card title="Informações básicas" loading={isLoading}>
             <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit}>
+                <Form.Item label="Icone" name="icon">
+                    <ImagePicker />
+                </Form.Item>
                 <Form.Item label="Nome da seção" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
                 </Form.Item>

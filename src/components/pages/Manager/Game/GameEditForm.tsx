@@ -7,6 +7,7 @@ import { DisciplineService } from "../../../../services/DisciplineService"
 import { GameService } from "../../../../services/GameService"
 import { SubjectService } from "../../../../services/SubjectService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
+import { ImagePicker } from "../../../UI/ImagePicker"
 import { RichTextSunEditor } from "../../../UI/RichTextSunEditor"
 
 interface IGameFormProps {
@@ -100,6 +101,9 @@ export const GameEditForm = ({ gameId: id }: IGameFormProps) => {
         />
         <Card title="Informações básicas" loading={isLoading}>
             <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit} onValuesChange={handleValuesChange}>
+                <Form.Item label="Icone" name="icon">
+                    <ImagePicker />
+                </Form.Item>
                 <Form.Item label="Nome do conteúdo" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
                 </Form.Item>

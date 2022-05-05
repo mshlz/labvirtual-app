@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { DisciplineService } from "../../../../services/DisciplineService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
+import { ImagePicker } from "../../../UI/ImagePicker"
 
 interface IDisciplineFormProps {
     disciplineId?: string
@@ -69,6 +70,9 @@ export const DisciplineEditForm = ({ disciplineId }: IDisciplineFormProps) => {
             <Form name="basic" form={form} layout="vertical" onFinish={handleSubmit}>
                 <Form.Item label="Nome da disciplina" name="name" rules={[{ required: true, min: 3 }]}>
                     <Input />
+                </Form.Item>
+                <Form.Item label="Icone" name="icon">
+                    <ImagePicker />
                 </Form.Item>
                 <Button type="primary" htmlType="submit" loading={isSubmitting}>Salvar</Button>
             </Form>
