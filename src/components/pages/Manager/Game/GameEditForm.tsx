@@ -44,7 +44,7 @@ export const GameEditForm = ({ gameId: id }: IGameFormProps) => {
     const handleValuesChange = (changes) => {
         if (changes.disciplines) {
             loadSubjects(changes.disciplines)
-            form.resetFields(['subject'])
+            form.resetFields(['subjects'])
         }
     }
 

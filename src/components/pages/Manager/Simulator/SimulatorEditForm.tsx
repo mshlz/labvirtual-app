@@ -42,9 +42,9 @@ export const SimulatorEditForm = ({ simulatorId: id }: ISimulatorFormProps) => {
     }
 
     const handleValuesChange = (changes) => {
-        if (changes.discipline) {
-            loadSubjects(changes.discipline)
-            form.resetFields(['subject'])
+        if (changes.disciplines) {
+            loadSubjects(changes.disciplines)
+            form.resetFields(['subjects'])
         }
     }
 
