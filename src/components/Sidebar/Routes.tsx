@@ -1,4 +1,4 @@
-import { ExperimentOutlined, HomeOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons';
+import { ExperimentOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ReactNode } from 'react';
 
 export interface RouteItem {
@@ -21,6 +21,11 @@ export const Routes: RouteItem[] = [
         path: '/v2/my-classes',
         title: 'Minhas turmas',
         icon: <HomeOutlined />,
+    },
+    {
+        path: '/pages/home',
+        title: 'Ajuda',
+        icon: <InfoCircleOutlined />,
     },
     // {
     //     path: '#',
