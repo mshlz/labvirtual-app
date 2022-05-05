@@ -5,6 +5,10 @@ export class UserService {
         return (await Axios.get('/users/profile')).data.data
     }
 
+    static async listTeachers() {
+        return (await Axios.get('/users/teachers/list')).data.data
+    }
+
     static async updateProfile(data) {
         return (await Axios.post('/users/update', data)).data.data
     }
