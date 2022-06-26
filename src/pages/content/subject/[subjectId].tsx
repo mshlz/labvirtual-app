@@ -8,6 +8,7 @@ import { GameService } from "../../../services/GameService"
 import { LessonService } from "../../../services/LessonService"
 import { SimulatorService } from "../../../services/SimulatorService"
 import { SubjectService } from "../../../services/SubjectService"
+import { VideoService } from "../../../services/VideoService"
 
 const SubjectLessonsPage = () => {
     const subjectId = router.query.subjectId as string
@@ -16,6 +17,7 @@ const SubjectLessonsPage = () => {
     const [lessons, setLessons] = useState([])
     const [simulators, setSimulators] = useState([])
     const [games, setGames] = useState([])
+    const [videos, setVideos] = useState([])
 
     useEffect(() => {
         if (subjectId) {
@@ -33,6 +35,8 @@ const SubjectLessonsPage = () => {
         setSimulators(result2)
         const result3 = await GameService.getFromSubjects(subjectId)
         setGames(result3)
+        const result4 = await VideoService.getFromSubjects(subjectId)
+        setVideos(result4)
 
         setIsLoading(false)
     }
@@ -71,7 +75,7 @@ const SubjectLessonsPage = () => {
                 <Typography.Title level={2}>Simuladores</Typography.Title>
             </Col>
             {simulators?.map(sim =>
-                <Col key={sim._id}  xs={24} md={12} xl={8}>
+                <Col key={sim._id} xs={24} md={12} xl={8}>
                     <GameSimCard id={sim._id} name={sim.name} icon={sim.icon} link={`/content/simulator/${sim._id}`} />
                 </Col>
             )}
@@ -81,7 +85,16 @@ const SubjectLessonsPage = () => {
             </Col>
             {games.map(game =>
                 <Col key={game._id} xs={24} md={12} xl={8}>
-                    <GameSimCard id={game._id} name={game.name} icon={game.icon} link={`/content/game/${game._id}`}  />
+                    <GameSimCard id={game._id} name={game.name} icon={game.icon} link={`/content/game/${game._id}`} />
+                </Col>
+            )}
+
+            <Col span={24}>
+                <Typography.Title level={2}>Videos</Typography.Title>
+            </Col>
+            {videos.map(video =>
+                <Col key={video._id} xs={24} md={12} xl={8}>
+                    <GameSimCard id={video._id} name={video.name} icon={video.icon} link={`/content/video/${video._id}`} />
                 </Col>
             )}
 
