@@ -178,10 +178,11 @@ export const GlossaryEntryPlugin: Plugin = {
     },
 
     generateListComponent: function (core, items: { id: string, name: string }[]) {
-        let listHtml = document.createElement('list');
+        let listHtml = document.createElement('ul');
         listHtml.classList.add('list-group', 'list-group-flush');
 
         items.map(e => {
+            const li = document.createElement('li')
             const a = document.createElement('a')
             a.innerText = e.name;
             a.href = "#"
@@ -190,8 +191,8 @@ export const GlossaryEntryPlugin: Plugin = {
                 event.preventDefault();
                 this.insertEntry.call(this, core, e);
             }
-
-            listHtml.appendChild(a)
+            li.appendChild(a)
+            listHtml.appendChild(li)
         })
 
         if (items.length > 0)
