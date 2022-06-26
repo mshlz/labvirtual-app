@@ -75,7 +75,7 @@ export const ActivityEditForm = ({ classworkId, classId }: IActivityFormProps) =
             console.log(reqData, result)
             message.success(`Atividade ${classworkId ? 'atualizada' : 'criada'} com sucesso!`)
             await delay(2000)
-            router.push(`/v2/class/${classId}/activities`)
+            router.push(`/v2/class/${classId}#activities`)
         } catch (err) {
             console.error(err)
             message.error(err.message, 10000)
