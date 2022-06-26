@@ -1,6 +1,6 @@
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { faPencilAlt, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Button } from "antd"
+import { Button, Popconfirm } from "antd"
 import Link from "next/link"
 import router from "next/router"
 import React, { useEffect, useState } from "react"
@@ -50,6 +50,12 @@ const DisciplineListPage = () => {
                             <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
 
                         </Link>
+                        <Popconfirm
+                            title="Você deseja deletar? Essa ação é irreversivel!"
+                            onConfirm={() => DisciplineService.delete(row._id).then(loadResources)}
+                        >
+                            <Button icon={<FontAwesomeIcon icon={faTimes} />} />
+                        </Popconfirm>
                     </>
                 }
             />
