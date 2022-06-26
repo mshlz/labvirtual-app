@@ -72,6 +72,11 @@ export const Routes: RouteItem[] = [
                 // icon: 'fas fa-tachometer-alt',
             },
             {
+                path: '/videos',
+                title: 'Videos',
+                // icon: 'fas fa-tachometer-alt',
+            },
+            {
                 path: '/games',
                 title: 'Jogos',
                 // icon: 'fas fa-tachometer-alt',
