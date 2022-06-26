@@ -1,6 +1,6 @@
 import router from "next/router"
-import { ActivityEditForm } from "../../../../../components/pages/Class/Activities/ActivityEditForm"
-import { AdminLayout } from "../../../../../layouts/AdminLayout"
+import { ActivityEditForm } from "../../../../../../components/pages/Class/Activities/ActivityEditForm"
+import { AdminLayout } from "../../../../../../layouts/AdminLayout"
 
 const EditActivity = () => {
     const classId = router.query.classId as string
