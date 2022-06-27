@@ -63,7 +63,17 @@ const ClassMural = () => {
                                 // height: 150
                             }}
                             title={
-                                <Typography.Title level={2} style={{ marginBottom: '48px' }}>Turma {klass?.name}</Typography.Title>
+                                <Typography.Title level={2} style={{ marginBottom: '48px' }}>
+                                    Turma {klass?.name}
+                                    {' '}
+                                    <Typography.Text
+                                        title="Código da turma"
+                                        style={{ fontSize: 16 }}
+                                        copyable
+                                    >
+                                        {klass?.code}
+                                    </Typography.Text>
+                                </Typography.Title>
                             }
                             activeTabKey={activeTab}
                             tabList={[
