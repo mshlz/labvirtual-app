@@ -3,6 +3,7 @@ import Avatar from "antd/lib/avatar/avatar"
 import { ReactNode } from "react"
 import router from "next/router"
 import { parseHtml } from "../../../../utils/parseHtml"
+import { UserType } from "../../../../models/User"
 
 interface IActivityPanel {
     classId: string
@@ -13,6 +14,7 @@ interface IActivityPanel {
     icon?: ReactNode
     loading?: boolean
     key: any
+    userType: UserType
 }
 
 export const ActivityPanel = (props: IActivityPanel) => {
@@ -46,7 +48,9 @@ export const ActivityPanel = (props: IActivityPanel) => {
                 <Col span={6}>
                     <Typography.Paragraph style={{ textAlign: 'right' }}>Devolvido</Typography.Paragraph>
                 </Col>
-
+            </Row>
+            <Row>
+                <Typography.Text>tipo: {props.userType}</Typography.Text>
             </Row>
             <Typography.Paragraph>
                 {parseHtml(props.description)}

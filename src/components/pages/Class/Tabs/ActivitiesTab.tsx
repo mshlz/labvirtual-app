@@ -3,11 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Collapse, Divider, Row, Space, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useApp } from "../../../../context/AppContext";
+import { ClassworkSubmission } from "../../../../models/ClassworkSubmission";
 import { ClassTopicService } from "../../../../services/ClassTopicService";
 import { ClassworkService } from "../../../../services/ClassworkService";
 import { LoadingComponent, LoadingWrapper } from "../../../Loading/Loading";
 import { Loading } from "../../../Loading/Loading2";
 import { ActivityPanel } from "../Activities/ActivityPanel";
+import { ActivityStudentCard } from "../Activities/ActivityStudentCard";
 import { NewTopicModal } from "../Activities/NewTopicModal";
 
 
@@ -17,6 +20,7 @@ interface ActivitiesTabProps {
 
 export const ActivitiesTab = (props: ActivitiesTabProps) => {
     const router = useRouter()
+    const { user } = useApp()
     const [isLoading, setIsLoading] = useState(true)
 
     const [topics, setTopics] = useState([])
@@ -44,21 +48,24 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
     }
 
     const renderTopicAtivities = topic => {
-        const topicActivities = activities.filter(v => v.topic === topic._id)
+        const topicActivities = activities.filter(v => v.topic === topic._id || v.classwork.topic === topic._id)
 
         if (topicActivities.length === 0)
-            return <Typography.Title level={5}>Não ha items</Typography.Title>
+            return <Typography.Title level={5}>Não há items</Typography.Title>
 
         return topicActivities.map(v =>
-            <ActivityPanel
-                key={v._id}
-                classId={props.classId}
-                id={v._id}
-                title={v.name}
-                description={v.description}
-                createdAt={v.createdAt}
-                icon={"A"}
-            />
+            v.classwork
+                ? <ActivityStudentCard key={v._id} classworkSubmission={ClassworkSubmission.create(v)} />
+                : <ActivityPanel
+                    key={v._id}
+                    classId={props.classId}
+                    id={v._id}
+                    title={v.name}
+                    description={v.description}
+                    createdAt={v.createdAt}
+                    icon={"A"}
+                    userType={user.type}
+                />
         )
     }
 

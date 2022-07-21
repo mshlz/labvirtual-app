@@ -25,4 +25,11 @@ export class ClassworkService {
         return (await Axios.post(`/classworks/from/class`, { classId })).data.data
     }
 
+    static async getAssignment(assignmentId: string) {
+        return (await Axios.post(`/classwork-assignment/get-basic`, { assignmentId })).data.data
+    }
+
+    static async submit(classworkId: string, answers) {
+        return (await Axios.post(`/classwork-assignment/submit`, { classworkId, answers })).data.data
+    }
 }

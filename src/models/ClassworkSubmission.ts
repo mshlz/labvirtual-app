@@ -11,6 +11,7 @@ export class ClassworkSubmission {
     status: 'NEW' | 'SUBMITTED' | 'RETURNED'
     createdAt: string
     updatedAt: string
+    grade: number
 
     static create(data: Partial<ClassworkSubmission>) {
         const obj = new ClassworkSubmission()
@@ -18,6 +19,7 @@ export class ClassworkSubmission {
         obj.status = data.status
         obj.createdAt = data.createdAt
         obj.updatedAt = data.updatedAt
+        obj.grade = data.grade
 
         setDataOrRef(obj, 'class', data, Class)
         setDataOrRef(obj, 'classwork', data, Classwork)

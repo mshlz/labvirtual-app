@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Result, Row, Typography } from "antd"
+import { Button, Card, Col, Form, message, Result, Row, Typography } from "antd"
 import { useForm } from "antd/lib/form/Form"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -7,6 +7,7 @@ import { QuestionItem } from "../../../../../../components/QuestionItem/Question
 import { AdminLayout } from "../../../../../../layouts/AdminLayout"
 import { Classwork } from "../../../../../../models/Classwork"
 import { ClassworkService } from "../../../../../../services/ClassworkService"
+import { delay } from "../../../../../../utils/delay"
 
 interface QuestionAnswer {
     questionId: string,
@@ -45,18 +46,24 @@ const StartActivity = () => {
     }
 
 
-    const handleSubmit = (formData: FormData) => {
+    const handleSubmit = async (formData: FormData) => {
         setIsSubmitting(true)
         const data = {
             classworkId: activityId,
             answers: formData.answers
         }
 
-        console.log(data)
-
-        setTimeout(() => {
+        try {
+            await ClassworkService.submit(data.classworkId, data.answers)
+            message.success('Atividade entregue com sucesso!')
+            await delay(2000)
+            router.replace(`/v2/class/${router.query.classId}/activity/${router.query.activityId}`)
+        } catch (err) {
+            message.error(`Falha ao entregar atividade!`)
+            message.error(err.response?.data?.message || err.message)
+        } finally {
             setIsSubmitting(false)
-        }, 2000);
+        }
     }
 
     const handleFailed = (event) => {
