@@ -35,8 +35,8 @@ const QuestionListPage = () => {
                 columns={[
                     { key: '_id', label: 'ID' },
                     { key: 'name', label: 'Nome' },
-                    { key: 'discipline.name', label: 'Disciplina' },
-                    { key: 'subject.name', label: 'Assunto' },
+                    { key: 'disciplines.*.name', label: 'Disciplinas' },
+                    { key: 'subjects.*.name', label: 'Assuntos' },
                 ]}
                 meta={{
                     page: page,
