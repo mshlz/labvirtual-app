@@ -9,6 +9,23 @@ import { RouteItem, Routes } from "./Routes"
 const { Sider } = Layout
 const { SubMenu } = Menu
 
+const assembleMenu = (route: RouteItem, basePath: string = "") => {
+  const routeKey = basePath.concat(route.path)
+  if (route.children) {
+    return (
+      <SubMenu icon={route.icon && route.icon} title={route.title}>
+        {route.children.map((subRoute) => assembleMenu(subRoute, routeKey))}
+      </SubMenu>
+    )
+  }
+
+  return (
+    <Menu.Item key={routeKey} icon={route.icon && route.icon}>
+      {route.title}
+    </Menu.Item>
+  )
+}
+
 export const Sidebar = (props) => {
   const router = useRouter()
   const { disciplines, user } = useApp()
@@ -50,29 +67,9 @@ export const Sidebar = (props) => {
         </Space>
       </Card>
       <Menu theme="light" mode="inline" onClick={handleSidebarClick}>
-        {Routes.concat(disciplinesRoutes).map((route, idx) => {
-          if (route.children) {
-            return (
-              <SubMenu
-                key={idx}
-                icon={route.icon && route.icon}
-                title={route.title}
-              >
-                {route.children.map((subRoute) => (
-                  <Menu.Item key={(route.base ?? "").concat(subRoute.path)}>
-                    {subRoute.title}
-                  </Menu.Item>
-                ))}
-              </SubMenu>
-            )
-          }
-
-          return (
-            <Menu.Item key={route.path} icon={route.icon && route.icon}>
-              {route.title}
-            </Menu.Item>
-          )
-        })}
+        {Routes.concat(disciplinesRoutes).map((route, idx) =>
+          assembleMenu(route)
+        )}
       </Menu>
     </Sider>
   )

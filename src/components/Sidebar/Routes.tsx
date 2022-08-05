@@ -13,7 +13,6 @@ export interface RouteItem {
   icon?: ReactNode
   scope?: "student" | "teacher" | "admin"
   permission?: string
-  base?: string
   children?: RouteItem[]
 }
 
@@ -46,10 +45,9 @@ export const Routes: RouteItem[] = [
   //     ]
   // },
   {
-    path: "#",
+    path: "/manager",
     title: "Gerenciamento",
     icon: <ProfileOutlined />,
-    base: "/manager",
     children: [
       {
         path: "/institutions",
@@ -103,14 +101,20 @@ export const Routes: RouteItem[] = [
         // icon: 'fas fa-tachometer-alt',
       },
       {
-        path: "/page-sections",
-        title: "Seções de Página",
-        // icon: 'fas fa-tachometer-alt',
-      },
-      {
-        path: "/pages",
-        title: "Páginas",
-        // icon: 'fas fa-tachometer-alt',
+        path: "",
+        title: "Páginas de Ajuda",
+        children: [
+          {
+            path: "/page-sections",
+            title: "Seções",
+            // icon: 'fas fa-tachometer-alt',
+          },
+          {
+            path: "/pages",
+            title: "Páginas",
+            // icon: 'fas fa-tachometer-alt',
+          },
+        ],
       },
     ],
   },
