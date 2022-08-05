@@ -3,12 +3,12 @@ import { VideoEditForm } from "../../../../components/pages/Manager/Video/VideoE
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateVideoPage = () => {
-    const router = useRouter()
-    const videoId = router.query.id as string
+  const router = useRouter()
+  const videoId = router.query.id as string
 
-    return <AdminLayout>
-        {videoId && <VideoEditForm videoId={videoId} />}
-    </AdminLayout >
+  return (
+    <AdminLayout>{videoId && <VideoEditForm videoId={videoId} />}</AdminLayout>
+  )
 }
 
 export default UpdateVideoPage

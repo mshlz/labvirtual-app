@@ -1,9 +1,9 @@
-import { Card, Col, Image, Row, Space, Typography } from "antd";
-import htmlParser from "html-react-parser";
-import router from "next/router";
-import { useEffect, useState } from "react";
-import { AdminLayout } from "../../../layouts/AdminLayout";
-import { VideoService } from "../../../services/VideoService";
+import { Card, Col, Image, Row, Space, Typography } from "antd"
+import htmlParser from "html-react-parser"
+import router from "next/router"
+import { useEffect, useState } from "react"
+import { AdminLayout } from "../../../layouts/AdminLayout"
+import { VideoService } from "../../../services/VideoService"
 
 // TODO THIS MUST BE MOVED TO UTILS (refactor branch)
 // TODO ADD GLOBAL MODAL SERVICE
@@ -11,11 +11,11 @@ const parseHtml = (value, openGlossaryEntry?) => {
   return htmlParser(value, {
     replace: (node) => {
       if (node.type == "tag") {
-        let current: any = node;
+        let current: any = node
         switch (node["name"]) {
           case "img":
-            current = <Image src={node["attribs"]["src"]} />;
-            break;
+            current = <Image src={node["attribs"]["src"]} />
+            break
           case "span":
             if (
               node["attribs"] &&
@@ -23,8 +23,8 @@ const parseHtml = (value, openGlossaryEntry?) => {
             ) {
               const text = (node["children"] || [])
                 .filter((v) => typeof v.data == "string")
-                .reduce((v, c) => (v += c.data), "");
-              const uuid = node["attribs"]["id"];
+                .reduce((v, c) => (v += c.data), "")
+              const uuid = node["attribs"]["id"]
               current = (
                 <Typography.Text
                   style={{ borderBottom: "dashed 1px #333", cursor: "pointer" }}
@@ -32,34 +32,34 @@ const parseHtml = (value, openGlossaryEntry?) => {
                 >
                   {text}
                 </Typography.Text>
-              );
+              )
             }
-            break;
+            break
         }
-        return current;
+        return current
       }
-      return node;
+      return node
     },
-  });
-};
+  })
+}
 
 const VideoPage = () => {
-  const contentId = router.query.contentId as string;
-  const [video, setVideo] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const contentId = router.query.contentId as string
+  const [video, setVideo] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (contentId) {
-      loadResource(contentId);
+      loadResource(contentId)
     }
-  }, [contentId]);
+  }, [contentId])
 
   const loadResource = async (contentId: string) => {
-    setIsLoading(true);
-    const result = await VideoService.get(contentId);
-    setVideo(result);
-    setIsLoading(false);
-  };
+    setIsLoading(true)
+    const result = await VideoService.get(contentId)
+    setVideo(result)
+    setIsLoading(false)
+  }
 
   return (
     !isLoading && (
@@ -85,7 +85,7 @@ const VideoPage = () => {
         </Row>
       </AdminLayout>
     )
-  );
-};
+  )
+}
 
-export default VideoPage;
+export default VideoPage

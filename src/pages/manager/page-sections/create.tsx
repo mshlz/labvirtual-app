@@ -2,9 +2,11 @@ import { PageSectionEditForm } from "../../../components/pages/Manager/PageSecti
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreatePageSectionPage = () => {
-    return <AdminLayout>
-        <PageSectionEditForm />
+  return (
+    <AdminLayout>
+      <PageSectionEditForm />
     </AdminLayout>
+  )
 }
 
 export default CreatePageSectionPage

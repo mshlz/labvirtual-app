@@ -2,9 +2,11 @@ import { GameEditForm } from "../../../components/pages/Manager/Game/GameEditFor
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateGamePage = () => {
-    return <AdminLayout>
-        <GameEditForm />
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      <GameEditForm />
+    </AdminLayout>
+  )
 }
 
 export default CreateGamePage

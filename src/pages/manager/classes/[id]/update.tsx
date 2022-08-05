@@ -3,12 +3,10 @@ import { ClassEditForm } from "../../../../components/pages/Manager/Class/ClassE
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateClassPage = () => {
-    const router = useRouter()
-    const id = router.query.id as string
+  const router = useRouter()
+  const id = router.query.id as string
 
-    return <AdminLayout>
-        {id && <ClassEditForm classId={id} />}
-    </AdminLayout >
+  return <AdminLayout>{id && <ClassEditForm classId={id} />}</AdminLayout>
 }
 
 export default UpdateClassPage

@@ -2,9 +2,11 @@ import { ClassEditForm } from "../../../components/pages/Manager/Class/ClassEdit
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateClassPage = () => {
-    return <AdminLayout>
-        <ClassEditForm />
+  return (
+    <AdminLayout>
+      <ClassEditForm />
     </AdminLayout>
+  )
 }
 
 export default CreateClassPage

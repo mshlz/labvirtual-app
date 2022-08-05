@@ -3,12 +3,14 @@ import { SimulatorEditForm } from "../../../../components/pages/Manager/Simulato
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateSimulatorPage = () => {
-    const router = useRouter()
-    const simulatorId = router.query.id as string
+  const router = useRouter()
+  const simulatorId = router.query.id as string
 
-    return <AdminLayout>
-        {simulatorId && <SimulatorEditForm simulatorId={simulatorId} />}
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      {simulatorId && <SimulatorEditForm simulatorId={simulatorId} />}
+    </AdminLayout>
+  )
 }
 
 export default UpdateSimulatorPage

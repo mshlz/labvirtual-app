@@ -3,12 +3,14 @@ import { PageSectionEditForm } from "../../../../components/pages/Manager/PageSe
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdatePageSectionPage = () => {
-    const router = useRouter()
-    const sectionId = router.query.id as string
+  const router = useRouter()
+  const sectionId = router.query.id as string
 
-    return <AdminLayout>
-        {sectionId && <PageSectionEditForm pageSectionId={sectionId} />}
+  return (
+    <AdminLayout>
+      {sectionId && <PageSectionEditForm pageSectionId={sectionId} />}
     </AdminLayout>
+  )
 }
 
 export default UpdatePageSectionPage

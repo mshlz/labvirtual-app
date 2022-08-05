@@ -10,57 +10,67 @@ import { AdminLayout } from "../../../layouts/AdminLayout"
 import { SubjectService } from "../../../services/SubjectService"
 
 const SubjectListPage = () => {
-    const [data, setData] = useState(null)
-    const [isLoading, setLoading] = useState(false)
-    const [page, setPage] = useState(1)
-    const [total_count, setTotal] = useState(0)
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [total_count, setTotal] = useState(0)
 
-    useEffect(() => {
-        setLoading(true)
-        loadResources()
-    }, [page])
+  useEffect(() => {
+    setLoading(true)
+    loadResources()
+  }, [page])
 
-    const loadResources = async () => {
-        const result = await SubjectService.list(page)
-        setData(result.data)
-        setTotal(result.meta.total)
-        setLoading(false)
-    }
+  const loadResources = async () => {
+    const result = await SubjectService.list(page)
+    setData(result.data)
+    setTotal(result.meta.total)
+    setLoading(false)
+  }
 
-    return <AdminLayout>
-        {data ? <>
-            <CustomTable
-                title="Assuntos"
-                createButton={{ action: () => router.push("/manager/subjects/create") }}
-                columns={[
-                    { key: '_id', label: 'ID' },
-                    { key: 'name', label: 'Nome' },
-                    { key: 'discipline.name', label: 'Disciplina' },
-                ]}
-                meta={{
-                    page: page,
-                    per_page: 10,
-                    total_count: total_count
-                }}
-                onPageChange={setPage}
-                data={data}
-                isLoading={isLoading}
-                actions={row =>
-                    <>
-                        <Link href={`/manager/subjects/${row._id}/update`}>
-                            <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
-                        </Link>
-                        <Popconfirm
-                            title="Você deseja deletar? Essa ação é irreversivel!"
-                            onConfirm={() => SubjectService.delete(row._id).then(loadResources)}
-                        >
-                            <Button icon={<FontAwesomeIcon icon={faTimes} />} />
-                        </Popconfirm>
-                    </>
-                }
-            />
-        </> : <LoadingComponent />}
+  return (
+    <AdminLayout>
+      {data ? (
+        <>
+          <CustomTable
+            title="Assuntos"
+            createButton={{
+              action: () => router.push("/manager/subjects/create"),
+            }}
+            columns={[
+              { key: "_id", label: "ID" },
+              { key: "name", label: "Nome" },
+              { key: "discipline.name", label: "Disciplina" },
+            ]}
+            meta={{
+              page: page,
+              per_page: 10,
+              total_count: total_count,
+            }}
+            onPageChange={setPage}
+            data={data}
+            isLoading={isLoading}
+            actions={(row) => (
+              <>
+                <Link href={`/manager/subjects/${row._id}/update`}>
+                  <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
+                </Link>
+                <Popconfirm
+                  title="Você deseja deletar? Essa ação é irreversivel!"
+                  onConfirm={() =>
+                    SubjectService.delete(row._id).then(loadResources)
+                  }
+                >
+                  <Button icon={<FontAwesomeIcon icon={faTimes} />} />
+                </Popconfirm>
+              </>
+            )}
+          />
+        </>
+      ) : (
+        <LoadingComponent />
+      )}
     </AdminLayout>
+  )
 }
 
 export default SubjectListPage

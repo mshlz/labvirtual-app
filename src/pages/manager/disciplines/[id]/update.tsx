@@ -3,12 +3,14 @@ import { DisciplineEditForm } from "../../../../components/pages/Manager/Discipl
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateDisciplinePage = () => {
-    const router = useRouter()
-    const disciplineId = router.query.id as string
+  const router = useRouter()
+  const disciplineId = router.query.id as string
 
-    return <AdminLayout>
-        {disciplineId && <DisciplineEditForm disciplineId={disciplineId} />}
+  return (
+    <AdminLayout>
+      {disciplineId && <DisciplineEditForm disciplineId={disciplineId} />}
     </AdminLayout>
+  )
 }
 
 export default UpdateDisciplinePage

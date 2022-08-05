@@ -2,9 +2,11 @@ import { LessonEditForm } from "../../../components/pages/Manager/Lesson/LessonE
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateLessonPage = () => {
-    return <AdminLayout>
-        <LessonEditForm />
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      <LessonEditForm />
+    </AdminLayout>
+  )
 }
 
 export default CreateLessonPage

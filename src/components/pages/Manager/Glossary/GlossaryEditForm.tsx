@@ -1,96 +1,96 @@
-import { Button, Card, Form, Input, PageHeader, Select } from "antd";
-import { useForm } from "antd/lib/form/Form";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { DisciplineService } from "../../../../services/DisciplineService";
-import { GlossaryService } from "../../../../services/GlossaryService";
-import { SubjectService } from "../../../../services/SubjectService";
-import { transformResponseError } from "../../../../utils/transformResponseError";
-import { RichTextSunEditor } from "../../../UI/RichTextSunEditor";
+import { Button, Card, Form, Input, PageHeader, Select } from "antd"
+import { useForm } from "antd/lib/form/Form"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import { DisciplineService } from "../../../../services/DisciplineService"
+import { GlossaryService } from "../../../../services/GlossaryService"
+import { SubjectService } from "../../../../services/SubjectService"
+import { transformResponseError } from "../../../../utils/transformResponseError"
+import { RichTextSunEditor } from "../../../UI/RichTextSunEditor"
 
 interface IGlossaryFormProps {
-  glossaryItemId?: string;
+  glossaryItemId?: string
 }
 
 export const GlossaryEditForm = ({
   glossaryItemId: id,
 }: IGlossaryFormProps) => {
-  const [form] = useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
+  const [form] = useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
 
-  const [glossaryItemId, setGlossaryItemId] = useState(id);
-  const [disciplines, setDisciplines] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const [glossaryItemId, setGlossaryItemId] = useState(id)
+  const [disciplines, setDisciplines] = useState([])
+  const [subjects, setSubjects] = useState([])
 
   useEffect(() => {
-    loadDependencies();
-    if (glossaryItemId) loadGlossaryEntry();
-  }, []);
+    loadDependencies()
+    if (glossaryItemId) loadGlossaryEntry()
+  }, [])
 
   const loadDependencies = async () => {
-    const disciplines = await DisciplineService.list();
-    setDisciplines(disciplines.data);
-  };
+    const disciplines = await DisciplineService.list()
+    setDisciplines(disciplines.data)
+  }
 
   const loadSubjects = async (disciplineId: string) => {
-    if (!disciplineId) return;
-    const subjects = await SubjectService.getFromDisciplines(disciplineId);
-    setSubjects(subjects);
-  };
+    if (!disciplineId) return
+    const subjects = await SubjectService.getFromDisciplines(disciplineId)
+    setSubjects(subjects)
+  }
 
   const handleValuesChange = (changes) => {
     if (changes.discipline) {
-      loadSubjects(changes.discipline);
-      form.resetFields(["subject"]);
+      loadSubjects(changes.discipline)
+      form.resetFields(["subject"])
     }
-  };
+  }
 
   const loadGlossaryEntry = async () => {
-    setIsLoading(true);
-    const glossaryEntry = await GlossaryService.get(glossaryItemId);
+    setIsLoading(true)
+    const glossaryEntry = await GlossaryService.get(glossaryItemId)
 
     if (!glossaryEntry || !glossaryEntry._id) {
-      toast("Conteúdo não encontrada!", { type: "error" });
-      return setTimeout(() => router.push("/manager/glossary"), 4000);
+      toast("Conteúdo não encontrada!", { type: "error" })
+      return setTimeout(() => router.push("/manager/glossary"), 4000)
     }
 
     await loadSubjects(
       glossaryEntry.discipline?._id || glossaryEntry.discipline
-    );
+    )
 
-    form.setFieldsValue(glossaryEntry);
-    setIsLoading(false);
-  };
+    form.setFieldsValue(glossaryEntry)
+    setIsLoading(false)
+  }
 
   const handleSubmit = async (data) => {
     try {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
 
       if (glossaryItemId) {
-        await GlossaryService.update(glossaryItemId, data);
+        await GlossaryService.update(glossaryItemId, data)
       } else {
-        const result = await GlossaryService.create(data);
-        setGlossaryItemId(result._id);
+        const result = await GlossaryService.create(data)
+        setGlossaryItemId(result._id)
       }
       toast(
         `Conteúdo ${glossaryItemId ? "atualizada" : "criada"} com sucesso!`,
         { type: "success" }
-      );
+      )
     } catch (err) {
-      let error = err.response;
+      let error = err.response
       if (error.status == 422) {
-        form.setFields(transformResponseError(error.data));
+        form.setFields(transformResponseError(error.data))
       } else if (error.data.message) {
-        form.setFields([{ name: "name", errors: [error.data.message] }]);
-        toast(err.response.data.message, { type: "error" });
+        form.setFields([{ name: "name", errors: [error.data.message] }])
+        toast(err.response.data.message, { type: "error" })
       }
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   return (
     <>
@@ -169,5 +169,5 @@ export const GlossaryEditForm = ({
         </Form>
       </Card>
     </>
-  );
-};
+  )
+}

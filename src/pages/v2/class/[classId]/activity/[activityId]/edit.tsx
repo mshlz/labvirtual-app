@@ -3,12 +3,16 @@ import { ActivityEditForm } from "../../../../../../components/pages/Class/Activ
 import { AdminLayout } from "../../../../../../layouts/AdminLayout"
 
 const EditActivity = () => {
-    const classId = router.query.classId as string
-    const activityId = router.query.activityId as string
+  const classId = router.query.classId as string
+  const activityId = router.query.activityId as string
 
-    return <AdminLayout>
-        {activityId && <ActivityEditForm classId={classId} classworkId={activityId} />}
+  return (
+    <AdminLayout>
+      {activityId && (
+        <ActivityEditForm classId={classId} classworkId={activityId} />
+      )}
     </AdminLayout>
+  )
 }
 
 export default EditActivity

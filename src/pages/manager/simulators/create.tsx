@@ -2,9 +2,11 @@ import { SimulatorEditForm } from "../../../components/pages/Manager/Simulator/S
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateSimulatorPage = () => {
-    return <AdminLayout>
-        <SimulatorEditForm />
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      <SimulatorEditForm />
+    </AdminLayout>
+  )
 }
 
 export default CreateSimulatorPage

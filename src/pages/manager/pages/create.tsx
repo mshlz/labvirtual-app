@@ -2,9 +2,11 @@ import { PageEditForm } from "../../../components/pages/Manager/Page/PageEditFor
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreatePagePage = () => {
-    return <AdminLayout>
-        <PageEditForm />
+  return (
+    <AdminLayout>
+      <PageEditForm />
     </AdminLayout>
+  )
 }
 
 export default CreatePagePage
