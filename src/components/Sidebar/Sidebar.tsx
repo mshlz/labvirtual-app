@@ -1,6 +1,7 @@
 import { faStar } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Card, Layout, Menu, Space, Typography } from "antd"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
 import { useApp } from "../../context/AppContext"
@@ -21,7 +22,7 @@ const assembleMenu = (route: RouteItem, basePath: string = "") => {
 
   return (
     <Menu.Item key={routeKey} icon={route.icon && route.icon}>
-      {route.title}
+      <Link href={routeKey}>{route.title}</Link>
     </Menu.Item>
   )
 }
@@ -41,10 +42,6 @@ export const Sidebar = (props) => {
     }
   })
 
-  const handleSidebarClick = (data) => {
-    router.push(data.key)
-  }
-
   return (
     <Sider
       breakpoint={"lg"}
@@ -58,6 +55,7 @@ export const Sidebar = (props) => {
     >
       <Card
         hoverable
+        onClick={() => router.push("/profile")}
         style={{ margin: "16px", backgroundColor: "#919eab1f" }}
         bodyStyle={{ padding: "16px" }}
       >
@@ -66,7 +64,7 @@ export const Sidebar = (props) => {
           <Typography.Text strong>{user.name}</Typography.Text>
         </Space>
       </Card>
-      <Menu theme="light" mode="inline" onClick={handleSidebarClick}>
+      <Menu theme="light" mode="inline">
         {Routes.concat(disciplinesRoutes).map((route, idx) =>
           assembleMenu(route)
         )}

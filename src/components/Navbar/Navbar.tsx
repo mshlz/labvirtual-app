@@ -1,6 +1,7 @@
 import { MenuOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons"
 import { Button, Dropdown, Menu, Space, Typography } from "antd"
 import Avatar from "antd/lib/avatar/avatar"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
 import { useApp } from "../../context/AppContext"
@@ -38,8 +39,7 @@ const Navbar = (props) => {
             overlay={
               <Menu style={{ minWidth: 150 }}>
                 <Menu.Item key="0" icon={<UserOutlined />}>
-                  {/* TODO */}
-                  <a href="#">Perfil</a>
+                  <Link href="/profile">Perfil</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item

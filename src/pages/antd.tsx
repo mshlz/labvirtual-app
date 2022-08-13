@@ -1,14 +1,20 @@
 import {
+  Button,
   Calendar,
   Card,
   Col,
+  Form,
+  Input,
   PageHeader,
   Row,
   Table,
   Tag,
   Typography,
 } from "antd"
-import { useState } from "react"
+import { useForm } from "antd/lib/form/Form"
+import { useEffect, useState } from "react"
+import { ImagePicker } from "../components/UI/ImagePicker"
+import { useApp } from "../context/AppContext"
 import { AdminLayout } from "../layouts/AdminLayout"
 const { Meta } = Card
 
@@ -35,65 +41,39 @@ const data = [
 
 const AntdTest = () => {
   const [s, ss] = useState()
+  const { user } = useApp()
+  const [form] = useForm()
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: user.name,
+      photo: null
+    })
+  }, [])
   return (
     <AdminLayout>
-      <Table
-        scroll={{ x: true }}
-        columns={[
-          {
-            fixed: true,
-            title: "Aluno",
-            sorter: (a, b) => a.n > b.n ? 1 : 0,
-            showSorterTooltip: true,
-            render: (v) => v.n,
-          },
-          {
-            title: "Atividade X",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade y",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-          {
-            title: "Atividade z",
-            render: (v) => v.x,
-          },
-        ]}
-        dataSource={[
-          {
-            n: "Mateus Holzschuh",
-            x: "XXXXXXXXXXXXXXX",
-          },{
-            n: "P Holzschuh",
-            x: "YYYYYYYYYYYYYYY",
-          },
-        ]}
-      />
+      <PageHeader title="Perfil" />
+      <Card>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={() => alert()}
+        >
+          <Form.Item label="Foto" name="photo">
+            <ImagePicker />
+          </Form.Item>
+
+          <Form.Item label="Nome" name="name">
+            <Input />
+          </Form.Item>
+
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              Salvar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </AdminLayout>
   )
 }
