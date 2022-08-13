@@ -1,5 +1,6 @@
 import { ConfigProvider } from "antd"
 import Head from "next/head"
+import "moment/locale/pt-br"
 import ptBR from "antd/lib/locale/pt_BR"
 import { ToastContainer } from "react-toastify"
 import "suneditor/dist/css/suneditor.min.css"

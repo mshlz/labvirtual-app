@@ -1,4 +1,13 @@
-import { Card, Col, PageHeader, Row, Table } from "antd"
+import {
+  Calendar,
+  Card,
+  Col,
+  PageHeader,
+  Row,
+  Table,
+  Tag,
+  Typography,
+} from "antd"
 import { useState } from "react"
 import { AdminLayout } from "../layouts/AdminLayout"
 const { Meta } = Card
@@ -28,31 +37,30 @@ const AntdTest = () => {
   const [s, ss] = useState()
   return (
     <AdminLayout>
-      <PageHeader title={"Minhas notas"} onBack={() => {}} />
-
-      {/* <Card> */}
-      <Row gutter={[24, 24]}>
-        <Col span={24}>
-          <Table
-            loading={true}
-            columns={[
-              {
-                title: "Atividade",
-                render: (v) => v.title,
-              },
-              {
-                title: "Data",
-              },
-              {
-                title: "Nota",
-              },
-            ]}
-            dataSource={data}
-            pagination={false}
-          />
-        </Col>
-      </Row>
-      {/* </Card> */}
+      <Calendar
+        style={{ padding: 16 }}
+        headerRender={(c) => (
+          <Typography.Title level={3}>
+            {c.value.format("dddd, DD [de] MMMM [de] YYYY")}
+          </Typography.Title>
+        )}
+        disabledDate={() => false}
+        dateCellRender={(date) => {
+          return (
+            <>
+              <Tag closable color={"processing"}>
+                Dia {date.date()}
+              </Tag>
+              <Tag closable color={"error"}>
+                Dia {date.date()}
+              </Tag>
+              <Tag closable color={"success"}>
+                Dia {date.date()}
+              </Tag>
+            </>
+          )
+        }}
+      />
     </AdminLayout>
   )
 }
