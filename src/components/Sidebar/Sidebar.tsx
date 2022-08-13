@@ -31,7 +31,7 @@ export const Sidebar = (props) => {
   const { disciplines, user } = useApp()
   const disciplinesRoutes = (disciplines || []).map<RouteItem>((v) => {
     return {
-      path: "#",
+      path: "",
       title: v.name,
       icon: <FontAwesomeIcon icon={faStar} />,
       children: (v.subjects || []).map((s) => ({
