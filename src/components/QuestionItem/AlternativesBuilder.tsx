@@ -4,10 +4,18 @@ import { parseHtml } from "../../utils/parseHtml"
 
 export function buildSingleChoiceAlternatives(question: Question) {
   return (
-    <Radio.Group>
-      <Space direction="vertical">
+    <Radio.Group style={{ width: "100%" }}>
+      <Space direction="vertical" style={{ display: "flex" }}>
         {question.alternatives.map((alternative) => (
-          <Radio key={alternative.code} value={alternative.code}>
+          <Radio
+            key={alternative.code}
+            value={alternative.code}
+            style={{
+              ...(alternative.correct
+                ? { background: "#b7eb8f", padding: "8px", width: "100%" }
+                : {}),
+            }}
+          >
             {parseHtml(alternative.text)}
           </Radio>
         ))}
@@ -18,10 +26,18 @@ export function buildSingleChoiceAlternatives(question: Question) {
 
 export function buildMultipleChoiceAlternatives(question: Question) {
   return (
-    <Checkbox.Group>
-      <Space direction="vertical">
+    <Checkbox.Group style={{ width: "100%" }}>
+      <Space direction="vertical" style={{ display: "flex" }}>
         {question.alternatives.map((alternative) => (
-          <Checkbox key={alternative.code} value={alternative.code}>
+          <Checkbox
+            key={alternative.code}
+            value={alternative.code}
+            style={{
+              ...(alternative.correct
+                ? { background: "#b7eb8f", padding: "8px", width: "100%" }
+                : {}),
+            }}
+          >
             {parseHtml(alternative.text)}
           </Checkbox>
         ))}

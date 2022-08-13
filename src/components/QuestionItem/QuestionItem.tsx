@@ -5,7 +5,9 @@ import {
   Comment as AntComment,
   Divider,
   Form,
+  Input,
   Row,
+  Tooltip,
   Typography,
 } from "antd"
 import { Comment } from "../../models/Comment"
@@ -19,14 +21,30 @@ import {
 } from "./AlternativesBuilder"
 
 interface QuestionItemProps {
+  renderType?: "FORM" | "READ" | "TEACHER"
   fieldName?: any
   question: Question
   grade?: number
   comment?: Comment
+
+  styles?: React.CSSProperties
 }
 
 export const QuestionItem = (props: QuestionItemProps) => {
-  const { question, grade, comment } = props
+  const { question, grade, comment, renderType = "TEACHER" } = props
+
+  const renderGrade = () => {
+    return renderType === "TEACHER" ? (
+      <Tooltip title="Nota da questão">
+        <Input
+          value={grade}
+          suffix={<span style={{ color: "gray" }}>{`/ ${grade}`}</span>}
+        />
+      </Tooltip>
+    ) : (
+      <Typography.Text>{grade} Pontos</Typography.Text>
+    )
+  }
 
   const renderAlternatives = () => {
     let Component = null
@@ -46,7 +64,7 @@ export const QuestionItem = (props: QuestionItemProps) => {
         Component = buildDissertative()
     }
 
-    return (
+    return renderType === "FORM" ? (
       <Form.Item
         label={label}
         name={[props.fieldName, "answer"]}
@@ -54,22 +72,66 @@ export const QuestionItem = (props: QuestionItemProps) => {
       >
         {Component}
       </Form.Item>
+    ) : (
+      Component
+    )
+  }
+
+  const renderCommentSection = () => {
+    const localComments = [props.comment]
+
+    return (
+      (renderType === "READ" || renderType === "TEACHER") && (
+        <>
+          <Divider />
+          <Row>
+            <Col>
+              {localComments.map((comment) => (
+                <AntComment
+                  avatar={
+                    <Avatar
+                      src={
+                        comment.author?._id ||
+                        "/assets/images/blank-profile.png"
+                      }
+                    />
+                  }
+                  author={
+                    <Typography.Text strong>
+                      {comment.author.name}
+                    </Typography.Text>
+                  }
+                  datetime={
+                    <Typography.Text>
+                      {relativeDate(comment.createdAt)}
+                    </Typography.Text>
+                  }
+                  content={<Typography.Text>{comment.text}</Typography.Text>}
+                />
+              ))}
+              {/* TODO this should be a common component */}
+              {renderType === "TEACHER" && (
+                <AntComment
+                  avatar={<Avatar src={"/assets/images/blank-profile.png"} />}
+                  content={<Input placeholder="inserir comentário" />}
+                />
+              )}
+            </Col>
+          </Row>
+        </>
+      )
     )
   }
 
   return (
-    <Card style={{ marginBottom: "24px" }}>
+    <Card style={{ marginBottom: "24px", ...(props.styles || {}) }}>
       {/* header */}
       <Row>
         <Col span={22}>
           <Typography.Title level={4}>{question.name}</Typography.Title>
         </Col>
 
-        {grade && (
-          <Col span={2}>
-            <Typography.Text>{grade} Pontos</Typography.Text>
-          </Col>
-        )}
+        <Col span={2}>{renderGrade()}</Col>
       </Row>
 
       {/* text */}
@@ -90,37 +152,8 @@ export const QuestionItem = (props: QuestionItemProps) => {
         <Col span={24}>{renderAlternatives()}</Col>
       </Row>
 
-      {/* teacher comment */}
-      {comment && (
-        <>
-          <Divider />
-          <Row>
-            <Col>
-              {/* TODO user avatar */}
-              <AntComment
-                avatar={
-                  <Avatar
-                    src={
-                      comment.author._id || "/assets/images/blank-profile.png"
-                    }
-                  />
-                }
-                author={
-                  <Typography.Text strong>
-                    {comment.author.name}
-                  </Typography.Text>
-                }
-                datetime={
-                  <Typography.Text>
-                    {relativeDate(comment.createdAt)}
-                  </Typography.Text>
-                }
-                content={<Typography.Text>{comment.text}</Typography.Text>}
-              />
-            </Col>
-          </Row>
-        </>
-      )}
+      {/* teacher comments */}
+      {renderCommentSection()}
     </Card>
   )
 }

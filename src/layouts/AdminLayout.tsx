@@ -1,5 +1,5 @@
 import { BackTop, Layout, Menu } from "antd"
-import { useState } from "react"
+import React, { useState } from "react"
 import { AutoBreadcrumb } from "../components/Breadcrumb/AutoBreadCrumb"
 import { Navbar } from "../components/Navbar/Navbar"
 import { Sidebar } from "../components/Sidebar/Sidebar"
@@ -7,7 +7,14 @@ import { Sidebar } from "../components/Sidebar/Sidebar"
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
 
-export const AdminLayout = ({ children }) => {
+interface AdminLayoutProps {
+  _containerStyles?: React.CSSProperties
+}
+
+export const AdminLayout = ({
+  children,
+  _containerStyles,
+}: React.PropsWithChildren<AdminLayoutProps>) => {
   const [collapsed, setCollapsed] = useState(false)
   const onCollapse = (newState: boolean) => setCollapsed(newState)
 
@@ -20,7 +27,11 @@ export const AdminLayout = ({ children }) => {
         {/* <Header /> */}
         <Content>
           <AutoBreadcrumb />
-          <div style={{ padding: 24, minHeight: 360 }}>{children}</div>
+          <div
+            style={{ padding: 24, minHeight: 360, ...(_containerStyles || {}) }}
+          >
+            {children}
+          </div>
         </Content>
       </Layout>
       {/* <Footer style={{ textAlign: 'center' }}>Labvis © {new Date().getFullYear()}</Footer> */}

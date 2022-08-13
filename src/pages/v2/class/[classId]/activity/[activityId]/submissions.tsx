@@ -1,22 +1,9 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  Image,
-  List,
-  PageHeader,
-  Row,
-  Tag,
-  Typography,
-} from "antd"
-import Title from "antd/lib/typography/Title"
-import { useState } from "react"
-import { LoadingComponent } from "../components/Loading/Loading"
-import { DisciplineCard } from "../components/pages/Content/DisciplineCard"
-import { QuestionItem } from "../components/QuestionItem/QuestionItem"
-import { AdminLayout } from "../layouts/AdminLayout"
-const { Meta } = Card
+import { Avatar, Col, List, PageHeader, Row, Tag } from "antd"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { LoadingComponent } from "../../../../../../components/Loading/Loading"
+import { QuestionItem } from "../../../../../../components/QuestionItem/QuestionItem"
+import { AdminLayout } from "../../../../../../layouts/AdminLayout"
 
 const data = [
   {
@@ -76,11 +63,26 @@ function UserList<T = any>(props: UserListProps<T>) {
   )
 }
 
-const AntdTest = () => {
+const ActivitySubmissions = () => {
+  const router = useRouter()
+  const activityId = router.query.activityId as string
+
   const [s, ss] = useState()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+  }, [s])
+
   return (
     <AdminLayout>
-      <PageHeader title={"Devv"} onBack={() => {}} />
+      <PageHeader
+        title={"Entregas da atividade XXXXXXXXXXXXXXXXX"}
+        onBack={() => {}}
+      />
 
       {/* <Card> */}
       <Row gutter={[24, 24]}>
@@ -101,7 +103,7 @@ const AntdTest = () => {
         </Col>
 
         <Col span={18} style={{ height: "450px", overflowY: "scroll" }}>
-          {false ? (
+          {!loading ? (
             <>
               <QuestionItem
                 question={{
@@ -158,4 +160,4 @@ const AntdTest = () => {
   )
 }
 
-export default AntdTest
+export default ActivitySubmissions
