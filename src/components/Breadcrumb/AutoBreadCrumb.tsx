@@ -69,6 +69,9 @@ const translationMap: {
   people: (router) => ({
     name: "Pessoas",
   }),
+  "my-activities": (router) => ({
+    name: "Minhas atividades",
+  }),
 }
 
 const skipParts = (value) =>

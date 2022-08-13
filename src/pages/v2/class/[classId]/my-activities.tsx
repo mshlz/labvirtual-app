@@ -1,6 +1,6 @@
 import { Card, Col, PageHeader, Row, Table } from "antd"
 import { useState } from "react"
-import { AdminLayout } from "../layouts/AdminLayout"
+import { AdminLayout } from "../../../../layouts/AdminLayout"
 const { Meta } = Card
 
 const data = [
@@ -24,17 +24,17 @@ const data = [
   },
 ]
 
-const AntdTest = () => {
+const MyActivities = () => {
   const [s, ss] = useState()
   return (
     <AdminLayout>
-      <PageHeader title={"Minhas notas"} onBack={() => {}} />
+      <PageHeader title={"Minhas atividades"} onBack={() => {}} />
 
       {/* <Card> */}
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Table
-            loading={true}
+            // loading={true}
             columns={[
               {
                 title: "Atividade",
@@ -57,4 +57,4 @@ const AntdTest = () => {
   )
 }
 
-export default AntdTest
+export default MyActivities
