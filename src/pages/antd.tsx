@@ -37,29 +37,62 @@ const AntdTest = () => {
   const [s, ss] = useState()
   return (
     <AdminLayout>
-      <Calendar
-        style={{ padding: 16 }}
-        headerRender={(c) => (
-          <Typography.Title level={3}>
-            {c.value.format("dddd, DD [de] MMMM [de] YYYY")}
-          </Typography.Title>
-        )}
-        disabledDate={() => false}
-        dateCellRender={(date) => {
-          return (
-            <>
-              <Tag closable color={"processing"}>
-                Dia {date.date()}
-              </Tag>
-              <Tag closable color={"error"}>
-                Dia {date.date()}
-              </Tag>
-              <Tag closable color={"success"}>
-                Dia {date.date()}
-              </Tag>
-            </>
-          )
-        }}
+      <Table
+        scroll={{ x: true }}
+        columns={[
+          {
+            fixed: true,
+            title: "Aluno",
+            sorter: (a, b) => a.n > b.n ? 1 : 0,
+            showSorterTooltip: true,
+            render: (v) => v.n,
+          },
+          {
+            title: "Atividade X",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade y",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+          {
+            title: "Atividade z",
+            render: (v) => v.x,
+          },
+        ]}
+        dataSource={[
+          {
+            n: "Mateus Holzschuh",
+            x: "XXXXXXXXXXXXXXX",
+          },{
+            n: "P Holzschuh",
+            x: "YYYYYYYYYYYYYYY",
+          },
+        ]}
       />
     </AdminLayout>
   )
