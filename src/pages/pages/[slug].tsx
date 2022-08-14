@@ -3,7 +3,7 @@ import router from "next/router"
 import { useEffect, useState } from "react"
 import { LoadingComponent } from "../../components/Loading/Loading"
 import { PublicPageLayout } from "../../layouts/PublicPageLayout"
-import { PageService } from "../../services/PageService"
+import { HelpPageService } from "../../services/HelpPageService"
 import { parseHtml } from "../../utils/parseHtml"
 
 const PublicPageFromSlug = () => {
@@ -21,7 +21,7 @@ const PublicPageFromSlug = () => {
 
   const loadPage = async (slug: string) => {
     const code = slug.split("-").pop()
-    const result = await PageService.getByCode(code)
+    const result = await HelpPageService.getByCode(code)
     setPage(result)
     setLoading(false)
   }

@@ -4,7 +4,7 @@ import { Avatar, Card, Layout, Menu, Space, Typography } from "antd"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { useApp } from "../../context/AppContext"
-import { PageService } from "../../services/PageService"
+import { HelpPageService } from "../../services/HelpPageService"
 import { getInitials } from "../../utils/getInitials"
 import { RouteItem, Routes } from "./Routes"
 const { Sider } = Layout
@@ -24,7 +24,7 @@ export const PublicPageSidebar = (props: IPublicPageSidebarProps) => {
   }, [])
 
   const loadPagesInfo = async () => {
-    const result = await PageService.getRouterInfo()
+    const result = await HelpPageService.getRouterInfo()
     const routes: RouteItem[] = []
 
     result.sections.forEach((section) => {

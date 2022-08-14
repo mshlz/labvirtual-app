@@ -7,9 +7,9 @@ import React, { useEffect, useState } from "react"
 import { LoadingComponent } from "../../../components/Loading/Loading"
 import { CustomTable } from "../../../components/UI/CustomTable"
 import { AdminLayout } from "../../../layouts/AdminLayout"
-import { PageSectionService } from "../../../services/PageSectionService"
+import { HelpPageService } from "../../../services/HelpPageService"
 
-const PageSectionListPage = () => {
+const PageListPage = () => {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
@@ -21,7 +21,7 @@ const PageSectionListPage = () => {
   }, [page])
 
   const loadResources = async () => {
-    const result = await PageSectionService.list(page)
+    const result = await HelpPageService.list(page)
     setData(result.data)
     setTotal(result.meta.total)
     setLoading(false)
@@ -32,13 +32,14 @@ const PageSectionListPage = () => {
       {data ? (
         <>
           <CustomTable
-            title="Seções"
+            title="Páginas de ajuda"
             createButton={{
-              action: () => router.push("/manager/page-sections/create"),
+              action: () => router.push("/manager/help-pages/create"),
             }}
             columns={[
               { key: "_id", label: "ID" },
               { key: "name", label: "Nome" },
+              { key: "section.name", label: "Seção" },
             ]}
             meta={{
               page: page,
@@ -50,13 +51,13 @@ const PageSectionListPage = () => {
             isLoading={isLoading}
             actions={(row) => (
               <>
-                <Link href={`/manager/page-sections/${row._id}/update`}>
+                <Link href={`/manager/help-pages/${row._id}/update`}>
                   <Button icon={<FontAwesomeIcon icon={faPencilAlt} />} />
                 </Link>
                 <Popconfirm
                   title="Você deseja deletar? Essa ação é irreversivel!"
                   onConfirm={() =>
-                    PageSectionService.delete(row._id).then(loadResources)
+                    HelpPageService.delete(row._id).then(loadResources)
                   }
                 >
                   <Button icon={<FontAwesomeIcon icon={faTimes} />} />
@@ -72,4 +73,4 @@ const PageSectionListPage = () => {
   )
 }
 
-export default PageSectionListPage
+export default PageListPage

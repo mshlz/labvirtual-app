@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { PageSectionEditForm } from "../../../../components/pages/Manager/PageSection/PageSectionEditForm"
+import { HelpSectionEditForm } from "../../../../components/pages/Manager/HelpSection/HelpSectionEditForm"
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdatePageSectionPage = () => {
@@ -8,7 +8,7 @@ const UpdatePageSectionPage = () => {
 
   return (
     <AdminLayout>
-      {sectionId && <PageSectionEditForm pageSectionId={sectionId} />}
+      {sectionId && <HelpSectionEditForm pageSectionId={sectionId} />}
     </AdminLayout>
   )
 }

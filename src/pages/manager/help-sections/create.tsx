@@ -1,10 +1,10 @@
-import { PageSectionEditForm } from "../../../components/pages/Manager/PageSection/PageSectionEditForm"
+import { HelpSectionEditForm } from "../../../components/pages/Manager/HelpSection/HelpSectionEditForm"
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreatePageSectionPage = () => {
   return (
     <AdminLayout>
-      <PageSectionEditForm />
+      <HelpSectionEditForm />
     </AdminLayout>
   )
 }

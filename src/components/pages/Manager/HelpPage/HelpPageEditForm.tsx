@@ -3,16 +3,16 @@ import { useForm } from "antd/lib/form/Form"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { PageSectionService } from "../../../../services/PageSectionService"
-import { PageService } from "../../../../services/PageService"
+import { HelpSectionService } from "../../../../services/HelpSectionService"
+import { HelpPageService } from "../../../../services/HelpPageService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
 import { RichTextSunEditor } from "../../../UI/RichTextSunEditor"
 
-interface IPageFormProps {
+interface IHelpPageFormProps {
   pageId?: string
 }
 
-export const PageEditForm = ({ pageId: id }: IPageFormProps) => {
+export const HelpPageEditForm = ({ pageId: id }: IHelpPageFormProps) => {
   const [form] = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -28,7 +28,7 @@ export const PageEditForm = ({ pageId: id }: IPageFormProps) => {
   }, [])
 
   const loadSections = async () => {
-    const result = await PageSectionService.list()
+    const result = await HelpSectionService.list()
     setSections(result.data)
   }
 
@@ -38,11 +38,11 @@ export const PageEditForm = ({ pageId: id }: IPageFormProps) => {
     const id = router.query.id as string
     if (!id) return
 
-    const page = await PageService.get(id)
+    const page = await HelpPageService.get(id)
 
     if (!page || !page._id) {
       toast("Página não encontrada!", { type: "error" })
-      return setTimeout(() => router.push("/manager/pages"), 4000)
+      return setTimeout(() => router.push("/manager/help-pages"), 4000)
     }
 
     if (page.section && typeof page.section !== "string") {
@@ -58,9 +58,9 @@ export const PageEditForm = ({ pageId: id }: IPageFormProps) => {
       setIsSubmitting(true)
 
       if (pageId) {
-        await PageService.update(pageId, data)
+        await HelpPageService.update(pageId, data)
       } else {
-        const result = await PageService.create(data)
+        const result = await HelpPageService.create(data)
         setPageId(result._id)
       }
       toast(`Página ${pageId ? "atualizada" : "criada"} com sucesso!`, {
@@ -83,7 +83,7 @@ export const PageEditForm = ({ pageId: id }: IPageFormProps) => {
     <>
       <PageHeader
         title={pageId ? "Editar página" : "Criar nova página"}
-        onBack={() => router.push("/manager/pages")}
+        onBack={() => router.push("/manager/help-pages")}
       />
       <Card title="Informações básicas" loading={isLoading}>
         <Form

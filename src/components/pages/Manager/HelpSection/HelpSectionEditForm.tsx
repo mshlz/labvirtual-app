@@ -3,17 +3,17 @@ import { useForm } from "antd/lib/form/Form"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { PageSectionService } from "../../../../services/PageSectionService"
+import { HelpSectionService } from "../../../../services/HelpSectionService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
 import { ImagePicker } from "../../../UI/ImagePicker"
 
-interface IPageSectionFormProps {
+interface IHelpSectionFormProps {
   pageSectionId?: string
 }
 
-export const PageSectionEditForm = ({
+export const HelpSectionEditForm = ({
   pageSectionId: id,
-}: IPageSectionFormProps) => {
+}: IHelpSectionFormProps) => {
   const [form] = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -31,11 +31,11 @@ export const PageSectionEditForm = ({
     const id = router.query.id as string
     if (!id) return
 
-    const section = await PageSectionService.get(id)
+    const section = await HelpSectionService.get(id)
 
     if (!section || !section._id) {
       toast("Seção não encontrada!", { type: "error" })
-      return setTimeout(() => router.push("/manager/page-sections"), 4000)
+      return setTimeout(() => router.push("/manager/help-sections"), 4000)
     }
 
     form.setFieldsValue(section)
@@ -47,9 +47,9 @@ export const PageSectionEditForm = ({
       setIsSubmitting(true)
 
       if (sectionId) {
-        await PageSectionService.update(sectionId, data)
+        await HelpSectionService.update(sectionId, data)
       } else {
-        const result = await PageSectionService.create(data)
+        const result = await HelpSectionService.create(data)
         setSectionId(result._id)
       }
 
@@ -73,7 +73,7 @@ export const PageSectionEditForm = ({
     <>
       <PageHeader
         title={sectionId ? "Editar seção" : "Criar nova seção"}
-        onBack={() => router.push("/manager/page-sections")}
+        onBack={() => router.push("/manager/help-sections")}
       />
       <Card title="Informações básicas" loading={isLoading}>
         <Form
