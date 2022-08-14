@@ -5,12 +5,15 @@ import {
   SettingOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"
 import { ReactNode } from "react"
 
 export interface RouteItem {
   path: string
   title: string
   icon?: ReactNode
+  external?: boolean
   scope?: "student" | "teacher" | "admin"
   permission?: string
   children?: RouteItem[]
@@ -86,6 +89,22 @@ export const Routes: RouteItem[] = [
         // icon: 'fas fa-tachometer-alt',
       },
       {
+        path: "",
+        title: "Seções Dinâmicas",
+        children: [
+          {
+            path: "/page-sections",
+            title: "Seções",
+            // icon: 'fas fa-tachometer-alt',
+          },
+          {
+            path: "/pages",
+            title: "Páginas",
+            // icon: 'fas fa-tachometer-alt',
+          },
+        ],
+      },
+      {
         path: "/classes",
         title: "Turmas",
         // icon: 'fas fa-tachometer-alt',
@@ -105,12 +124,18 @@ export const Routes: RouteItem[] = [
         title: "Páginas de Ajuda",
         children: [
           {
-            path: "/page-sections",
+            path: "/pages/home",
+            title: "Acessar",
+            external: true,
+            icon: <FontAwesomeIcon icon={faExternalLinkAlt} />,
+          },
+          {
+            path: "/help-sections",
             title: "Seções",
             // icon: 'fas fa-tachometer-alt',
           },
           {
-            path: "/pages",
+            path: "/help-pages",
             title: "Páginas",
             // icon: 'fas fa-tachometer-alt',
           },

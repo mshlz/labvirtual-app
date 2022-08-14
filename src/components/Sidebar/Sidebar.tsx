@@ -22,7 +22,13 @@ const assembleMenu = (route: RouteItem, basePath: string = "") => {
 
   return (
     <Menu.Item key={routeKey} icon={route.icon && route.icon}>
-      <Link href={routeKey}>{route.title}</Link>
+      {route.external ? (
+        <a href={route.path} target="_blank">
+          {route.title}
+        </a>
+      ) : (
+        <Link href={routeKey}>{route.title}</Link>
+      )}
     </Menu.Item>
   )
 }
