@@ -1,6 +1,7 @@
 import { faStar } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Card, Layout, Menu, Space, Typography } from "antd"
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
@@ -24,7 +25,7 @@ const assembleMenu = (route: RouteItem, basePath: string = "") => {
     <Menu.Item key={routeKey} icon={route.icon && route.icon}>
       {route.external ? (
         <a href={route.path} target="_blank">
-          {route.title}
+          {route.title} {<FontAwesomeIcon size="sm" icon={faExternalLinkAlt} />}
         </a>
       ) : (
         <Link href={routeKey}>{route.title}</Link>

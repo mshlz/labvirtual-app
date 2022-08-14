@@ -5,8 +5,6 @@ import {
   SettingOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"
 import { ReactNode } from "react"
 
 export interface RouteItem {
@@ -127,7 +125,6 @@ export const Routes: RouteItem[] = [
             path: "/pages/home",
             title: "Acessar",
             external: true,
-            icon: <FontAwesomeIcon icon={faExternalLinkAlt} />,
           },
           {
             path: "/help-sections",
