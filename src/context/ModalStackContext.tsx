@@ -1,4 +1,5 @@
 import { Modal } from "antd"
+import EventEmitter from "events"
 import React, { createContext, useContext, useEffect, useState } from "react"
 
 interface ModalOptions {
@@ -23,7 +24,7 @@ interface StackItem {
 
 const ModalStackContext = createContext({} as ModalStackContext)
 
-const stackManager = new (class extends EventTarget {
+const stackManager = new (class extends EventEmitter {
   private items: StackItem[] = []
   constructor() {
     super()
@@ -31,21 +32,21 @@ const stackManager = new (class extends EventTarget {
   }
   add(item: Omit<StackItem, "visible">) {
     this.items.push({ ...item, visible: true })
-    this.dispatchEvent(new Event("CHANGE"))
+    this.emit("CHANGE")
     return this.items.length - 1
   }
 
   remove(index: number) {
     if (this.items[index]) {
       this.items.splice(index, 1)
-      this.dispatchEvent(new Event("CHANGE"))
+      this.emit("CHANGE")
     }
   }
 
   close(index: number) {
     if (this.items[index]) {
       this.items[index].visible = false
-      this.dispatchEvent(new Event("CHANGE"))
+      this.emit("CHANGE")
     }
   }
 
@@ -65,8 +66,10 @@ export const ModalStackProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const observeChange = () => setRenderStack(stackManager.values())
-    stackManager.addEventListener("CHANGE", observeChange)
-    return () => stackManager.removeEventListener("CHANGE", observeChange)
+    stackManager.addListener("CHANGE", observeChange)
+    return () => {
+      stackManager.removeListener("CHANGE", observeChange)
+    }
   }, [])
 
   return (
@@ -100,7 +103,7 @@ export const ModalStackProvider: React.FC = ({ children }) => {
 export const useModalStack = () => useContext(ModalStackContext)
 
 export const ModalStack = {
-  open: (content: React.ReactNode | string, options?: ModalOptions) =>
+  open: (content, options?: ModalOptions) =>
     stackManager.add({ content, options }),
   close: (index: number) => stackManager.close(index),
   closeAll: () => stackManager.clear(),
