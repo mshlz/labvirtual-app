@@ -1,47 +1,9 @@
 import { Card, Col, Image, Row, Space, Typography } from "antd"
-import htmlParser from "html-react-parser"
 import router from "next/router"
 import { useEffect, useState } from "react"
 import { AdminLayout } from "../../../layouts/AdminLayout"
 import { VideoService } from "../../../services/VideoService"
-
-// TODO THIS MUST BE MOVED TO UTILS (refactor branch)
-// TODO ADD GLOBAL MODAL SERVICE
-const parseHtml = (value, openGlossaryEntry?) => {
-  return htmlParser(value, {
-    replace: (node) => {
-      if (node.type == "tag") {
-        let current: any = node
-        switch (node["name"]) {
-          case "img":
-            current = <Image src={node["attribs"]["src"]} />
-            break
-          case "span":
-            if (
-              node["attribs"] &&
-              node["attribs"]["data-origin"] == "glossary-entry-word"
-            ) {
-              const text = (node["children"] || [])
-                .filter((v) => typeof v.data == "string")
-                .reduce((v, c) => (v += c.data), "")
-              const uuid = node["attribs"]["id"]
-              current = (
-                <Typography.Text
-                  style={{ borderBottom: "dashed 1px #333", cursor: "pointer" }}
-                  onClick={() => openGlossaryEntry && openGlossaryEntry(uuid)}
-                >
-                  {text}
-                </Typography.Text>
-              )
-            }
-            break
-        }
-        return current
-      }
-      return node
-    },
-  })
-}
+import { parseHtml } from "../../../utils/parseHtml"
 
 const VideoPage = () => {
   const contentId = router.query.contentId as string
