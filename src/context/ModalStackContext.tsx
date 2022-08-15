@@ -1,5 +1,5 @@
 import { Modal } from "antd"
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 
 interface ModalOptions {
   title?: string
@@ -23,36 +23,60 @@ interface StackItem {
 
 const ModalStackContext = createContext({} as ModalStackContext)
 
-const _STACK: StackItem[] = []
-export const ModalStackProvider: React.FC = ({ children }) => {
-  const [renderStack, setRenderStack] = useState<StackItem[]>([])
-
-  const removeFromStack = (index: number) => {
-    renderStack.splice(index, 1)
-    setRenderStack([...renderStack])
+const stackManager = new (class extends EventTarget {
+  private items: StackItem[] = []
+  constructor() {
+    super()
+    this.items = []
+  }
+  add(item: Omit<StackItem, "visible">) {
+    this.items.push({ ...item, visible: true })
+    this.dispatchEvent(new Event("CHANGE"))
+    return this.items.length - 1
   }
 
-  const openModal = (content: React.ReactNode, options?: ModalOptions) => {
-    _STACK.push({ content, options, visible: true })
-    setRenderStack([..._STACK])
-    return _STACK.length - 1
-  }
-
-  const closeModal = (index: number) => {
-    if (_STACK[index]) {
-      _STACK[index].visible = false
-      setRenderStack([..._STACK])
-      _STACK.splice(index, 1)
+  remove(index: number) {
+    if (this.items[index]) {
+      this.items.splice(index, 1)
+      this.dispatchEvent(new Event("CHANGE"))
     }
   }
 
-  const closeAll = () => {
-    _STACK.splice(0, _STACK.length)
-    setRenderStack(_STACK)
+  close(index: number) {
+    if (this.items[index]) {
+      this.items[index].visible = false
+      this.dispatchEvent(new Event("CHANGE"))
+    }
   }
 
+  clear() {
+    for (let i = this.items.length - 1; i >= 0; i--) {
+      this.close(i)
+    }
+  }
+
+  values() {
+    return [...this.items]
+  }
+})()
+
+export const ModalStackProvider: React.FC = ({ children }) => {
+  const [renderStack, setRenderStack] = useState<StackItem[]>([])
+
+  useEffect(() => {
+    const observeChange = () => setRenderStack(stackManager.values())
+    stackManager.addEventListener("CHANGE", observeChange)
+    return () => stackManager.removeEventListener("CHANGE", observeChange)
+  }, [])
+
   return (
-    <ModalStackContext.Provider value={{ openModal, closeModal, closeAll }}>
+    <ModalStackContext.Provider
+      value={{
+        openModal: (content, options) => stackManager.add({ content, options }),
+        closeModal: (index) => stackManager.close(index),
+        closeAll: () => stackManager.clear(),
+      }}
+    >
       {renderStack.map((item, index) => (
         <Modal
           key={index}
@@ -61,9 +85,9 @@ export const ModalStackProvider: React.FC = ({ children }) => {
           okText={item.options?.okText}
           onOk={(e) => item.options?.onOk?.(e, index)}
           cancelText={item.options?.cancelText}
-          onCancel={() => closeModal(index)}
+          onCancel={() => stackManager.close(index)}
           maskClosable={item.options?.maskClosable}
-          afterClose={() => removeFromStack(index)}
+          afterClose={() => stackManager.remove(index)}
         >
           {item.content}
         </Modal>
@@ -74,3 +98,10 @@ export const ModalStackProvider: React.FC = ({ children }) => {
 }
 
 export const useModalStack = () => useContext(ModalStackContext)
+
+export const ModalStack = {
+  open: (content: React.ReactNode | string, options?: ModalOptions) =>
+    stackManager.add({ content, options }),
+  close: (index: number) => stackManager.close(index),
+  closeAll: () => stackManager.clear(),
+}
