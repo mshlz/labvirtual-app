@@ -15,7 +15,11 @@ const assembleMenu = (route: RouteItem, basePath: string = "") => {
   const routeKey = basePath.concat(route.path)
   if (route.children) {
     return (
-      <SubMenu icon={route.icon && route.icon} title={route.title}>
+      <SubMenu
+        key={btoa(route.title)}
+        icon={route.icon && route.icon}
+        title={route.title}
+      >
         {route.children.map((subRoute) => assembleMenu(subRoute, routeKey))}
       </SubMenu>
     )
