@@ -9,17 +9,20 @@ import "../../styles/antd.css"
 import { Loading } from "../components/Loading/Loading2"
 import { AppProvider } from "../context/AppContext"
 import "../plugins/validation/yup-translation"
+import { ModalStackProvider } from "../context/ModalStackContext"
 
 function LabvisApp({ Component, pageProps }) {
   return (
     <ConfigProvider locale={ptBR}>
       <AppProvider>
-        <Head>
-          <title>Laboratório Virtual</title>
-        </Head>
-        <Loading />
-        <Component {...pageProps} />
-        <ToastContainer />
+        <ModalStackProvider>
+          <Head>
+            <title>Laboratório Virtual</title>
+          </Head>
+          <Loading />
+          <Component {...pageProps} />
+          <ToastContainer />
+        </ModalStackProvider>
       </AppProvider>
     </ConfigProvider>
   )
