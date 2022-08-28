@@ -3,7 +3,6 @@ import { useState } from "react"
 import { ClassService } from "../../../services/ClassService"
 
 interface EnrollClassProps {
-  isOpen: boolean
   onFinish: (hasChange: boolean) => void
 }
 
@@ -40,12 +39,7 @@ export const EnrollClass = (props: EnrollClassProps) => {
   }
 
   return (
-    <Modal
-      centered={true}
-      visible={props.isOpen}
-      footer={null}
-      onCancel={() => handleFinish()}
-    >
+    <>
       <Typography.Title level={4}>Participar de nova turma</Typography.Title>
       <Typography.Text type="secondary" style={{ marginBottom: 8 }}>
         Para participar de uma nova turma, insira o código da turma e aperte em
@@ -81,6 +75,6 @@ export const EnrollClass = (props: EnrollClassProps) => {
           </Row>
         </Form.Item>
       </Form>
-    </Modal>
+    </>
   )
 }

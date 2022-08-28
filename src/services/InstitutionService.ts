@@ -9,8 +9,9 @@ class InstitutionService {
     return (await Axios.get(`/institutions/${id}`)).data.data
   }
 
-  static async list(page?: number) {
-    return (await Axios.get(`/institutions`, { params: { page } })).data
+  static async list(page?: number, per_page?: number) {
+    return (await Axios.get(`/institutions`, { params: { page, per_page } }))
+      .data
   }
 
   static async update(id: string, data) {

@@ -8,6 +8,7 @@ interface ModalOptions {
   cancelText?: React.ReactNode
   onOk?: (e: React.MouseEvent<HTMLElement>, modalIndex: number) => void
   maskClosable?: boolean
+  footer?: React.ReactNode
 }
 
 interface ModalStackContext {
@@ -31,9 +32,13 @@ const stackManager = new (class extends EventEmitter {
     this.items = []
   }
   add(item: Omit<StackItem, "visible">) {
+    const nextId = this.items.length
+    if (typeof item.content === 'function') {
+      item.content = item.content(nextId)
+    }
     this.items.push({ ...item, visible: true })
     this.emit("CHANGE")
-    return this.items.length - 1
+    return nextId
   }
 
   remove(index: number) {
@@ -91,6 +96,7 @@ export const ModalStackProvider: React.FC = ({ children }) => {
           onCancel={() => stackManager.close(index)}
           maskClosable={item.options?.maskClosable}
           afterClose={() => stackManager.remove(index)}
+          footer={item.options?.footer}
         >
           {item.content}
         </Modal>
@@ -103,7 +109,7 @@ export const ModalStackProvider: React.FC = ({ children }) => {
 export const useModalStack = () => useContext(ModalStackContext)
 
 export const ModalStack = {
-  open: (content, options?: ModalOptions) =>
+  open: (content: ((id: number) => React.ReactNode | React.ReactNode), options?: ModalOptions) =>
     stackManager.add({ content, options }),
   close: (index: number) => stackManager.close(index),
   closeAll: () => stackManager.clear(),
