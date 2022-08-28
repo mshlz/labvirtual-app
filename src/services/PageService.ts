@@ -25,10 +25,10 @@ export class PageService {
     return (await Axios.delete(`/pages/${id}`)).data.data
   }
 
-  static async getFromSections(sections: string | string[]) {
+  static async getFromSubjects(subjects: string | string[]) {
     return (
-      await Axios.post(`/pages/from/sections`, {
-        sections: Array.isArray(sections) ? sections : [sections],
+      await Axios.post(`/pages/from/subjects`, {
+        subjects: Array.isArray(subjects) ? subjects : [subjects],
       })
     ).data.data
   }

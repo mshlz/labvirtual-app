@@ -70,7 +70,7 @@ export const ActivityPanel = (props: IActivityPanel) => {
           <Typography.Text>tipo: {props.userType}</Typography.Text>
         </Row>
         <Typography.Paragraph>
-          {parseHtml(props.description)}
+          {parseHtml(props.description || "")}
         </Typography.Paragraph>
       </Card>
     </Collapse.Panel>
