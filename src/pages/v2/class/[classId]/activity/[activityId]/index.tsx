@@ -80,16 +80,16 @@ const ViewActivity = () => {
               </Row>
               <Row justify="space-between" style={{ marginBottom: "16px" }}>
                 <Col>
-                  {!activity.value && (
+                  {!activity.classwork.value && (
                     <Typography.Text type="secondary">
                       Pontuação: {activity.grade || 0} pontos
                     </Typography.Text>
                   )}
                 </Col>
                 <Col>
-                  {activity.dueDate && (
+                  {activity.classwork.dueDate && (
                     <Typography.Text type="secondary">
-                      Data de entrega: {activity.dueDate}
+                      Data de entrega: {activity.classwork.dueDate}
                     </Typography.Text>
                   )}
                 </Col>
@@ -99,7 +99,7 @@ const ViewActivity = () => {
               <Row>
                 <Col>
                   <Typography.Text>
-                    {parseHtml(activity.description)}
+                    {parseHtml(activity.classwork.description)}
                   </Typography.Text>
                 </Col>
               </Row>

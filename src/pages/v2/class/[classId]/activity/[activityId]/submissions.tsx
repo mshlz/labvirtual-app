@@ -48,7 +48,7 @@ function UserList<T = any>(props: UserListProps<T>) {
         >
           <List.Item.Meta
             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-            title={item.title}
+            title={item['title']}
             description={
               Math.random() > 0.5 ? (
                 <Tag color={"green"}>Entregue</Tag>
@@ -67,7 +67,7 @@ const ActivitySubmissions = () => {
   const router = useRouter()
   const activityId = router.query.activityId as string
 
-  const [s, ss] = useState()
+  const [s, ss] = useState<any>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const ActivitySubmissions = () => {
                     name: "mateus",
                     birthdate: new Date().toDateString(),
                   },
-                  createdAt: new Date(),
+                  createdAt: new Date().toDateString(),
                 }}
                 fieldName="ssssss"
                 grade={10}
@@ -141,10 +141,12 @@ const ActivitySubmissions = () => {
                   text: "blabla",
                   authorId: "a",
                   author: {
+                    _id: '1',
+                    email: "aA",
                     name: "mateus",
                     birthdate: new Date().toDateString(),
                   },
-                  createdAt: new Date(),
+                  createdAt: new Date().toDateString(),
                 }}
                 fieldName="ssssss2s"
                 grade={10}

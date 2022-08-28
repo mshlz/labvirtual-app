@@ -28,7 +28,7 @@ export class Question {
 
 class Alternative {
   code: string
-  correct: boolean
+  correct?: boolean
   text: string
 
   static create(data: Partial<Alternative>) {

@@ -4,7 +4,7 @@ import { User } from "./User"
 export class Comment {
   text: string
   authorId: string
-  author: User
+  author: Partial<User>
   createdAt?: string
 
   static create(data: Partial<Comment>) {
