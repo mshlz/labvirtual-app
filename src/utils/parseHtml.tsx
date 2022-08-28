@@ -1,9 +1,13 @@
 import { Image, Typography } from "antd"
-import htmlParser from "html-react-parser"
+import htmlParser, { HTMLReactParserOptions } from "html-react-parser"
 import { openGlossaryModal } from "../components/Glossary/GlossaryModal"
 
-export const parseHtml = (htmlString: string) =>
+export const parseHtml = (
+  htmlString: string,
+  options?: HTMLReactParserOptions
+) =>
   htmlParser(htmlString, {
+    ...(options || {}),
     replace: (node) => {
       if (node.type == "tag") {
         let current: any = node
