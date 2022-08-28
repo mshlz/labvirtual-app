@@ -4,13 +4,15 @@ import { Button, Col, Collapse, Divider, Row, Space, Typography } from "antd"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useApp } from "../../../../context/AppContext"
+import { ModalStack } from "../../../../context/ModalStackContext"
 import { ClassworkSubmission } from "../../../../models/ClassworkSubmission"
+import { ClassService } from "../../../../services/ClassService"
 import { ClassTopicService } from "../../../../services/ClassTopicService"
 import { ClassworkService } from "../../../../services/ClassworkService"
 import { LoadingWrapper } from "../../../Loading/Loading"
 import { ActivityPanel } from "../Activities/ActivityPanel"
 import { ActivityStudentCard } from "../Activities/ActivityStudentCard"
-import { NewTopicModal } from "../Activities/NewTopicModal"
+import { TopicForm } from "../Activities/TopicForm"
 
 interface ActivitiesTabProps {
   classId: string
@@ -35,14 +37,29 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
   }, [props.classId])
 
   const loadTopics = async () => {
-    const result = await ClassTopicService.list()
-
-    setTopics(result.data)
+    const result = await ClassService.getTopics(props.classId)
+    setTopics(result)
   }
 
   const loadActivities = async () => {
     const result = await ClassworkService.getFromClass(props.classId)
     setActivities(result)
+  }
+
+  const openTopicModal = (id?: string) => {
+    ModalStack.open(
+      (mId) => (
+        <TopicForm
+          topicId={id}
+          classId={props.classId}
+          onFinish={() => {
+            ModalStack.close(mId)
+            loadTopics()
+          }}
+        />
+      ),
+      { footer: null }
+    )
   }
 
   const renderTopicAtivities = (topic) => {
@@ -79,12 +96,6 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
       <Col span={24}>
         <Row gutter={[24, 24]}>
           <Col span={24}>
-            <NewTopicModal
-              classId={props.classId}
-              isOpen={newTopicModal}
-              handleSuccess={() => (setModalOpen(false), loadTopics())}
-              handleCancel={() => setModalOpen(false)}
-            />
             <Space>
               <Button
                 type="primary"
@@ -113,16 +124,45 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
                     style={{ marginRight: "8px" }}
                   />
                 }
-                onClick={() => setModalOpen(true)}
+                onClick={() => openTopicModal()}
               >
                 Adicionar tópico
+              </Button>
+              <Button
+                type="primary"
+                shape="round"
+                icon={
+                  <FontAwesomeIcon
+                    icon={faPlus}
+                    style={{ marginRight: "8px" }}
+                  />
+                }
+                onClick={() => setModalOpen(true)}
+              >
+                Adicionar material
               </Button>
             </Space>
           </Col>
 
           {topics.map((topic) => (
             <Col key={topic._id} span={24} style={{ marginBottom: "24px" }}>
-              <Typography.Title level={2}>{topic.name}</Typography.Title>
+              <Space>
+                <Typography.Title level={3}>{topic.name}</Typography.Title>
+
+                <Button onClick={() => openTopicModal(topic._id)}>
+                  Editar
+                </Button>
+                <Button
+                  onClick={() =>
+                    ModalStack.confirm(
+                      async () => ClassTopicService.delete(topic._id).then(() => loadTopics()),
+                      `Você deseja remover o tópico "${topic.name}"?`
+                    )
+                  }
+                >
+                  Remover
+                </Button>
+              </Space>
               <Divider style={{ margin: "12px 0" }} />
               <Collapse
                 defaultActiveKey={[]}

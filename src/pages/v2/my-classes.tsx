@@ -4,7 +4,6 @@ import { Button, Col, Result, Row, Space } from "antd"
 import Title from "antd/lib/typography/Title"
 import { useEffect, useState } from "react"
 import { LoadingComponent } from "../../components/Loading/Loading"
-import { ClassEditForm } from "../../components/pages/Manager/Class/ClassEditForm"
 import ClassCard from "../../components/pages/MyClasses/ClassCard"
 import { CreateClass } from "../../components/pages/MyClasses/CreateClass"
 import { EnrollClass } from "../../components/pages/MyClasses/EnrollClass"
@@ -12,7 +11,6 @@ import { useApp } from "../../context/AppContext"
 import { ModalStack } from "../../context/ModalStackContext"
 import { AdminLayout } from "../../layouts/AdminLayout"
 import { ClassService } from "../../services/ClassService"
-import CreateClassPage from "../manager/classes/create"
 
 const MyClasses = () => {
   const [isLoading, setIsLoading] = useState(false)

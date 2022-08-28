@@ -1,4 +1,4 @@
-import { Modal } from "antd"
+import { Modal, Typography } from "antd"
 import EventEmitter from "events"
 import React, { createContext, useContext, useEffect, useState } from "react"
 
@@ -8,6 +8,7 @@ interface ModalOptions {
   cancelText?: React.ReactNode
   onOk?: (e: React.MouseEvent<HTMLElement>, modalIndex: number) => void
   maskClosable?: boolean
+  centered?: boolean
   footer?: React.ReactNode
 }
 
@@ -33,7 +34,7 @@ const stackManager = new (class extends EventEmitter {
   }
   add(item: Omit<StackItem, "visible">) {
     const nextId = this.items.length
-    if (typeof item.content === 'function') {
+    if (typeof item.content === "function") {
       item.content = item.content(nextId)
     }
     this.items.push({ ...item, visible: true })
@@ -97,6 +98,7 @@ export const ModalStackProvider: React.FC = ({ children }) => {
           maskClosable={item.options?.maskClosable}
           afterClose={() => stackManager.remove(index)}
           footer={item.options?.footer}
+          centered={item.options?.centered}
         >
           {item.content}
         </Modal>
@@ -109,8 +111,24 @@ export const ModalStackProvider: React.FC = ({ children }) => {
 export const useModalStack = () => useContext(ModalStackContext)
 
 export const ModalStack = {
-  open: (content: ((id: number) => React.ReactNode | React.ReactNode), options?: ModalOptions) =>
-    stackManager.add({ content, options }),
+  open: (
+    content: (id: number) => React.ReactNode | React.ReactNode,
+    options?: ModalOptions
+  ) => stackManager.add({ content, options }),
   close: (index: number) => stackManager.close(index),
   closeAll: () => stackManager.clear(),
+  confirm: (block: () => Promise<void>, title?: string) =>
+    stackManager.add({
+      content: (
+        <>
+          <Typography.Title level={4}>
+            {title || `Você deseja remover?`}
+          </Typography.Title>
+        </>
+      ),
+      options: {
+        onOk: (e, idx) => block().then(() => ModalStack.close(idx)),
+        centered: true,
+      },
+    }),
 }

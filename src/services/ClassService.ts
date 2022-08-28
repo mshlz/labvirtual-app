@@ -21,6 +21,10 @@ class ClassService {
     return (await Axios.get(`/classes`, { params: { page } })).data
   }
 
+  static async getTopics(id: string) {
+    return (await Axios.get(`/classes/${id}/topics`)).data.data
+  }
+
   static async update(id: string, data: ICreateReq) {
     return (await Axios.post(`/classes/${id}`, data)).data.data
   }
