@@ -4,23 +4,19 @@ import { AdminLayout } from "../../layouts/AdminLayout"
 import { UserService } from "../../services/UserService"
 
 const MyClasses = () => {
+  useEffect(() => {
+    ;(async () => {
+      const u = await UserService.getProfile()
+    })()
+  }, [])
 
-    useEffect(() => {
-        (async () => {
-            const u = await UserService.getProfile()
-            console.log('user', u)
-        })()
-    }, [])
-
-    return <AdminLayout>
-        <div className="row">
-            <ClassCard
-                id="uuid"
-                name="Disciplina teste"
-                teacher="Professor"
-            />
-        </div>
+  return (
+    <AdminLayout>
+      <div className="row">
+        <ClassCard id="uuid" name="Disciplina teste" teacher="Professor" />
+      </div>
     </AdminLayout>
+  )
 }
 
 export default MyClasses

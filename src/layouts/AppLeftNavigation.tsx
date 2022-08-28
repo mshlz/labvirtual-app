@@ -19,18 +19,14 @@ const AppLeftNavigation = ({ children }) => {
         {/* <!-- MAIN CONTENT--> */}
         <div className="main-content">
           <div className="section__content section__content--p30">
-            <div className="container-fluid p-b-10">
-
-              {children}
-
-            </div>
+            <div className="container-fluid p-b-10">{children}</div>
           </div>
         </div>
         {/* <!-- END MAIN CONTENT--> */}
-
       </div>
       {/* <!-- END PAGE CONTAINER--> */}
-    </>)
+    </>
+  )
 }
 
 export { AppLeftNavigation }

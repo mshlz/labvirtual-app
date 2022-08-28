@@ -2,9 +2,11 @@ import { InstitutionEditForm } from "../../../components/pages/Manager/Instituti
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateInstitutionPage = () => {
-    return <AdminLayout>
-        <InstitutionEditForm />
+  return (
+    <AdminLayout>
+      <InstitutionEditForm />
     </AdminLayout>
+  )
 }
 
 export default CreateInstitutionPage

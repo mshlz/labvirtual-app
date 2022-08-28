@@ -3,12 +3,14 @@ import { InstitutionEditForm } from "../../../../components/pages/Manager/Instit
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateInstitutionPage = () => {
-    const router = useRouter()
-    const institutionId = router.query.id as string
+  const router = useRouter()
+  const institutionId = router.query.id as string
 
-    return <AdminLayout>
-        <InstitutionEditForm institutionId={institutionId} />
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      <InstitutionEditForm institutionId={institutionId} />
+    </AdminLayout>
+  )
 }
 
 export default UpdateInstitutionPage

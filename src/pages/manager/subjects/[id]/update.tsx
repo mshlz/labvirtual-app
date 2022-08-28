@@ -3,12 +3,14 @@ import { SubjectEditForm } from "../../../../components/pages/Manager/Subject/Su
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 
 const UpdateSubjectPage = () => {
-    const router = useRouter()
-    const subjectId = router.query.id as string
+  const router = useRouter()
+  const subjectId = router.query.id as string
 
-    return <AdminLayout>
-        {subjectId && <SubjectEditForm subjectId={subjectId} />}
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      {subjectId && <SubjectEditForm subjectId={subjectId} />}
+    </AdminLayout>
+  )
 }
 
 export default UpdateSubjectPage

@@ -3,9 +3,11 @@ import { SubjectEditForm } from "../../../components/pages/Manager/Subject/Subje
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateSubjectPage = () => {
-    return <AdminLayout>
-        <SubjectEditForm />
+  return (
+    <AdminLayout>
+      <SubjectEditForm />
     </AdminLayout>
+  )
 }
 
 export default CreateSubjectPage

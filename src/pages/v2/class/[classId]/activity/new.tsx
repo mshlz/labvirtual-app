@@ -5,15 +5,19 @@ import { ActivityEditForm } from "../../../../../components/pages/Class/Activiti
 import { AdminLayout } from "../../../../../layouts/AdminLayout"
 
 const NewActivity = () => {
-    const classId = router.query.classId as string
-    useEffect(() => {
-        message.info({icon: <Spin size="small" style={{marginRight: '8px'}}/>, content:"Salvando atividade..."})
-    },[])
+  const classId = router.query.classId as string
+  useEffect(() => {
+    message.info({
+      icon: <Spin size="small" style={{ marginRight: "8px" }} />,
+      content: "Salvando atividade...",
+    })
+  }, [])
 
-
-    return <AdminLayout>
-        <ActivityEditForm classId={classId} />
+  return (
+    <AdminLayout>
+      <ActivityEditForm classId={classId} />
     </AdminLayout>
+  )
 }
 
 export default NewActivity

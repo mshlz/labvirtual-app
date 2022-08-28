@@ -2,9 +2,11 @@ import { GlossaryEditForm } from "../../../components/pages/Manager/Glossary/Glo
 import { AdminLayout } from "../../../layouts/AdminLayout"
 
 const CreateGlossaryItemPage = () => {
-    return <AdminLayout>
-        <GlossaryEditForm />
-    </AdminLayout >
+  return (
+    <AdminLayout>
+      <GlossaryEditForm />
+    </AdminLayout>
+  )
 }
 
 export default CreateGlossaryItemPage
