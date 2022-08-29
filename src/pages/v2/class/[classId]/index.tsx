@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography } from "antd"
+import { Button, Card, Col, Dropdown, Menu, Row, Space, Typography } from "antd"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { LoadingWrapper } from "../../../../components/Loading/Loading"
@@ -7,6 +7,15 @@ import { MuralTab } from "../../../../components/pages/Class/Tabs/MuralTab"
 import { PeopleTab } from "../../../../components/pages/Class/Tabs/PeopleTab"
 import { AdminLayout } from "../../../../layouts/AdminLayout"
 import { ClassService } from "../../../../services/ClassService"
+import {
+  ExperimentOutlined,
+  HomeOutlined,
+  ProfileOutlined,
+  SettingOutlined,
+  InfoCircleOutlined,
+  MoreOutlined,
+} from "@ant-design/icons"
+import { useApp } from "../../../../context/AppContext"
 
 const TabKeysArray = ["mural", "activities", "people"] as const
 type TabKeys = typeof TabKeysArray[number]
@@ -16,6 +25,7 @@ const ClassMural = () => {
   const query = router.query
   const classId = router.query.classId as string
 
+  const { user } = useApp()
   const [klass, setKlass] = useState(null)
   const [activeTab, setActiveTab] = useState<TabKeys>("mural")
 
@@ -66,16 +76,37 @@ const ClassMural = () => {
                   }
                 }
                 title={
-                  <Typography.Title level={2} style={{ marginBottom: "48px" }}>
-                    Turma {klass?.name}{" "}
-                    <Typography.Text
-                      title="Código da turma"
-                      style={{ fontSize: 16 }}
-                      copyable
-                    >
-                      {klass?.code}
-                    </Typography.Text>
-                  </Typography.Title>
+                  <div style={{ marginBottom: "48px" }}>
+                    <Typography.Title level={2}>
+                      {klass?.name}{" "}
+                      <Space style={{ float: "right" }}>
+                        <Typography.Text
+                          title="Código da turma"
+                          style={{ fontSize: 16 }}
+                          copyable
+                        >
+                          {klass?.code}
+                        </Typography.Text>
+                        {user.type === "TEACHER" ? (
+                          <Dropdown
+                            overlay={
+                              <Menu>
+                                <Menu.Item>Editar</Menu.Item>
+                              </Menu>
+                            }
+                            trigger={["click"]}
+                          >
+                            <Button type="dashed" shape="circle">
+                              <MoreOutlined />
+                            </Button>
+                          </Dropdown>
+                        ) : null}
+                      </Space>
+                    </Typography.Title>
+                    {klass?.description ? (
+                      <Typography.Text>{klass.description}</Typography.Text>
+                    ) : null}
+                  </div>
                 }
                 activeTabKey={activeTab}
                 tabList={[

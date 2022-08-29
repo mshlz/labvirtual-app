@@ -26,7 +26,7 @@ export const MuralTab = (props: MuralTabProps) => {
 
   return (
     <LoadingWrapper isLoading={isLoading} fullWidth={true}>
-      <Col sm={24} xl={18}>
+      <Col sm={24} >
         <Row gutter={[0, 16]}>
           {/* MuralNewPostForm */}
           <Col span={24}>

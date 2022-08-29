@@ -12,6 +12,7 @@ import { ClassworkService } from "../../../../services/ClassworkService"
 import { LoadingWrapper } from "../../../Loading/Loading"
 import { ActivityPanel } from "../Activities/ActivityPanel"
 import { ActivityStudentCard } from "../Activities/ActivityStudentCard"
+import { MaterialForm } from "../Activities/MaterialForm"
 import { TopicForm } from "../Activities/TopicForm"
 
 interface ActivitiesTabProps {
@@ -62,6 +63,21 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
     )
   }
 
+  const openMaterialModal = () => {
+    ModalStack.open(
+      (mId) => (
+        <MaterialForm
+          classId={props.classId}
+          onFinish={() => {
+            ModalStack.close(mId)
+            loadTopics()
+          }}
+        />
+      ),
+      { footer: null }
+    )
+  }
+
   const renderTopicAtivities = (topic) => {
     const topicActivities = activities.filter(
       (v) => v.topic === topic._id || v.classwork?.topic === topic._id
@@ -95,73 +111,82 @@ export const ActivitiesTab = (props: ActivitiesTabProps) => {
     <LoadingWrapper isLoading={isLoading} fullWidth={true}>
       <Col span={24}>
         <Row gutter={[24, 24]}>
-          <Col span={24}>
-            <Space>
-              <Button
-                type="primary"
-                shape="round"
-                icon={
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    style={{ marginRight: "8px" }}
-                  />
-                }
-                onClick={() =>
-                  router.push({
-                    pathname: "/v2/class/[classId]/activity/new",
-                    query: { classId: props.classId },
-                  })
-                }
-              >
-                Adicionar atividade
-              </Button>
-              <Button
-                type="primary"
-                shape="round"
-                icon={
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    style={{ marginRight: "8px" }}
-                  />
-                }
-                onClick={() => openTopicModal()}
-              >
-                Adicionar tópico
-              </Button>
-              <Button
-                type="primary"
-                shape="round"
-                icon={
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    style={{ marginRight: "8px" }}
-                  />
-                }
-                onClick={() => setModalOpen(true)}
-              >
-                Adicionar material
-              </Button>
-            </Space>
-          </Col>
+          {user.type === "TEACHER" ? (
+            <Col span={24}>
+              <Space>
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ marginRight: "8px" }}
+                    />
+                  }
+                  onClick={() =>
+                    router.push({
+                      pathname: "/v2/class/[classId]/activity/new",
+                      query: { classId: props.classId },
+                    })
+                  }
+                >
+                  Adicionar atividade
+                </Button>
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ marginRight: "8px" }}
+                    />
+                  }
+                  onClick={() => openTopicModal()}
+                >
+                  Adicionar tópico
+                </Button>
+                <Button
+                  type="primary"
+                  shape="round"
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ marginRight: "8px" }}
+                    />
+                  }
+                  onClick={() => openMaterialModal()}
+                >
+                  Adicionar material
+                </Button>
+              </Space>
+            </Col>
+          ) : null}
 
           {topics.map((topic) => (
             <Col key={topic._id} span={24} style={{ marginBottom: "24px" }}>
               <Space>
                 <Typography.Title level={3}>{topic.name}</Typography.Title>
 
-                <Button onClick={() => openTopicModal(topic._id)}>
-                  Editar
-                </Button>
-                <Button
-                  onClick={() =>
-                    ModalStack.confirm(
-                      async () => ClassTopicService.delete(topic._id).then(() => loadTopics()),
-                      `Você deseja remover o tópico "${topic.name}"?`
-                    )
-                  }
-                >
-                  Remover
-                </Button>
+                {user.type === "TEACHER" ? (
+                  <>
+                    <Button onClick={() => openTopicModal(topic._id)}>
+                      Editar
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        ModalStack.confirm(
+                          async () =>
+                            ClassTopicService.delete(topic._id).then(() =>
+                              loadTopics()
+                            ),
+                          `Você deseja remover o tópico "${topic.name}"?`
+                        )
+                      }
+                    >
+                      Remover
+                    </Button>
+                  </>
+                ) : null}
               </Space>
               <Divider style={{ margin: "12px 0" }} />
               <Collapse
