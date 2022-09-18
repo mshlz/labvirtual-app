@@ -1,8 +1,11 @@
-import { Button, Col, Form, Row, Select, Typography } from "antd"
+import { Button, Col, Form, List, Row, Select, Space, Typography } from "antd"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
+import { useApp } from "../../../../context/AppContext"
+import { ModalStack } from "../../../../context/ModalStackContext"
 import { ClassMaterialService } from "../../../../services/ClassMaterialService"
 import { ClassTopicService } from "../../../../services/ClassTopicService"
+import { SubjectService } from "../../../../services/SubjectService"
 import { transformResponseError } from "../../../../utils/transformResponseError"
 import QuillEditor from "../../../UI/QuillEditor"
 
@@ -16,6 +19,8 @@ export const MaterialForm = (props: IMaterialForm) => {
   const [isSubmitting, setSubmitting] = useState(false)
 
   const [topics, setTopics] = useState([])
+  const [selectedSubjects, setSelectedSubjects] = useState([])
+
   useEffect(() => {
     loadTopics()
   }, [])
@@ -45,6 +50,60 @@ export const MaterialForm = (props: IMaterialForm) => {
       .finally(() => {
         setSubmitting(false)
       })
+  }
+
+  const openSubjectSelectorModal = () => {
+    const Modal = ({ onFinish }) => {
+      const [items, setItems] = useState([])
+      const { user } = useApp()
+
+      useEffect(() => {
+        SubjectService.list().then((result) => {
+          setItems(result.data)
+        })
+      }, [])
+      return (
+        <>
+          <Typography.Title level={4}>Vincular assunto</Typography.Title>
+
+          <List
+            itemLayout="horizontal"
+            dataSource={items}
+            renderItem={(item, index) => (
+              <List.Item
+                key={item._id}
+                actions={[
+                  <a
+                    onClick={() => {
+                      onFinish(item)
+                    }}
+                  >
+                    Adicionar
+                  </a>,
+                ]}
+              >
+                {item.name}
+              </List.Item>
+            )}
+          />
+        </>
+      )
+    }
+    ModalStack.open(
+      (mId) => (
+        <Modal
+          onFinish={(item) => {
+            if (item && !selectedSubjects.find((v) => v._id == item._id)) {
+              setSelectedSubjects([...selectedSubjects, item])
+            }
+            ModalStack.close(mId)
+          }}
+        />
+      ),
+      {
+        footer: null,
+      }
+    )
   }
 
   return (
@@ -77,7 +136,7 @@ export const MaterialForm = (props: IMaterialForm) => {
           </Select>
         </Form.Item>
         <Form.Item
-          // label="Nome do tópico"
+          label="Descrição"
           name="description"
           rules={[
             { required: true, message: "Você deve preencher este campo!" },
@@ -93,6 +152,40 @@ export const MaterialForm = (props: IMaterialForm) => {
                 ["clean"],
               ],
             }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <Space>
+              Assuntos{" "}
+              <Button onClick={() => openSubjectSelectorModal()}>
+                Vincular assunto
+              </Button>
+            </Space>
+          }
+        >
+          <List
+            itemLayout="horizontal"
+            dataSource={selectedSubjects}
+            renderItem={(item, index) => (
+              <List.Item
+                key={item._id}
+                actions={[
+                  <a
+                    onClick={() => {
+                      setSelectedSubjects(
+                        selectedSubjects.filter((v) => v._id != item._id)
+                      )
+                    }}
+                  >
+                    remover
+                  </a>,
+                ]}
+              >
+                {item.name}
+              </List.Item>
+            )}
           />
         </Form.Item>
 
